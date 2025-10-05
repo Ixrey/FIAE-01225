@@ -45,56 +45,67 @@ java/
 app/
 Main.java # Einstieg, Initialisierung
 
-game/ # Spielablauf/Run-Loop, State-Maschine
+# Spielablauf/Run-Loop, State-Maschine
+game/ 
 GameController.java
 GameState.java
 
-world/ # Ebenen/Räume/Events/Encounter
+# Ebenen/Räume/Events/Encounter
+world/ 
 Dungeon.java
 Floor.java
 Room.java
 RoomType.java
 EncounterService.java
 
-entities/ # Spieler & Gegner (Modelle/Stats/Skills)
+# Spieler & Gegner (Modelle/Stats/Skills)
+entities/ 
 Player.java
 Enemy.java
 Stats.java
 Skill.java
 
-combat/ # Kampfmotor, Rundenlogik, Aktionen
+# Kampfmotor, Rundenlogik, Aktionen
+combat/ 
 CombatEngine.java
 Action.java
 CombatLog.java
 
-items/ # Tränke/Relikte/Inventar
+# Tränke/Relikte/Inventar
+items/ 
 Item.java
 Potion.java
 Relic.java
 Inventory.java
 
-ui/ # Swing-GUI (Views, Panels, Controls)
+# Swing-GUI (Views, Panels, Controls)
+ui/ 
 GameWindow.java
 MapPanel.java
 CombatPanel.java
 StatusPanel.java
 
-meta/ # Hometown, Freischaltungen (Stretch)
+# Hometown, Freischaltungen (Stretch)
+meta/ 
 Hometown.java
 UnlockService.java
 
-quest/ # Quests (Stretch)
+# Quests (Stretch)
+quest/ 
 Quest.java
 QuestLog.java
 
-save/ # Speichern/Laden (JSON)
+# Speichern/Laden (JSON)
+save/ 
 SaveGame.java
 JsonSaveService.java
 
-util/ # Hilfsklassen (Random, Validation, etc.)
+# Hilfsklassen (Random, Validation, etc.)
+util/ 
 RandomUtil.java
 
-test/ # (optional) Unit-Tests
+# (optional) Unit-Tests
+test/ 
 
 
 **Hinweise zur Aufteilung:**
