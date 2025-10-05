@@ -1,0 +1,23 @@
+# Build-Ordner
+/out/
+/bin/
+/target/
+
+# IDE/Editor
+.vscode/
+.classpath
+.project
+.settings/
+.idea/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs & Temp
+*.log
+*.tmp
+
+# Java
+*.class
