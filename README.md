@@ -7,112 +7,81 @@ Kleines Roguelike/Dungeoncrawler mit rundenbasiertem Kampf. Fokus: **OOP**, **Co
 - **Kernsysteme:** Spielwelt (Räume & Events), Encounter, Charakter-/Gegnerwerte, rundenbasierter Kampf (Angriff/Items/Skills), Inventar (Relikte/Tränke), GUI (frei begehbare Räume + fester Kampfbildschirm), optional Meta-Progression & Quests.
 
 ## Basisversion (MVP)
-- **Spielwelt:** 1 Ebene mit ~5 Räumen, 2 Raumtypen: normaler Kampf (ein Gegner) & Bossraum.
-- **Spieler:** HP, Angriff, Verteidigung, Level-Up (erhöht Basiswerte), **Aktionspunkte** pro Runde, **Standardangriff**, feste Anzahl Tränke.
-- **Gegner:** 2 Typen (z. B. Goblin, Ork) + Boss; einfache KI (jede Runde Angriff).
+- **Spielwelt:** 1 Ebene mit ~5 Räumen, Raumtypen: normaler Kampf (ein Gegner) & Bossraum.
+- **Spieler:** HP, Angriff, Verteidigung, Level-Up (erhöht Basiswerte), **Aktions-/Manapunkte** pro Runde, **Standardangriff**, feste Anzahl Tränke.
+- **Gegner:** Mind. 2 Typen (z. B. Goblin/Ork) + Boss; einfache KI (jeder Runde Angriff).
 - **Kampf:** rundenbasiert (Spieler → Gegner), Aktionen: **Angriff**, **Item nutzen**; Ausgang: Sieg (XP/Level-Up) oder Game Over.
-- **GUI (MVP):** Kampf-View (links Spieler / rechts Gegner), Buttons (Angriff/Tränke), Statusanzeigen (Name/HP/Level), Mini-Karte, Kampflog; Bewegung über Kontext/Buttons.
+- **GUI (MVP):** Kampf-View (links Spieler / rechts Gegner), Buttons (Angriff/Tränke), Statusanzeigen (Name/HP/Level), Mini-Karte, Kampflog; Bewegung per Buttons/Klick.
 
 ## Meilensteine
-1) **Spielbare Basisversion**  
-   Kernlogik (Kampf, Bewegung, Sieg/Niederlage); 1 Ebene, 2 Gegner, 1 Boss.
-2) **Welt & Gegner**  
-   Mehr Ebenen; neue Gegnertypen; neue Raumtypen (Schatz/Händler).
-3) **Skills, Stats & Items**  
-   ~15 Skills, max. 4 aktiv; neue Stats (Ausweichrate/Genauigkeit/Crit); passive Itemeffekte.
-4) **GUI-Optimierung**  
-   Platzhalter → Sprites, bessere Statusanzeigen/Buttons.
-5) **Stretch Goals**  
-   Hometown (Meta-Progression), einfache Quests, **Speichern/Laden (JSON)** für Meta & Run-Status.
+1. **Spielbare Basisversion** – Kernlogik (Kampf, Bewegung, Sieg/Niederlage); 1 Ebene, 2 Gegner, 1 Boss.  
+2. **Welt & Gegner** – Mehr Ebenen; neue Gegnertypen; neue Raumtypen (Schatz/Händler).  
+3. **Skills, Stats & Items** – ~10–15 Skills (max. 4 aktiv), zusätzliche Stats (Ausweichrate/Genauigkeit/Crit); passive Itemeffekte.  
+4. **GUI-Optimierung** – Platzhalter → bessere Darstellung, Statusanzeigen/Buttons.  
+5. **Stretch Goals** – Hometown (Meta-Progression), einfache Quests, **Speichern/Laden (JSON)** für Meta & Run-Status.
 
 ---
 
-## Team & Aufgaben
-- **Spielablauf:** Tobi  
-- **Kampfablauf:** Apo  
-- **Charaktere/Modelle:** Chris  
-- **GUI (Ansichten/Interaktion):** Daniel  
-- **GUI (weitere Komponenten/Support):** Abdi  
+## Team & Aufgaben (eintragen)
+- **Spielablauf / Run-Loop** – _…_  
+- **Kampfablauf / Rundenlogik** – _…_  
+- **Charaktere & Modelle (Stats/Skills/Enemies)** – _…_  
+- **GUI (Ansichten/Interaktion)** – _…_  
+- **GUI (weitere Komponenten/Support)** – _…_
 
 > Zusammenarbeit: Niemand arbeitet direkt auf `main`. Jeder Feature-Branch → Pull Request → Review → Merge.
 
 ---
 
 ## Paket-/Ordnerstruktur (Vorschlag)
+
+~~~text
 src/
-main/
-java/
-app/
-Main.java # Einstieg, Initialisierung
+└── main/
+    └── java/
+        └── app/
+            ├── Main.java
+            ├── game/
+            │   ├── GameController.java
+            │   └── GameState.java
+            ├── world/
+            │   ├── Dungeon.java
+            │   ├── Floor.java
+            │   ├── Room.java
+            │   └── RoomType.java
+            ├── entities/
+            │   ├── Player.java
+            │   ├── Enemy.java
+            │   ├── Stats.java
+            │   └── Skill.java
+            ├── combat/
+            │   ├── CombatEngine.java
+            │   ├── Action.java
+            │   └── CombatLog.java
+            ├── items/
+            │   ├── Item.java
+            │   ├── Potion.java
+            │   ├── Relic.java
+            │   └── Inventory.java
+            ├── ui/
+            │   ├── GameWindow.java
+            │   ├── MapPanel.java
+            │   ├── CombatPanel.java
+            │   └── StatusPanel.java
+            ├── meta/
+            │   ├── Hometown.java
+            │   └── UnlockService.java
+            ├── quest/
+            │   ├── Quest.java
+            │   └── QuestLog.java
+            ├── save/
+            │   ├── SaveGame.java
+            │   └── JsonSaveService.java
+            └── util/
+                └── RandomUtil.java
+~~~
 
-# Spielablauf/Run-Loop, State-Maschine
-game/ 
-GameController.java
-GameState.java
-
-# Ebenen/Räume/Events/Encounter
-world/ 
-Dungeon.java
-Floor.java
-Room.java
-RoomType.java
-EncounterService.java
-
-# Spieler & Gegner (Modelle/Stats/Skills)
-entities/ 
-Player.java
-Enemy.java
-Stats.java
-Skill.java
-
-# Kampfmotor, Rundenlogik, Aktionen
-combat/ 
-CombatEngine.java
-Action.java
-CombatLog.java
-
-# Tränke/Relikte/Inventar
-items/ 
-Item.java
-Potion.java
-Relic.java
-Inventory.java
-
-# Swing-GUI (Views, Panels, Controls)
-ui/ 
-GameWindow.java
-MapPanel.java
-CombatPanel.java
-StatusPanel.java
-
-# Hometown, Freischaltungen (Stretch)
-meta/ 
-Hometown.java
-UnlockService.java
-
-# Quests (Stretch)
-quest/ 
-Quest.java
-QuestLog.java
-
-# Speichern/Laden (JSON)
-save/ 
-SaveGame.java
-JsonSaveService.java
-
-# Hilfsklassen (Random, Validation, etc.)
-util/ 
-RandomUtil.java
-
-# (optional) Unit-Tests
-test/ 
-
-
-**Hinweise zur Aufteilung:**
-- **Spielablauf (Tobi):** `game/` steuert die Zustände: Erkunden → Kampf → Sieg/Niederlage → (Hometown). Übergibt an `world/` und `combat/`.
-- **Kampf (Apo):** `combat/` kapselt Rundenlogik, Aktionen, Schadensberechnung, CombatLog.
-- **Charaktere (Chris):** `entities/` inkl. Stats/Skills, Basisklassen (Player/Enemy) und einfache Gegner-Implementierungen.
-- **GUI (Daniel/Abdi):** `ui/` Panels/Window, Bindung von Buttons an `game/`/`combat/`, Statusleisten, Minimap, Log.
+**Hinweis:** Leere Ordner erscheinen in Git nicht. Für Platzhalter ggf. `.gitkeep` anlegen.
 
 ---
 
@@ -120,18 +89,16 @@ test/
 
 ### Branch-Strategie
 - **Feature-Branches:** `feature/<thema>` (z. B. `feature/kampf`), Fixes: `fix/<thema>`.
-- PR erst nach „baut lokal“ + kleiner Selbsttest.
+- PR erst nach „baut lokal“ + kleinem Selbsttest (kann man starten? Buttons klicken?).
 
-### Ablauf (VS Code)
+### VS Code (empfohlen)
 1. **Branch erstellen:** Git-Panel → Branch-Icon → *Create new branch…*  
 2. **Commit & Push:** Änderungen → Message → *Commit* → *Publish Branch*  
-3. **PR:** Extension *GitHub Pull Requests & Issues* → *Create Pull Request* (Base: `main`)
+3. **PR:** Extension **GitHub Pull Requests & Issues** → *Create Pull Request* (Base: `main`)
 
-### Ablauf (Bash)
+### Bash (Alternative)
 ```bash
 git checkout -b feature/spielablauf
 git add .
 git commit -m "Implementiert Grundgerüst Spielablauf"
 git push -u origin feature/spielablauf
-
-
