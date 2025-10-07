@@ -39,10 +39,10 @@ public class Spieler extends Charakter{
         if (lvlup){
             float lpPlus = (float) (this.getmaxLebenspunkte()*0.2);
             this.setLevel(this.getLevel()+1);
+            this.setBenErfahrungspunkte(getBenErfahrungspunkte()*2);
             this.setmaxLebenspunkte(this.getmaxLebenspunkte()+lpPlus);
             this.setaktLebenspunkte(this.getaktLebenspunkte()+lpPlus);
             this.setangriffsWert((float) (this.getAngriffsWert()*1.2));
-            this.setBenErfahrungspunkte(getBenErfahrungspunkte()*2);
 
         }
     }
