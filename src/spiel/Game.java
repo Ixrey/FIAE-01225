@@ -2,8 +2,8 @@ package spiel;
 
 import java.util.Scanner;
 
-import StateManagement.GameStateManager;
-import StateManagement.GameStates.GameRunning;
+import stateManagement.GameStateManager;
+import stateManagement.GameStates.GameRunning;
 
 public class Game {
 

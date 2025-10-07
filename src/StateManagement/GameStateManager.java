@@ -1,8 +1,9 @@
-package StateManagement;
+package stateManagement;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import StateManagement.GameStates.GameState;
+import stateManagement.GameStates.GameState;
 
 // Sie Arbeiten nur im package Game. Alle anderen Dateien bleiben von Ihnen unberührt. 
 
@@ -22,7 +23,8 @@ public class GameStateManager {
         observers.remove(observer);
     }
 
-    // Ändert den Zustand und benachrichtigt die Observer nur bei einer tatsächlichen Änderung
+    // Ändert den Zustand und benachrichtigt die Observer nur bei einer
+    // tatsächlichen Änderung
     public void setState(GameState newState) {
         if (!this.currentState.equals(newState)) {
             this.currentState = newState;
