@@ -1,16 +1,26 @@
 package spiel;
 
+import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
+import charakter.Gegner;
 import charakter.Spieler;
 import stateManagement.GameStateManager;
 import stateManagement.GameStates.GameClose;
 import stateManagement.GameStates.GameRunning;
+import stateManagement.GameStates.GameStart;
 
 public class Game {
 
     private static GameStateManager stateManager;
     private static Spieler spieler;
+    private static DemoDungeon demoDungeon;
+
+    // Platzhalter bis echter kampf da ist
+    public enum DemoKampfErgebnis {
+        SPIELER_BESIEGT, GEGNER_BESIEGT
+    }
 
     public static void setStateManager(GameStateManager manager) {
         stateManager = manager;
@@ -43,7 +53,8 @@ public class Game {
         System.out.println("'Start' für Spiel starten.");
         String test = scanner.nextLine();
         if (test.equals("Start")) {
-            Spieler spieler = new Spieler("Krasser Spieler", 100, 20, 1);
+            spieler = new Spieler("Krasser Spieler", 100, 20, 1);
+            demoDungeon = DemoDungeon.demo();
             stateManager.setState(new GameRunning());
         }
 
@@ -65,12 +76,99 @@ public class Game {
         // sonst geht dieser verloren.
 
         System.out.println("Das Spiel ist im laufenden Zustand");
-        stateManager.setState(new GameClose());
+
+        while (true) {
+            DemoRaum raum = demoDungeon.naechsterRaum();
+            if (raum == null) {
+                System.out.println("Win, zurück zum Menü. Yay.");
+                stateManager.setState(new GameStart());
+                return;
+            }
+
+            System.out.println("Raum: " + raum.name + " Raumtyp: " + raum.typ);
+
+            if (raum.istKampf()) {
+                Gegner gegner = DemoGegnerGenerator.demo();
+                DemoKampfErgebnis ergebnis = DemoKampfsystem.start(spieler, gegner);
+                if (ergebnis == DemoKampfErgebnis.SPIELER_BESIEGT) {
+                    System.out.println("Verloren, du looser. Game Over!");
+                    stateManager.setState(new GameStart());
+                    return;
+                } else {
+                    spieler.bekommeErfahrung(gegner.getAusgabeErfahrungspunkte());
+                    System.out.println("Win. " + gegner.getAusgabeErfahrungspunkte() + "XP bekommen");
+                }
+            } else {
+                // leerer demo raum -> erstmal nix
+                System.out.println("Nix, weitermachen.");
+            }
+        }
     }
 
     public static void close() {
         // Hier wird Ihre Anwendung beendet.
         System.out.println("Das Spiel wird herunter gefahren");
+    }
+
+    // platzhalter kampfsystem zum testen bis echte Klasse kommt. random chance auf
+    // win
+    static class DemoKampfsystem {
+        private static Random rnd = new Random();
+
+        static DemoKampfErgebnis start(Spieler spieler, Gegner gegner) {
+            boolean spielerGewinnt = rnd.nextDouble() < 0.75;
+            System.out.println("Kampf gegen " + gegner.getName());
+            return spielerGewinnt ? DemoKampfErgebnis.GEGNER_BESIEGT : DemoKampfErgebnis.SPIELER_BESIEGT;
+        }
+    }
+
+    // platzhalter welt zum testen bis echte klasse kommt.
+    static class DemoDungeon {
+        private List<DemoRaum> raumListe;
+        private int zaehler = -1;
+
+        private DemoDungeon(List<DemoRaum> raumListe) {
+            this.raumListe = raumListe;
+        }
+
+        static DemoDungeon demo() {
+            return new DemoDungeon(List.of(
+                    new DemoRaum("Raum 1", "LEER"),
+                    new DemoRaum("Raum 2", "KAMPF"),
+                    new DemoRaum("Raum 3", "LEER"),
+                    new DemoRaum("Raum 4", "KAMPF"),
+                    new DemoRaum("Raum 4", "LEER")));
+        }
+
+        DemoRaum naechsterRaum() {
+            zaehler++;
+            if (zaehler >= raumListe.size()) {
+                return null;
+            }
+            return raumListe.get(zaehler);
+        }
+    }
+
+    static class DemoRaum {
+        String name;
+        String typ;
+
+        DemoRaum(String name, String typ) {
+            this.name = name;
+            this.typ = typ;
+        }
+
+        boolean istKampf() {
+            return "KAMPF".equals(typ);
+        }
+    }
+
+    static class DemoGegnerGenerator {
+        private static Random rng = new Random();
+
+        static Gegner demo() {
+            return rng.nextBoolean() ? new Gegner("Goblin", 50, 10, 1) : new Gegner("Ork", 70, 12, 1);
+        }
     }
 
 }
