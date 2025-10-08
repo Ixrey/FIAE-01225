@@ -1,0 +1,20 @@
+public class Testklasscha {
+    public static void main(String[] args) throws Exception {
+//test für charakter
+        Spieler sp1 = new Spieler("sp1", 100, 10, 1);
+        Gegner g1 = new Gegner("Ork", (float) 50*(sp1.getLevel()), (float) 5*(sp1.getLevel()), (int) (sp1.getLevel()+1));
+        sp1.setaktLebenspunkte(80);
+        //sp1.bekommeErfahrung(g1.getAusgabeErfahrungspunkte());
+        sp1.bekommeErfahrung(g1.getLevel());
+        sp1.bekommeErfahrung(20);
+        System.out.println("lvl"+sp1.getLevel());
+        System.out.println("lvl"+g1.getLevel());
+        Gegner g2 = new Gegner("Ork", (float) 50*(sp1.getLevel()), (float) 5*(sp1.getLevel()), (int) (sp1.getLevel()+1));
+        System.out.println("lvl"+g2.getLevel());
+        System.out.println("akterf"+sp1.getAktErfahrungspunkte());
+        System.out.println("benerf"+sp1.getBenErfahrungspunkte());
+        System.out.println("aktlp"+sp1.getaktLebenspunkte());
+        System.out.println("atk"+sp1.getAngriffsWert());
+        System.out.println("atk"+g2.getAngriffsWert());
+    }
+}
