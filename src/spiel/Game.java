@@ -2,14 +2,15 @@ package spiel;
 
 import java.util.Scanner;
 
+import charakter.Spieler;
 import stateManagement.GameStateManager;
 import stateManagement.GameStates.GameClose;
 import stateManagement.GameStates.GameRunning;
-import stateManagement.GameStates.GameState;
 
 public class Game {
 
     private static GameStateManager stateManager;
+    private static Spieler spieler;
 
     public static void setStateManager(GameStateManager manager) {
         stateManager = manager;
@@ -42,6 +43,7 @@ public class Game {
         System.out.println("'Start' für Spiel starten.");
         String test = scanner.nextLine();
         if (test.equals("Start")) {
+            Spieler spieler = new Spieler("Krasser Spieler", 100, 20, 1);
             stateManager.setState(new GameRunning());
         }
 
