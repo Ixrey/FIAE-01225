@@ -3,7 +3,9 @@ package spiel;
 import java.util.Scanner;
 
 import stateManagement.GameStateManager;
+import stateManagement.GameStates.GameClose;
 import stateManagement.GameStates.GameRunning;
+import stateManagement.GameStates.GameState;
 
 public class Game {
 
@@ -61,6 +63,7 @@ public class Game {
         // sonst geht dieser verloren.
 
         System.out.println("Das Spiel ist im laufenden Zustand");
+        stateManager.setState(new GameClose());
     }
 
     public static void close() {
