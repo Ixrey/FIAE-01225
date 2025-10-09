@@ -47,7 +47,7 @@ public class Einzelkampf {
             spieler.setaktLebenspunkte(spieler.getaktLebenspunkte() + 7);
         }
         nachAktion();
-        
+
         setCombatLog("Durch den Trank hat " + spieler.getName() + " 7 Lebenspunkte bekommen.\n"); // Später abändern
     }
 

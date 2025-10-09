@@ -1,6 +1,6 @@
-package stateManagement;
+package StateManagement;
 
-import stateManagement.GameStates.GameState;
+import StateManagement.GameStates.GameState;
 
 // Sie Arbeiten nur im package Game. Alle anderen Dateien bleiben von Ihnen unberührt. 
 

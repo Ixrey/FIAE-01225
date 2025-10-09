@@ -1,9 +1,9 @@
-package stateManagement;
+package StateManagement;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import stateManagement.GameStates.GameState;
+import StateManagement.GameStates.GameState;
 
 // Sie Arbeiten nur im package Game. Alle anderen Dateien bleiben von Ihnen unberührt. 
 

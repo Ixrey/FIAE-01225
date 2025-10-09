@@ -1,10 +1,10 @@
-package stateManagement;
+package StateManagement;
 
+import StateManagement.GameStates.GameClose;
+import StateManagement.GameStates.GameRunning;
+import StateManagement.GameStates.GameStart;
+import StateManagement.GameStates.GameState;
 import spiel.Game;
-import stateManagement.GameStates.GameClose;
-import stateManagement.GameStates.GameRunning;
-import stateManagement.GameStates.GameStart;
-import stateManagement.GameStates.GameState;
 
 public class GameStateRouter implements GameObserver {
     // Observer der auf Zustandsänderungen reagiert
