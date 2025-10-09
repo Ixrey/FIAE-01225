@@ -1,12 +1,25 @@
-import charakter.Gegner;
-import charakter.Spieler;
-import kampf.Einzelkampf;
+import spiel.Game;
+import stateManagement.GameStateManager;
+import stateManagement.GameStateRouter;
+import stateManagement.GameStates.GameStart;
+
+// Sie Arbeiten nur im package Game. Alle anderen Dateien bleiben von Ihnen unberührt. 
 
 public class App {
-    public static void main(String[] args) throws Exception {
-        Spieler sp = new Spieler("Max Mustermann", 100, 10, 1);
-        Gegner geg = new Gegner("Böser Troll", 70, 7, 1);
+    public static void main(String[] args) {
 
-        Einzelkampf testkampf = new Einzelkampf(sp, geg);
+        // Initialer Zustand: GameStart
+        GameStateManager stateManager = new GameStateManager(new GameStart());
+        Game.setStateManager(stateManager);
+
+        GameStateRouter router = new GameStateRouter();
+        stateManager.addObserver(router);
+
+        // Startet das Spiel
+        router.onStateChange(stateManager.getState());
+
+        // stateManager.setState(new GameStart());
+        // Fehler? weil prüfung immer false ist?
+
     }
 }
