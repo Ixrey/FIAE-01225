@@ -19,25 +19,29 @@ public class SpielPanel extends JPanel {
         JButton btnStart = new JButton("Start Game");
         btnStart.setBounds(100, 175, 100, 25);
         add(btnStart);
-        btnStart.addActionListener(e -> kampf.kampf());
+        btnStart.addActionListener(e -> Einzelkampf.neuesSpiel(sp, gn));
 
         JButton btnAngriff = new JButton("Angriff");
         btnAngriff.setBounds(100, 225, 100, 25);
         add(btnAngriff);
-        btnAngriff.addActionListener(e -> kampf.kampfablauf());
+        btnAngriff.addActionListener(e -> kampf.standartangriff());
 
         JButton btnTraenke = new JButton("Trank");
         btnTraenke.setBounds(100, 250, 100, 25);
         add(btnTraenke);
-        btnTraenke.addActionListener(e -> kampf.spieleraktion(1));
+        btnTraenke.addActionListener(e -> kampf.trank());
 
         JButton btnFaehigkeit = new JButton("Fähigkeit");
         btnFaehigkeit.setBounds(100, 200, 100, 25);
         add(btnFaehigkeit);
-
-        JButton btnAufgeben = new JButton("Aufgeben");
+        btnFaehigkeit.addActionListener(e -> kampf.faehigkeit());
+        
+        
+        JButton btnAufgeben = new JButton("Beenden");
         btnAufgeben.setBounds(100, 275, 100, 25);
         add(btnAufgeben);
+
+        
 
         JLabel lblNamenAnzeige = new JLabel();
         lblNamenAnzeige.setBounds(300, 100, 100, 25);
@@ -69,12 +73,14 @@ public class SpielPanel extends JPanel {
         combatLogArea.setEditable(false);
         combatLogArea.setLineWrap(true);
         combatLogArea.setWrapStyleWord(true);
+        combatLogArea.setText();
 
 
         //Panel für combatlog textarea
         JScrollPane scrollPane = new JScrollPane(combatLogArea);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane.setBounds(250, 500, 300, 150);
+
         add(scrollPane);
     }
 }
