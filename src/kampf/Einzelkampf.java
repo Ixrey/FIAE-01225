@@ -1,10 +1,9 @@
 package kampf;
 
-import java.util.concurrent.ThreadLocalRandom;
-
+import charakter.Charakter;
 import charakter.Gegner;
 import charakter.Spieler;
-import charakter.Charakter;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Einzelkampf {
 
@@ -15,10 +14,10 @@ public class Einzelkampf {
     public Einzelkampf(Spieler spieler, Gegner gegner) {
         this.spieler = spieler;
         this.gegner = gegner;
-        kampf();
+        
     }
 
-    public void kampf() {
+    public final void kampf() {
         boolean gegnerBesiegt = kampfablauf();
         if (gegnerBesiegt) {
             erfahrungspunkteBekommen();
@@ -32,7 +31,10 @@ public class Einzelkampf {
         while (!kampfende) {
 
             vorRundenbeginn();
-            spieleraktion();
+            if (runde == 1){
+                
+            spieleraktion(0);
+            }
             kampfende = pruefeKampfende();
             gegneraktion();
             kampfende = pruefeKampfende();
@@ -50,16 +52,32 @@ public class Einzelkampf {
         // Effekte werden um 1 verringert und bei 0 beendet
     }
 
-    public void spieleraktion() {
+    public void spieleraktion(int n) {
         boolean rundevorbei = false;
 
         while (!rundevorbei) {
             // Button mit Standartangriff
+
+            switch(n){
+
+                case 0:
+                System.out.println("Spiel startet.");
+                rundevorbei = true;
+                break;
+                case 1:
+              System.out.println("Trank getrunken!");
             if (gegner.getaktLebenspunkte() > 0) {
                 gegner.setaktLebenspunkte(gegner.getaktLebenspunkte() - 10);
-                System.out.println(gegner.getaktLebenspunkte());
+                System.out.println("Gegner HP: " + gegner.getaktLebenspunkte());
                 rundevorbei = true;
+            } else{
+                
             }
+                break;
+            }
+
+
+
 
             // Button Fähigkeit
 
