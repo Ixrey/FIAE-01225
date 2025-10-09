@@ -4,120 +4,92 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import charakter.Gegner;
 import charakter.Spieler;
+import gui.GameWindow;
 import charakter.Charakter;
 
 public class Einzelkampf {
 
-    private int runde;
     private Spieler spieler;
     private Gegner gegner;
+    private int runde = 1;
 
     public Einzelkampf(Spieler spieler, Gegner gegner) {
         this.spieler = spieler;
         this.gegner = gegner;
-        kampf();
     }
 
-    public void kampf() {
-        boolean gegnerBesiegt = kampfablauf();
-        if (gegnerBesiegt) {
-            erfahrungspunkteBekommen();
-        }
+    public static void neuesSpiel(Spieler spieler, Gegner gegner) {
+        new Einzelkampf(spieler, gegner);
     }
 
-    public boolean kampfablauf() {
-        boolean kampfende = false;
-        runde = 0;
+    // Methoden für Buttons im GUI
 
-        while (!kampfende) {
-
-            vorRundenbeginn();
-            spieleraktion();
-            kampfende = pruefeKampfende();
-            gegneraktion();
-            kampfende = pruefeKampfende();
-        }
-        if (!istLebendig(gegner)) {
-            return true;
-        } else {
-            return false;
-        }
+    public void rundeBeenden() {
+        spieler.setAktionspunkte(0);
+        nachAktion();
     }
 
-    public void vorRundenbeginn() {
+    public void standartangriff() {
+        gegner.setaktLebenspunkte(gegner.getaktLebenspunkte() - spieler.getAngriffsWert());
+        nachAktion();
+    }
+
+    public void faehigkeit() {
+        gegner.setaktLebenspunkte(gegner.getaktLebenspunkte() - spieler.getAngriffsWert());
+        nachAktion();
+    }
+
+    public void trank() {
+        if ((spieler.getmaxLebenspunkte() - spieler.getaktLebenspunkte()) >= 7) {
+            spieler.setaktLebenspunkte(spieler.getaktLebenspunkte() + 7);
+        }
+        nachAktion();
+    }
+
+    // Schaden geben und nehmen
+
+    public int aktion(Charakter )
+
+    // Methoden der Spiellogik
+
+    public void naechsteRunde() {
         runde++;
-        System.out.println("Runde " + runde); /// Später entfernen
-        // Effekte werden um 1 verringert und bei 0 beendet
     }
 
-    public void spieleraktion() {
-        boolean rundevorbei = false;
-
-        while (!rundevorbei) {
-            // Button mit Standartangriff
-            if (gegner.getaktLebenspunkte() > 0) {
-                gegner.setaktLebenspunkte(gegner.getaktLebenspunkte() - 10);
-                System.out.println(gegner.getaktLebenspunkte());
-                rundevorbei = true;
-            }
-
-            // Button Fähigkeit
-
-            // Button Trank
-
-            // Button Runde beenden (rundevorbei = true) Erst später
-
-            // Button Aufgeben (rundevorbei = true)
-
-        }
-
-    }
-
-    public void gegneraktion() {
-        int aktion = ThreadLocalRandom.current().nextInt(0, 3);
-        // bound später zu einer Variable machen, falls es erweitert wird
-        switch (aktion) {
-            case 0: // Wenn die cases vom Datentyp Strings sein sollen, dann abändern
-                // Fähigkeit 1 wird benutzt
-                break;
-
-            case 1:
-                // Fähigkeit 2 wird benutzt
-                break;
-
-            case 2:
-                // Fähigkeit 3 wird benutzt
-                break;
-
-            default:
-                break;
-        }
-
+    public boolean pruefeNaechsteRunde() {
+        return true; // für die Basisversion
     }
 
     public boolean pruefeKampfende() {
-        if (istLebendig(spieler) && !istLebendig(gegner) || hatAufgegeben()) {
-            return true;
-        }
-        if (istLebendig(gegner)) {
-            return false;
-        }
-        System.out.println("Fehler in der Methode pruefeKampfende");
-        return false;
-    }
-
-    public boolean istLebendig(Charakter charakter) {
-        if (charakter.getaktLebenspunkte() <= 0) {
+        if (charakter.Charakter.istLebendig(spieler) && charakter.Charakter.istLebendig(gegner)) {
             return false;
         }
         return true;
     }
 
-    public boolean hatAufgegeben() {
+    public void nachAktion() {
+        boolean pruefeEnde = pruefeKampfende();
+        if (!pruefeEnde) {
+            boolean pruefeNaechste = pruefeNaechsteRunde();
+
+            if (pruefeNaechste) {
+                gegnerRunde();
+                naechsteRunde();
+            }
+        }
+    }
+
+    public boolean einzelkampfEnde() {
+        if (charakter.Charakter.istLebendig(spieler) == false) {
+            return false;
+        } else if (charakter.Charakter.istLebendig(gegner) == false) {
+            return true;
+        }
+        System.out.println("Fehler ist in der einzelkampfEnde-Methode aufgetreten");
         return false;
     }
 
-    public void erfahrungspunkteBekommen() {
-        spieler.setAktErfahrungspunkte(gegner.getAusgabeErfahrungspunkte());
+    public void gegnerRunde() {
+        spieler.setaktLebenspunkte(spieler.getaktLebenspunkte() - 5);
     }
 }
