@@ -50,12 +50,15 @@ public class Game {
         // Bei "Spiel schließen" muss der State auf GameClose() gesetzt werden.
         // stateManager.setState(new GameClose());
 
-        System.out.println("'Start' für Spiel starten.");
+        System.out.println("[1] für Spiel starten.");
+        System.out.println("[2] für Spiel beenden.");
         String test = scanner.nextLine();
-        if (test.equals("Start")) {
+        if (test.equals("1")) {
             spieler = new Spieler("Krasser Spieler", 100, 20, 1);
             demoDungeon = DemoDungeon.demo();
             stateManager.setState(new GameRunning());
+        } else if (test.equals("2")) {
+            stateManager.setState(new GameClose());
         }
 
         scanner.close();
@@ -76,38 +79,58 @@ public class Game {
         // sonst geht dieser verloren.
 
         System.out.println("Das Spiel ist im laufenden Zustand");
+        RunPhase run = RunPhase.ERKUNDEN;
 
         while (true) {
-            DemoRaum raum = demoDungeon.naechsterRaum();
-            if (raum == null) {
-                System.out.println("Win, zurück zum Menü. Yay.");
-                stateManager.setState(new GameStart());
-                return;
-            }
+            switch (run) {
+                case ERKUNDEN:
+                    DemoRaum raum = demoDungeon.naechsterRaum();
+                    if (raum == null) {
+                        run = RunPhase.RUN_ABGESCHLOSSEN;
+                        break;
+                    }
+                    System.out.println("Raum: " + raum.name + " Raumtyp: " + raum.typ);
+                    if (raum.istKampf()) {
+                        run = RunPhase.KAMPF;
+                        break;
+                    } else {
+                        System.out.println("Nix, weitermachen.");
+                        run = RunPhase.ERKUNDEN;
+                    }
+                    break;
 
-            System.out.println("Raum: " + raum.name + " Raumtyp: " + raum.typ);
+                case KAMPF:
+                    Gegner gegner = DemoGegnerGenerator.demo();
+                    DemoKampfErgebnis ergebnis = DemoKampfsystem.start(spieler, gegner);
 
-            if (raum.istKampf()) {
-                Gegner gegner = DemoGegnerGenerator.demo();
-                DemoKampfErgebnis ergebnis = DemoKampfsystem.start(spieler, gegner);
-                if (ergebnis == DemoKampfErgebnis.SPIELER_BESIEGT) {
-                    System.out.println("Verloren, du looser. Game Over!");
+                    if (ergebnis == DemoKampfErgebnis.SPIELER_BESIEGT) {
+                        run = RunPhase.GAME_OVER;
+                    } else {
+                        spieler.bekommeErfahrung(gegner.getAusgabeErfahrungspunkte());
+                        System.out.println("Kampf win.");
+                        run = RunPhase.ERKUNDEN;
+                    }
+                    break;
+
+                case GAME_OVER:
+                    System.out.println("Verloren, du looser. Game Over");
                     stateManager.setState(new GameStart());
                     return;
-                } else {
-                    spieler.bekommeErfahrung(gegner.getAusgabeErfahrungspunkte());
-                    System.out.println("Win. " + gegner.getAusgabeErfahrungspunkte() + "XP bekommen");
-                }
-            } else {
-                // leerer demo raum -> erstmal nix
-                System.out.println("Nix, weitermachen.");
+
+                case RUN_ABGESCHLOSSEN:
+                    System.out.println("Win, zurück zum Menü. Yay.");
+                    stateManager.setState(new GameStart());
+                    break;
+
             }
+
         }
     }
 
     public static void close() {
         // Hier wird Ihre Anwendung beendet.
         System.out.println("Das Spiel wird herunter gefahren");
+        System.exit(0);
     }
 
     // platzhalter kampfsystem zum testen bis echte Klasse kommt. random chance auf
@@ -163,6 +186,7 @@ public class Game {
         }
     }
 
+    // platzhalter bis echte methode kommt
     static class DemoGegnerGenerator {
         private static Random rng = new Random();
 
