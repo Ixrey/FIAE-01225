@@ -27,7 +27,12 @@ public class HauptmenuePanel extends JPanel {
         JButton btnBeenden = createMenuButton("Beenden", btnSize);
 
         // Aktionen
-        btnStart.addActionListener(e -> cl.show(cardPanel, "spiel"));
+        btnStart.addActionListener(e -> {
+            cl.show(cardPanel, "spiel");
+            var name = javax.swing.JOptionPane.showInputDialog("Enter a Username: ");
+            
+        });
+        
         btnBeenden.addActionListener(e -> System.exit(0));
 
         // Buttons hinzufügen

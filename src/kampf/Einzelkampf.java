@@ -8,7 +8,7 @@ public class Einzelkampf {
     private Spieler spieler;
     private Gegner gegner;
     private int runde = 1;
-    private String text="";
+    private String text = "";
 
     public Einzelkampf(Spieler spieler, Gegner gegner) {
         this.spieler = spieler;
@@ -23,7 +23,7 @@ public class Einzelkampf {
 
     public void rundeBeenden() {
         spieler.setAktionspunkte(0);
-        
+
         nachAktion();
     }
 
@@ -31,15 +31,15 @@ public class Einzelkampf {
         gegner.setaktLebenspunkte(gegner.getaktLebenspunkte() - spieler.getAngriffsWert());
 
         nachAktion();
-        setCombatLog("Spieler "+ spieler.getName() + " greift Gegnger "+ gegner.getName() +" mit "+ spieler.getAngriffsWert() + " Schaden an.");
+        setCombatLog("Spieler " + spieler.getName() + " greift Gegnger " + gegner.getName() + " mit "
+                + spieler.getAngriffsWert() + " Schaden an.\n");
     }
 
     public void faehigkeit() {
         gegner.setaktLebenspunkte(gegner.getaktLebenspunkte() - spieler.getAngriffsWert());
         nachAktion();
-        
-        
-        
+        setCombatLog("Spieler " + spieler.getName() + " greift Gegnger " + gegner.getName() + " mit "
+                + spieler.getAngriffsWert() + " Schaden an.\n");
     }
 
     public void trank() {
@@ -47,6 +47,8 @@ public class Einzelkampf {
             spieler.setaktLebenspunkte(spieler.getaktLebenspunkte() + 7);
         }
         nachAktion();
+        
+        setCombatLog("Durch den Trank hat " + spieler.getName() + " 7 Lebenspunkte bekommen.\n"); // Später abändern
     }
 
     // Methoden der Spiellogik
@@ -67,7 +69,7 @@ public class Einzelkampf {
     }
 
     public void nachAktion() {
-        
+
         boolean pruefeEnde = pruefeKampfende();
         if (!pruefeEnde) {
             boolean pruefeNaechste = pruefeNaechsteRunde();

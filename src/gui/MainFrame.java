@@ -25,11 +25,13 @@ public class MainFrame extends JFrame {
 
         HauptmenuePanel HauptmenuePanel = new HauptmenuePanel(cardLayout, cardPanel);
         SpielPanel spielPanel = new SpielPanel();
+        HomeTown homeTown = new HomeTown();
 
         //Panels zum CardLayout hinzufügen
 
         cardPanel.add(HauptmenuePanel,"menue");
         cardPanel.add(spielPanel,"spiel");
+        cardPanel.add(homeTown,"home");
 
         setContentPane(cardPanel);
         setVisible(true);
