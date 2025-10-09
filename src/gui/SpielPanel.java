@@ -12,14 +12,14 @@ public class SpielPanel extends JPanel {
         setLayout(null); // du benutzt aktuell absolutes Layout
 
         Spieler sp = new Spieler("Oraclez", 100, 10, 1);
-        Gegner gn = new Gegner("Orc", 70, 1, 1); 
-        Einzelkampf kampf = new Einzelkampf(sp, gn);        
+        Gegner gn = new Gegner("Orc", 70, 1, 1);
+        Einzelkampf kampf = new Einzelkampf(sp, gn);
 
         JTextArea combatLogArea = new JTextArea();
         combatLogArea.setEditable(false);
         combatLogArea.setLineWrap(true);
         combatLogArea.setWrapStyleWord(true);
-        
+
         // Alle Buttons
         JButton btnStart = new JButton("Start Game");
         btnStart.setBounds(100, 175, 100, 25);
@@ -30,10 +30,9 @@ public class SpielPanel extends JPanel {
         btnAngriff.setBounds(100, 225, 100, 25);
         add(btnAngriff);
         btnAngriff.addActionListener(e -> {
-        kampf.standartangriff(); // Aktion ausführen
-        combatLogArea.append(kampf.getCombatLog()+"\n"); // Textfeld aktualisieren
+            kampf.standartangriff(); // Aktion ausführen
+            combatLogArea.append(kampf.getCombatLog()); // Textfeld aktualisieren
         });
-
 
         JButton btnTraenke = new JButton("Trank");
         btnTraenke.setBounds(100, 250, 100, 25);
@@ -44,16 +43,14 @@ public class SpielPanel extends JPanel {
         btnFaehigkeit.setBounds(100, 200, 100, 25);
         add(btnFaehigkeit);
         btnFaehigkeit.addActionListener(e -> {
-        kampf.standartangriff(); // Aktion ausführen
-        combatLogArea.setText("Combat:"+kampf.getCombatLog());
-        // Textfeld aktualisieren
+            kampf.standartangriff(); // Aktion ausführen
+            combatLogArea.append(kampf.getCombatLog());
+            // Textfeld aktualisieren
         });
-        
+
         JButton btnAufgeben = new JButton("Beenden");
         btnAufgeben.setBounds(100, 275, 100, 25);
         add(btnAufgeben);
-
-        
 
         JLabel lblNamenAnzeige = new JLabel();
         lblNamenAnzeige.setBounds(300, 100, 100, 25);
@@ -63,8 +60,7 @@ public class SpielPanel extends JPanel {
         lblLvl.setBounds(300, 125, 50, 25);
         add(lblLvl);
 
-
-        //Healtbar spieler
+        // Healtbar spieler
         JProgressBar healthBarSp = new JProgressBar(0, 100);
         healthBarSp.setForeground(Color.RED);
         healthBarSp.setStringPainted(true);
@@ -72,7 +68,7 @@ public class SpielPanel extends JPanel {
         healthBarSp.setBounds(250, 200, 150, 25);
         add(healthBarSp);
 
-        //healthbar gegnger
+        // healthbar gegnger
         JProgressBar healthBarGegner = new JProgressBar(0, 100);
         healthBarGegner.setForeground(Color.RED);
         healthBarGegner.setStringPainted(true);
@@ -80,9 +76,7 @@ public class SpielPanel extends JPanel {
         healthBarGegner.setBounds(500, 200, 150, 25);
         add(healthBarGegner);
 
-        
-
-        //Panel für combatlog textarea
+        // Panel für combatlog textarea
         JScrollPane scrollPane = new JScrollPane(combatLogArea);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane.setBounds(250, 500, 400, 150);
