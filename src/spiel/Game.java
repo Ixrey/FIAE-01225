@@ -16,6 +16,7 @@ public class Game {
     private static GameStateManager stateManager;
     private static Spieler spieler;
     private static DemoDungeon demoDungeon;
+    private static RunPhase run;
 
     // Platzhalter bis echter kampf da ist
     public enum DemoKampfErgebnis {
@@ -79,7 +80,12 @@ public class Game {
         // sonst geht dieser verloren.
 
         System.out.println("Das Spiel ist im laufenden Zustand");
-        RunPhase run = RunPhase.ERKUNDEN;
+        naechsterSchritt();
+
+    }
+
+    public static void naechsterSchritt() {
+        run = RunPhase.ERKUNDEN;
 
         while (true) {
             switch (run) {
@@ -123,7 +129,6 @@ public class Game {
                     break;
 
             }
-
         }
     }
 
