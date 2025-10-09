@@ -12,6 +12,7 @@ public class Einzelkampf {
     private Spieler spieler;
     private Gegner gegner;
     private int runde = 1;
+    private String text;
 
     public Einzelkampf(Spieler spieler, Gegner gegner) {
         this.spieler = spieler;
@@ -36,6 +37,8 @@ public class Einzelkampf {
 
     public void faehigkeit() {
         gegner.setaktLebenspunkte(gegner.getaktLebenspunkte() - spieler.getAngriffsWert());
+        setCombatLog("Spieler " + spieler + "greift Gegner " + gegner + " mit " + spieler.getAngriffsWert()
+                + " Schaden an.");
         nachAktion();
     }
 
@@ -90,10 +93,10 @@ public class Einzelkampf {
     }
 
     public void setCombatLog(String text) {
-        combatLogArea.setText();
+        this.text = text;
     }
 
-    public String faehigkeitText() {
-        return "Spieler " + spieler + " greift Gegner " + gegner + " mit " + spieler.getAngriffsWert() + " Schaden an!";
+    public String getCombatLog() {
+        return text;
     }
 }
