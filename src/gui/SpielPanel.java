@@ -31,7 +31,7 @@ public class SpielPanel extends JPanel {
         add(btnAngriff);
         btnAngriff.addActionListener(e -> {
         kampf.standartangriff(); // Aktion ausführen
-        combatLogArea.append(kampf.getCombatLog()+"\n"); // Textfeld aktualisieren
+        combatLogArea.append(kampf.getCombatLog()); // Textfeld aktualisieren
         });
 
 
