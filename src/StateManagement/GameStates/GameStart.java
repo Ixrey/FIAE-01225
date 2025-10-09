@@ -1,4 +1,4 @@
-package StateManagement.GameStates;
+package stateManagement.GameStates;
 
 // Sie Arbeiten nur im package Game. Alle anderen Dateien bleiben von Ihnen unberührt. 
 

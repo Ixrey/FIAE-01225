@@ -4,12 +4,12 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
-import StateManagement.GameStateManager;
-import StateManagement.GameStates.GameClose;
-import StateManagement.GameStates.GameRunning;
-import StateManagement.GameStates.GameStart;
 import charakter.Gegner;
 import charakter.Spieler;
+import stateManagement.GameStateManager;
+import stateManagement.GameStates.GameClose;
+import stateManagement.GameStates.GameRunning;
+import stateManagement.GameStates.GameStart;
 
 public class Game {
 
