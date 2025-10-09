@@ -6,6 +6,7 @@ public class Gegner extends Charakter {
     // Konstruktor der Unterklasse
     public Gegner(String name, float maxLebenspunkte, float angriffsWert, int level) {
         super(name, maxLebenspunkte, angriffsWert, level);
+        this.ausgabeErfahrungspunkte = 2 + level;
     }
 
     // Setter für Variablen der Unterklasse
@@ -17,4 +18,5 @@ public class Gegner extends Charakter {
     public int getAusgabeErfahrungspunkte() {
         return this.ausgabeErfahrungspunkte;
     }
+
 }
