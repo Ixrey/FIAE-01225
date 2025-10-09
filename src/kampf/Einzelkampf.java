@@ -8,6 +8,7 @@ public class Einzelkampf {
     private Spieler spieler;
     private Gegner gegner;
     private int runde = 1;
+    private String text="";
 
     public Einzelkampf(Spieler spieler, Gegner gegner) {
         this.spieler = spieler;
@@ -22,19 +23,22 @@ public class Einzelkampf {
 
     public void rundeBeenden() {
         spieler.setAktionspunkte(0);
+        
         nachAktion();
     }
 
     public void standartangriff() {
         gegner.setaktLebenspunkte(gegner.getaktLebenspunkte() - spieler.getAngriffsWert());
+
         nachAktion();
+        setCombatLog("Spieler "+ spieler.getName() + " greift Gegnger "+ gegner.getName() +" mit "+ spieler.getAngriffsWert() + " Schaden an.");
     }
 
     public void faehigkeit() {
         gegner.setaktLebenspunkte(gegner.getaktLebenspunkte() - spieler.getAngriffsWert());
-        System.out.println(spieler.getAngriffsWert());
-        System.out.println(gegner.getaktLebenspunkte());
         nachAktion();
+        
+        
         
     }
 
@@ -44,10 +48,6 @@ public class Einzelkampf {
         }
         nachAktion();
     }
-
-    // Schaden geben und nehmen
-
-//    ' public int aktion(Charakter )'
 
     // Methoden der Spiellogik
 
@@ -67,6 +67,7 @@ public class Einzelkampf {
     }
 
     public void nachAktion() {
+        
         boolean pruefeEnde = pruefeKampfende();
         if (!pruefeEnde) {
             boolean pruefeNaechste = pruefeNaechsteRunde();
@@ -90,5 +91,13 @@ public class Einzelkampf {
 
     public void gegnerRunde() {
         spieler.setaktLebenspunkte(spieler.getaktLebenspunkte() - 5);
+    }
+
+    public void setCombatLog(String text) {
+        this.text = text;
+    }
+
+    public String getCombatLog() {
+        return this.text;
     }
 }
