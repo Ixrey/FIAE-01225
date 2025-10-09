@@ -59,4 +59,12 @@ public class Charakter {
     public int getLevel() {
         return this.level;
     }
+
+    public static boolean istLebendig(Charakter charakter) { // von Apo
+        if (charakter.getaktLebenspunkte() <= 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 }

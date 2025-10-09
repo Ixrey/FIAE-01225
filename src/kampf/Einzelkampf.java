@@ -3,17 +3,23 @@ package kampf;
 import charakter.Charakter;
 import charakter.Gegner;
 import charakter.Spieler;
+<<<<<<< HEAD
 import java.util.concurrent.ThreadLocalRandom;
+=======
+import gui.GameWindow;
+import charakter.Charakter;
+>>>>>>> 1c0b85c1b29d7eddfb62e4b84d00e6794cf51ce9
 
 public class Einzelkampf {
 
-    private int runde;
     private Spieler spieler;
     private Gegner gegner;
+    private int runde = 1;
 
     public Einzelkampf(Spieler spieler, Gegner gegner) {
         this.spieler = spieler;
         this.gegner = gegner;
+<<<<<<< HEAD
         
     }
 
@@ -22,12 +28,17 @@ public class Einzelkampf {
         if (gegnerBesiegt) {
             erfahrungspunkteBekommen();
         }
+=======
     }
 
-    public boolean kampfablauf() {
-        boolean kampfende = false;
-        runde = 0;
+    public static void neuesSpiel(Spieler spieler, Gegner gegner) {
+        new Einzelkampf(spieler, gegner);
+>>>>>>> 1c0b85c1b29d7eddfb62e4b84d00e6794cf51ce9
+    }
 
+    // Methoden für Buttons im GUI
+
+<<<<<<< HEAD
         while (!kampfende) {
 
             vorRundenbeginn();
@@ -44,14 +55,41 @@ public class Einzelkampf {
         } else {
             return false;
         }
+=======
+    public void rundeBeenden() {
+        spieler.setAktionspunkte(0);
+        nachAktion();
+>>>>>>> 1c0b85c1b29d7eddfb62e4b84d00e6794cf51ce9
     }
 
-    public void vorRundenbeginn() {
+    public void standartangriff() {
+        gegner.setaktLebenspunkte(gegner.getaktLebenspunkte() - spieler.getAngriffsWert());
+        nachAktion();
+    }
+
+    public void faehigkeit() {
+        gegner.setaktLebenspunkte(gegner.getaktLebenspunkte() - spieler.getAngriffsWert());
+        nachAktion();
+    }
+
+    public void trank() {
+        if ((spieler.getmaxLebenspunkte() - spieler.getaktLebenspunkte()) >= 7) {
+            spieler.setaktLebenspunkte(spieler.getaktLebenspunkte() + 7);
+        }
+        nachAktion();
+    }
+
+    // Schaden geben und nehmen
+
+    public int aktion(Charakter )
+
+    // Methoden der Spiellogik
+
+    public void naechsteRunde() {
         runde++;
-        System.out.println("Runde " + runde); /// Später entfernen
-        // Effekte werden um 1 verringert und bei 0 beendet
     }
 
+<<<<<<< HEAD
     public void spieleraktion(int n) {
         boolean rundevorbei = false;
 
@@ -111,31 +149,42 @@ public class Einzelkampf {
                 break;
         }
 
+=======
+    public boolean pruefeNaechsteRunde() {
+        return true; // für die Basisversion
+>>>>>>> 1c0b85c1b29d7eddfb62e4b84d00e6794cf51ce9
     }
 
     public boolean pruefeKampfende() {
-        if (istLebendig(spieler) && !istLebendig(gegner) || hatAufgegeben()) {
-            return true;
-        }
-        if (istLebendig(gegner)) {
-            return false;
-        }
-        System.out.println("Fehler in der Methode pruefeKampfende");
-        return false;
-    }
-
-    public boolean istLebendig(Charakter charakter) {
-        if (charakter.getaktLebenspunkte() <= 0) {
+        if (charakter.Charakter.istLebendig(spieler) && charakter.Charakter.istLebendig(gegner)) {
             return false;
         }
         return true;
     }
 
-    public boolean hatAufgegeben() {
+    public void nachAktion() {
+        boolean pruefeEnde = pruefeKampfende();
+        if (!pruefeEnde) {
+            boolean pruefeNaechste = pruefeNaechsteRunde();
+
+            if (pruefeNaechste) {
+                gegnerRunde();
+                naechsteRunde();
+            }
+        }
+    }
+
+    public boolean einzelkampfEnde() {
+        if (charakter.Charakter.istLebendig(spieler) == false) {
+            return false;
+        } else if (charakter.Charakter.istLebendig(gegner) == false) {
+            return true;
+        }
+        System.out.println("Fehler ist in der einzelkampfEnde-Methode aufgetreten");
         return false;
     }
 
-    public void erfahrungspunkteBekommen() {
-        spieler.setAktErfahrungspunkte(gegner.getAusgabeErfahrungspunkte());
+    public void gegnerRunde() {
+        spieler.setaktLebenspunkte(spieler.getaktLebenspunkte() - 5);
     }
 }
