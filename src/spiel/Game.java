@@ -43,6 +43,10 @@ public class Game {
         return stateManager;
     }
 
+    public static Spieler getSpieler() {
+        return spieler;
+    }
+
     // Die Konsolenausgaben sind nur für Sie für die erste Orientierung.
     // Die Logik in den Methoden sollen Sie für Ihr Projekt anpassen.
 
@@ -54,8 +58,6 @@ public class Game {
         mainFrame = new MainFrame();
 
         mainFrame.showMenu();
-
-        // Scanner scanner = new Scanner(System.in);
 
         // Hier gehört alles was beim Starten dieses Spiels ausgewählt werden kann rein.
         // Beispielsweise "Neues Spiel","Spielstand laden","Spielstand löschen", "Spiel
@@ -71,18 +73,6 @@ public class Game {
         // Bei "Spiel schließen" muss der State auf GameClose() gesetzt werden.
         // stateManager.setState(new GameClose());
 
-        // System.out.println("[1] für Spiel starten.");
-        // System.out.println("[2] für Spiel beenden.");
-        // String test = scanner.nextLine();
-        // if (test.equals("1")) {
-        // spieler = new Spieler(100, 20, 1);
-        // demoDungeon = DemoDungeon.demo();
-        // stateManager.setState(new GameRunning());
-        // } else if (test.equals("2")) {
-        // stateManager.setState(new GameClose());
-        // }
-
-        // scanner.close();
     }
 
     public static void running() {
@@ -100,8 +90,7 @@ public class Game {
         // sonst geht dieser verloren.
 
         run = RunPhase.KAMPF;
-        System.out.println(
-                "[DEBUG] Game.running() - before showSpiel() mainFrame id=" + System.identityHashCode(mainFrame));
+
         mainFrame.showSpiel();
         spielPanel.zeigeKampfFenster();
 

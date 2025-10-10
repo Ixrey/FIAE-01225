@@ -47,6 +47,7 @@ public class HauptmenuePanel extends JPanel {
             // cl.show(cardPanel, "spiel");
             Game.getStateManager().setState(new GameRunning());
             var name = javax.swing.JOptionPane.showInputDialog("Enter a Username: ");
+            Game.getSpieler().setName(name);
 
         });
 
