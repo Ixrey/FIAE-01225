@@ -9,8 +9,8 @@ public class HauptmenuePanel extends JPanel {
 
     public HauptmenuePanel(CardLayout cl, JPanel cardPanel) {
         // === Hintergrundbild laden ===
-        backgroundImage = new ImageIcon(getClass().getResource("/assets/hauptmenu.jpg")).getImage();
-
+        backgroundImage = new ImageIcon(getClass().getResource("/assets/bg.jpg")).getImage();
+        Font font = new Font("Serif", Font.BOLD, 24);
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -25,6 +25,7 @@ public class HauptmenuePanel extends JPanel {
 
         JButton btnStart = createMenuButton("Neues Spiel starten", btnSize);
         JButton btnBeenden = createMenuButton("Beenden", btnSize);
+        btnStart.setFont(font);
 
         // Aktionen
         btnStart.addActionListener(e -> {
