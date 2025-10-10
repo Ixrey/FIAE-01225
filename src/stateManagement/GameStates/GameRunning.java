@@ -14,7 +14,6 @@ public final class GameRunning implements GameState {
     @Override
     public void enter() {
         Game.running();
-        System.out.println("[DEBUG] Game.running() - before showSpiel()");
     }
 
 }
