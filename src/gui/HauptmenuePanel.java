@@ -24,6 +24,8 @@ public class HauptmenuePanel extends JPanel {
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.insets = new Insets(10, 0, 10, 0);
 
+        zeigeHauptfenster();
+
     }
 
     public void zeigeHauptfenster() {
@@ -44,7 +46,6 @@ public class HauptmenuePanel extends JPanel {
         btnStart.addActionListener(e -> {
             // cl.show(cardPanel, "spiel");
             Game.getStateManager().setState(new GameRunning());
-            Game.naechsterSchritt();
             var name = javax.swing.JOptionPane.showInputDialog("Enter a Username: ");
 
         });

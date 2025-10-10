@@ -8,17 +8,17 @@ import kampf.Einzelkampf;
 
 public class SpielPanel extends JPanel {
     private Image playerImage;
-    
-    
+
     public SpielPanel() {
         setLayout(null); // du benutzt aktuell absolutes Layout
-        
-
-
 
     }
-        public void zeigeKampfFenster(){
-        playerImage = new ImageIcon(getClass().getResource("/assets/bg.jpg")).getImage();
+
+    public void zeigeKampfFenster() {
+        removeAll();
+        setLayout(null);
+
+        playerImage = new ImageIcon(getClass().getResource("/assets/Warrior_Idle1.jpg")).getImage();
         Spieler sp = new Spieler("Oraclez", 100, 10, 1);
         Gegner gn = new Gegner("Orc", 70, 1, 1);
         Einzelkampf kampf = new Einzelkampf(sp, gn);
@@ -26,8 +26,6 @@ public class SpielPanel extends JPanel {
         combatLogArea.setEditable(false);
         combatLogArea.setLineWrap(true);
         combatLogArea.setWrapStyleWord(true);
-
-        
 
         JButton btnAngriff = new JButton("Angriff");
         btnAngriff.setBounds(100, 500, 100, 25);
@@ -49,17 +47,17 @@ public class SpielPanel extends JPanel {
         btnFaehigkeit.setBounds(100, 525, 100, 25);
         add(btnFaehigkeit);
         btnFaehigkeit.addActionListener(e -> {
-            kampf.faehigkeit();; // Aktion ausführen
+            kampf.faehigkeit();
+            ; // Aktion ausführen
             combatLogArea.append(kampf.getCombatLog());
             // Textfeld aktualisieren
         });
-
 
         JLabel lblNamenAnzeige = new JLabel(sp.getName());
         lblNamenAnzeige.setBounds(275, 250, 50, 25);
         add(lblNamenAnzeige);
 
-        JLabel lblLvl = new JLabel("lvl "+sp.getLevel());
+        JLabel lblLvl = new JLabel("lvl " + sp.getLevel());
         lblLvl.setBounds(350, 250, 25, 25);
         add(lblLvl);
 
@@ -84,10 +82,11 @@ public class SpielPanel extends JPanel {
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane.setBounds(250, 500, 400, 150);
 
+        System.out.println("[DEBUG] SpielPanel.zeigeKampfFenster()");
         add(scrollPane);
+        revalidate();
+        repaint();
     }
-
-
 
     @Override
     protected void paintComponent(Graphics g) {

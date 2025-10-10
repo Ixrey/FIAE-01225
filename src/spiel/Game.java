@@ -4,6 +4,8 @@ import charakter.Gegner;
 import charakter.Spieler;
 import gui.HauptmenuePanel;
 import gui.MainFrame;
+import gui.SpielPanel;
+
 import java.awt.CardLayout;
 import java.util.List;
 import java.util.Random;
@@ -24,6 +26,7 @@ public class Game {
     private static Einzelkampf kampfsystem;
     private static HauptmenuePanel hauptmenuPanel;
     private static MainFrame mainFrame;
+    private static SpielPanel spielPanel;
     CardLayout cardLayout;
     JPanel cardPanel;
 
@@ -50,7 +53,7 @@ public class Game {
         System.out.println("Spiel gestartet");
         mainFrame = new MainFrame();
 
-        hauptmenuPanel.zeigeHauptfenster();
+        mainFrame.showMenu();
 
         // Scanner scanner = new Scanner(System.in);
 
@@ -97,6 +100,10 @@ public class Game {
         // sonst geht dieser verloren.
 
         run = RunPhase.KAMPF;
+        System.out.println(
+                "[DEBUG] Game.running() - before showSpiel() mainFrame id=" + System.identityHashCode(mainFrame));
+        mainFrame.showSpiel();
+        spielPanel.zeigeKampfFenster();
 
         System.out.println("Das Spiel ist im laufenden Zustand");
         spieler = new Spieler(100, 20, 1);
@@ -129,6 +136,7 @@ public class Game {
             case KAMPF:
                 Gegner gegner = DemoGegnerGenerator.demo();
                 kampfsystem = new Einzelkampf(spieler, gegner);
+                Einzelkampf.neuesSpiel(spieler, gegner);
 
                 if (!kampfsystem.hatSpielerGewonnen()) {
                     run = RunPhase.GAME_OVER;
@@ -154,6 +162,10 @@ public class Game {
 
     public static void setHauptmenuPanel(HauptmenuePanel hauptmenu) {
         hauptmenuPanel = hauptmenu;
+    }
+
+    public static void setSpielPanel(SpielPanel spiel) {
+        spielPanel = spiel;
     }
 
     public static void close() {
