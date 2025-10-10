@@ -7,10 +7,10 @@ import javax.swing.*;
 import kampf.Einzelkampf;
 
 public class SpielPanel extends JPanel {
-
+    private Image playerImage;
     public SpielPanel() {
         setLayout(null); // du benutzt aktuell absolutes Layout
-
+        playerImage = new ImageIcon(getClass().getResource("/assets/bg.jpg")).getImage();
         Spieler sp = new Spieler("Oraclez", 100, 10, 1);
         Gegner gn = new Gegner("Orc", 70, 1, 1);
         Einzelkampf kampf = new Einzelkampf(sp, gn);
@@ -21,13 +21,13 @@ public class SpielPanel extends JPanel {
         combatLogArea.setWrapStyleWord(true);
 
         // Alle Buttons
-        JButton btnStart = new JButton("Start Game");
-        btnStart.setBounds(100, 175, 100, 25);
-        add(btnStart);
-        btnStart.addActionListener(e -> Einzelkampf.neuesSpiel(sp, gn));
+        // JButton btnStart = new JButton("Start Game");
+        // btnStart.setBounds(100, 175, 100, 25);
+        // add(btnStart);
+        // btnStart.addActionListener(e -> Einzelkampf.neuesSpiel(sp, gn));
 
         JButton btnAngriff = new JButton("Angriff");
-        btnAngriff.setBounds(100, 225, 100, 25);
+        btnAngriff.setBounds(100, 500, 100, 25);
         add(btnAngriff);
         btnAngriff.addActionListener(e -> {
             kampf.standartangriff(); // Aktion ausführen
@@ -35,29 +35,32 @@ public class SpielPanel extends JPanel {
         });
 
         JButton btnTraenke = new JButton("Trank");
-        btnTraenke.setBounds(100, 250, 100, 25);
+        btnTraenke.setBounds(100, 550, 100, 25);
         add(btnTraenke);
-        btnTraenke.addActionListener(e -> kampf.trank());
-
+        btnTraenke.addActionListener(e -> {
+            kampf.trank(); // Aktion ausführen
+            combatLogArea.append(kampf.getCombatLog());
+            // Textfeld aktualisieren
+        });
         JButton btnFaehigkeit = new JButton("Fähigkeit");
-        btnFaehigkeit.setBounds(100, 200, 100, 25);
+        btnFaehigkeit.setBounds(100, 525, 100, 25);
         add(btnFaehigkeit);
         btnFaehigkeit.addActionListener(e -> {
-            kampf.standartangriff(); // Aktion ausführen
+            kampf.faehigkeit();; // Aktion ausführen
             combatLogArea.append(kampf.getCombatLog());
             // Textfeld aktualisieren
         });
 
-        JButton btnAufgeben = new JButton("Beenden");
-        btnAufgeben.setBounds(100, 275, 100, 25);
-        add(btnAufgeben);
+        // JButton btnAufgeben = new JButton("Beenden");
+        // btnAufgeben.setBounds(100, 275, 100, 25);
+        // add(btnAufgeben);
 
-        JLabel lblNamenAnzeige = new JLabel();
-        lblNamenAnzeige.setBounds(300, 100, 100, 25);
+        JLabel lblNamenAnzeige = new JLabel(sp.getName());
+        lblNamenAnzeige.setBounds(275, 250, 50, 25);
         add(lblNamenAnzeige);
 
-        JLabel lblLvl = new JLabel();
-        lblLvl.setBounds(300, 125, 50, 25);
+        JLabel lblLvl = new JLabel("lvl "+sp.getLevel());
+        lblLvl.setBounds(350, 250, 25, 25);
         add(lblLvl);
 
         // Healtbar spieler
@@ -83,5 +86,15 @@ public class SpielPanel extends JPanel {
 
         add(scrollPane);
 
+
+        
+
+    }
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        if (playerImage != null) {
+            g.drawImage(playerImage, 500, 550, getWidth(), getHeight(), this);
+        }
     }
 }
