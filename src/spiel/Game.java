@@ -46,6 +46,8 @@ public class Game {
         System.out.println("Spiel gestartet");
         mainFrame = new MainFrame();
         hauptmenuPanel.zeigeHauptfenster();
+        run = RunPhase.KAMPF;
+        naechsterSchritt();
         Scanner scanner = new Scanner(System.in);
 
         // Hier gehört alles was beim Starten dieses Spiels ausgewählt werden kann rein.
@@ -66,7 +68,7 @@ public class Game {
         System.out.println("[2] für Spiel beenden.");
         String test = scanner.nextLine();
         if (test.equals("1")) {
-            spieler = new Spieler("Krasser Spieler", 100, 20, 1);
+            spieler = new Spieler(100, 20, 1);
             demoDungeon = DemoDungeon.demo();
             stateManager.setState(new GameRunning());
         } else if (test.equals("2")) {
@@ -90,13 +92,13 @@ public class Game {
         // Spätestens dann muss der Fortschritt in der Datenquelle gespeichert werden,
         // sonst geht dieser verloren.
 
+        run = RunPhase.KAMPF;
         System.out.println("Das Spiel ist im laufenden Zustand");
         naechsterSchritt();
 
     }
 
     public static void naechsterSchritt() {
-        run = RunPhase.KAMPF;
 
         switch (run) {
             case ERKUNDEN:
