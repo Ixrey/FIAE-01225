@@ -4,12 +4,12 @@ import charakter.Gegner;
 import charakter.Spieler;
 import gui.HauptmenuePanel;
 import gui.MainFrame;
-import kampf.Einzelkampf;
 import java.awt.CardLayout;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 import javax.swing.JPanel;
+import kampf.Einzelkampf;
 import stateManagement.GameStateManager;
 import stateManagement.GameStates.GameClose;
 import stateManagement.GameStates.GameRunning;
@@ -120,6 +120,7 @@ public class Game {
             case KAMPF:
                 Gegner gegner = DemoGegnerGenerator.demo();
                 Einzelkampf.neuesSpiel(spieler, gegner);
+               
 
                 if (!kampfsystem.hatSpielerGewonnen()) {
                     run = RunPhase.GAME_OVER;
