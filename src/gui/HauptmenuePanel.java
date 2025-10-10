@@ -2,8 +2,8 @@ package gui;
 
 import java.awt.*;
 import javax.swing.*;
-
 import spiel.Game;
+
 
 public class HauptmenuePanel extends JPanel {
     private CardLayout cl;
@@ -28,7 +28,8 @@ public class HauptmenuePanel extends JPanel {
 
     public void zeigeHauptfenster() {
         JPanel buttonPanel = new JPanel();
-        Font font = new Font("Serif", Font.BOLD, 24);
+        Font font = new Font("Latin Modern Math", Font.BOLD, 16);
+        Font fontbnden = new Font("Caladea", Font.BOLD, 16);
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
         buttonPanel.setOpaque(false); // damit Hintergrund sichtbar bleibt
 
@@ -37,6 +38,8 @@ public class HauptmenuePanel extends JPanel {
         JButton btnStart = createMenuButton("Neues Spiel starten", btnSize);
         JButton btnBeenden = createMenuButton("Beenden", btnSize);
         btnStart.setFont(font);
+        btnBeenden.setFont(fontbnden);
+        
 
         // Aktionen
         btnStart.addActionListener(e -> {
