@@ -1,11 +1,12 @@
 package spiel;
 
+import charakter.Gegner;
+import charakter.Spieler;
+import java.awt.CardLayout;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
-
-import charakter.Gegner;
-import charakter.Spieler;
+import javax.swing.JPanel;
 import stateManagement.GameStateManager;
 import stateManagement.GameStates.GameClose;
 import stateManagement.GameStates.GameRunning;
@@ -17,6 +18,9 @@ public class Game {
     private static Spieler spieler;
     private static DemoDungeon demoDungeon;
     private static RunPhase run;
+    CardLayout cardLayout;
+    JPanel cardPanel;
+   
 
     // Platzhalter bis echter kampf da ist
     public enum DemoKampfErgebnis {
@@ -50,7 +54,7 @@ public class Game {
 
         // Bei "Spiel schließen" muss der State auf GameClose() gesetzt werden.
         // stateManager.setState(new GameClose());
-
+        
         System.out.println("[1] für Spiel starten.");
         System.out.println("[2] für Spiel beenden.");
         String test = scanner.nextLine();
