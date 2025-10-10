@@ -81,7 +81,7 @@ public class Einzelkampf {
         }
     }
 
-    public boolean einzelkampfEnde() {
+    public boolean hatSpielerGewonnen() {
         if (charakter.Charakter.istLebendig(spieler) == false) {
             return false;
         } else if (charakter.Charakter.istLebendig(gegner) == false) {

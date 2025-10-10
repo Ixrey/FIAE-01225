@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 import charakter.Gegner;
 import charakter.Spieler;
+import kampf.Einzelkampf;
 import stateManagement.GameStateManager;
 import stateManagement.GameStates.GameClose;
 import stateManagement.GameStates.GameRunning;
@@ -17,6 +18,7 @@ public class Game {
     private static Spieler spieler;
     private static DemoDungeon demoDungeon;
     private static RunPhase run;
+    private static Einzelkampf kampfsystem;
 
     // Platzhalter bis echter kampf da ist
     public enum DemoKampfErgebnis {
@@ -107,9 +109,8 @@ public class Game {
 
                 case KAMPF:
                     Gegner gegner = DemoGegnerGenerator.demo();
-                    DemoKampfErgebnis ergebnis = DemoKampfsystem.start(spieler, gegner);
-
-                    if (ergebnis == DemoKampfErgebnis.SPIELER_BESIEGT) {
+                    Einzelkampf.neuesSpiel(spieler, gegner);
+                    if (!kampfsystem.hatSpielerGewonnen()) {
                         run = RunPhase.GAME_OVER;
                     } else {
                         spieler.bekommeErfahrung(gegner.getAusgabeErfahrungspunkte());
