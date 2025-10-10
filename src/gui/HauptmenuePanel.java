@@ -3,7 +3,7 @@ package gui;
 import java.awt.*;
 import javax.swing.*;
 import spiel.Game;
-
+import stateManagement.GameStates.GameRunning;
 
 public class HauptmenuePanel extends JPanel {
     private CardLayout cl;
@@ -39,11 +39,11 @@ public class HauptmenuePanel extends JPanel {
         JButton btnBeenden = createMenuButton("Beenden", btnSize);
         btnStart.setFont(font);
         btnBeenden.setFont(fontbnden);
-        
 
         // Aktionen
         btnStart.addActionListener(e -> {
             // cl.show(cardPanel, "spiel");
+            Game.getStateManager().setState(new GameRunning());
             Game.naechsterSchritt();
             var name = javax.swing.JOptionPane.showInputDialog("Enter a Username: ");
 

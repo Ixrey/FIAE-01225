@@ -94,7 +94,7 @@ public class SpielPanel extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (playerImage != null) {
-            g.drawImage(playerImage, 300, 250, 128, 128, this);
+            g.drawImage(playerImage, 250, 250, 128, 128, this);
         }
     }
 }
