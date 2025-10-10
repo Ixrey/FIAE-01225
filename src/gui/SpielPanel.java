@@ -7,10 +7,10 @@ import javax.swing.*;
 import kampf.Einzelkampf;
 
 public class SpielPanel extends JPanel {
-
+    private Image playerImage;
     public SpielPanel() {
         setLayout(null); // du benutzt aktuell absolutes Layout
-
+        playerImage = new ImageIcon(getClass().getResource("/assets/bg.jpg")).getImage();
         Spieler sp = new Spieler("Oraclez", 100, 10, 1);
         Gegner gn = new Gegner("Orc", 70, 1, 1);
         Einzelkampf kampf = new Einzelkampf(sp, gn);
@@ -86,5 +86,15 @@ public class SpielPanel extends JPanel {
 
         add(scrollPane);
 
+
+        
+
+    }
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        if (playerImage != null) {
+            g.drawImage(playerImage, 500, 550, getWidth(), getHeight(), this);
+        }
     }
 }

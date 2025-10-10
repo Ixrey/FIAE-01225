@@ -23,7 +23,6 @@ public class Einzelkampf {
 
     public void rundeBeenden() {
         spieler.setAktionspunkte(0);
-
         nachAktion();
     }
 

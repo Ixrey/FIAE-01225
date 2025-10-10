@@ -1,12 +1,13 @@
 package spiel;
 
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
-
 import charakter.Gegner;
 import charakter.Spieler;
 import kampf.Einzelkampf;
+import java.awt.CardLayout;
+import java.util.List;
+import java.util.Random;
+import java.util.Scanner;
+import javax.swing.JPanel;
 import stateManagement.GameStateManager;
 import stateManagement.GameStates.GameClose;
 import stateManagement.GameStates.GameRunning;
@@ -19,6 +20,8 @@ public class Game {
     private static DemoDungeon demoDungeon;
     private static RunPhase run;
     private static Einzelkampf kampfsystem;
+    CardLayout cardLayout;
+    JPanel cardPanel;
 
     // Platzhalter bis echter kampf da ist
     public enum DemoKampfErgebnis {
