@@ -19,8 +19,8 @@ public class SpielPanel extends JPanel {
         setLayout(null);
 
         playerImage = new ImageIcon(getClass().getResource("/assets/Warrior_Idle1.jpg")).getImage();
-        Spieler sp = new Spieler("Oraclez", 100, 10, 1);
-        Gegner gn = new Gegner("Orc", 70, 1, 1);
+        sp =Game.getSpieler()
+        
         Einzelkampf kampf = new Einzelkampf(sp, gn);
         JTextArea combatLogArea = new JTextArea();
         combatLogArea.setEditable(false);
