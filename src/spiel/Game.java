@@ -2,6 +2,8 @@ package spiel;
 
 import charakter.Gegner;
 import charakter.Spieler;
+import gui.HauptmenuePanel;
+import gui.MainFrame;
 import kampf.Einzelkampf;
 import java.awt.CardLayout;
 import java.util.List;
@@ -20,6 +22,8 @@ public class Game {
     private static DemoDungeon demoDungeon;
     private static RunPhase run;
     private static Einzelkampf kampfsystem;
+    private static HauptmenuePanel hauptmenuPanel;
+    private static MainFrame mainFrame;
     CardLayout cardLayout;
     JPanel cardPanel;
 
@@ -40,6 +44,8 @@ public class Game {
 
     public static void start() {
         System.out.println("Spiel gestartet");
+        mainFrame = new MainFrame();
+        hauptmenuPanel.zeigeHauptfenster();
         Scanner scanner = new Scanner(System.in);
 
         // Hier gehört alles was beim Starten dieses Spiels ausgewählt werden kann rein.
@@ -90,50 +96,53 @@ public class Game {
     }
 
     public static void naechsterSchritt() {
-        run = RunPhase.ERKUNDEN;
+        run = RunPhase.KAMPF;
 
-        while (true) {
-            switch (run) {
-                case ERKUNDEN:
-                    DemoRaum raum = demoDungeon.naechsterRaum();
-                    if (raum == null) {
-                        run = RunPhase.RUN_ABGESCHLOSSEN;
-                        break;
-                    }
-                    System.out.println("Raum: " + raum.name + " Raumtyp: " + raum.typ);
-                    if (raum.istKampf()) {
-                        run = RunPhase.KAMPF;
-                        break;
-                    } else {
-                        System.out.println("Nix, weitermachen.");
-                        run = RunPhase.ERKUNDEN;
-                    }
+        switch (run) {
+            case ERKUNDEN:
+                DemoRaum raum = demoDungeon.naechsterRaum();
+                if (raum == null) {
+                    run = RunPhase.RUN_ABGESCHLOSSEN;
                     break;
-
-                case KAMPF:
-                    Gegner gegner = DemoGegnerGenerator.demo();
-                    Einzelkampf.neuesSpiel(spieler, gegner);
-                    if (!kampfsystem.hatSpielerGewonnen()) {
-                        run = RunPhase.GAME_OVER;
-                    } else {
-                        spieler.bekommeErfahrung(gegner.getAusgabeErfahrungspunkte());
-                        System.out.println("Kampf win.");
-                        run = RunPhase.ERKUNDEN;
-                    }
+                }
+                System.out.println("Raum: " + raum.name + " Raumtyp: " + raum.typ);
+                if (raum.istKampf()) {
+                    run = RunPhase.KAMPF;
                     break;
+                } else {
+                    System.out.println("Nix, weitermachen.");
+                    run = RunPhase.ERKUNDEN;
+                }
+                break;
 
-                case GAME_OVER:
-                    System.out.println("Verloren, du looser. Game Over");
-                    stateManager.setState(new GameStart());
-                    return;
+            case KAMPF:
+                Gegner gegner = DemoGegnerGenerator.demo();
+                Einzelkampf.neuesSpiel(spieler, gegner);
 
-                case RUN_ABGESCHLOSSEN:
-                    System.out.println("Win, zurück zum Menü. Yay.");
-                    stateManager.setState(new GameStart());
-                    break;
+                if (!kampfsystem.hatSpielerGewonnen()) {
+                    run = RunPhase.GAME_OVER;
+                } else {
+                    spieler.bekommeErfahrung(gegner.getAusgabeErfahrungspunkte());
+                    System.out.println("Kampf win.");
+                    run = RunPhase.ERKUNDEN;
+                }
+                break;
 
-            }
+            case GAME_OVER:
+                System.out.println("Verloren, du looser. Game Over");
+                stateManager.setState(new GameStart());
+                return;
+
+            case RUN_ABGESCHLOSSEN:
+                System.out.println("Win, zurück zum Menü. Yay.");
+                stateManager.setState(new GameStart());
+                break;
+
         }
+    }
+
+    public static void setHauptmenuPanel(HauptmenuePanel hauptmenu) {
+        hauptmenuPanel = hauptmenu;
     }
 
     public static void close() {
@@ -165,7 +174,7 @@ public class Game {
 
         static DemoDungeon demo() {
             return new DemoDungeon(List.of(
-                    new DemoRaum("Raum 1", "LEER"),
+                    new DemoRaum("Raum 1", "KAMPF"),
                     new DemoRaum("Raum 2", "KAMPF"),
                     new DemoRaum("Raum 3", "LEER"),
                     new DemoRaum("Raum 4", "KAMPF"),

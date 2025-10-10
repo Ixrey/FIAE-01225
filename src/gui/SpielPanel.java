@@ -8,9 +8,10 @@ import kampf.Einzelkampf;
 
 public class SpielPanel extends JPanel {
     private Image playerImage;
+
     public SpielPanel() {
         setLayout(null); // du benutzt aktuell absolutes Layout
-        playerImage = new ImageIcon(getClass().getResource("/assets/bg.jpg")).getImage();
+        playerImage = new ImageIcon(getClass().getResource("/assets/Warrior_Idle1.jpg")).getImage();
         Spieler sp = new Spieler("Oraclez", 100, 10, 1);
         Gegner gn = new Gegner("Orc", 70, 1, 1);
         Einzelkampf kampf = new Einzelkampf(sp, gn);
@@ -46,7 +47,8 @@ public class SpielPanel extends JPanel {
         btnFaehigkeit.setBounds(100, 525, 100, 25);
         add(btnFaehigkeit);
         btnFaehigkeit.addActionListener(e -> {
-            kampf.faehigkeit();; // Aktion ausführen
+            kampf.faehigkeit();
+            ; // Aktion ausführen
             combatLogArea.append(kampf.getCombatLog());
             // Textfeld aktualisieren
         });
@@ -59,7 +61,7 @@ public class SpielPanel extends JPanel {
         lblNamenAnzeige.setBounds(275, 250, 50, 25);
         add(lblNamenAnzeige);
 
-        JLabel lblLvl = new JLabel("lvl "+sp.getLevel());
+        JLabel lblLvl = new JLabel("lvl " + sp.getLevel());
         lblLvl.setBounds(350, 250, 25, 25);
         add(lblLvl);
 
@@ -86,15 +88,13 @@ public class SpielPanel extends JPanel {
 
         add(scrollPane);
 
-
-        
-
     }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (playerImage != null) {
-            g.drawImage(playerImage, 500, 550, getWidth(), getHeight(), this);
+            g.drawImage(playerImage, 300, 250, 128, 128, this);
         }
     }
 }

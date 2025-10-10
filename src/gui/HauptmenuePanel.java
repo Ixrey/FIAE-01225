@@ -3,32 +3,30 @@ package gui;
 import java.awt.*;
 import javax.swing.*;
 
+import spiel.Game;
+
 public class HauptmenuePanel extends JPanel {
     private CardLayout cl;
     private JPanel cardPanel;
     private Image backgroundImage;
-    private GridBagConstraints gbc ;
-    
-    
+    private GridBagConstraints gbc;
 
     public HauptmenuePanel(CardLayout cl, JPanel cardPanel) {
         this.cl = cl;
         this.cardPanel = cardPanel;
 
         // === Hintergrundbild laden ===
-        backgroundImage = new ImageIcon(getClass().getResource("/assets/bg.jpg")).getImage();
+        backgroundImage = new ImageIcon(getClass().getResource("/assets/bg.png")).getImage();
         gbc = new GridBagConstraints();
         setLayout(new GridBagLayout());
-        
+
         gbc.gridx = 0;
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.insets = new Insets(10, 0, 10, 0);
 
-        zeigeHauptfenster();
+    }
 
-        
-}
-public void zeigeHauptfenster(){
+    public void zeigeHauptfenster() {
         JPanel buttonPanel = new JPanel();
         Font font = new Font("Serif", Font.BOLD, 24);
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
@@ -42,11 +40,12 @@ public void zeigeHauptfenster(){
 
         // Aktionen
         btnStart.addActionListener(e -> {
-            cl.show(cardPanel, "spiel");
+            // cl.show(cardPanel, "spiel");
+            Game.naechsterSchritt();
             var name = javax.swing.JOptionPane.showInputDialog("Enter a Username: ");
-            
+
         });
-        
+
         btnBeenden.addActionListener(e -> System.exit(0));
 
         // Buttons hinzufügen
