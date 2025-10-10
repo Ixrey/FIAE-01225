@@ -36,6 +36,10 @@ public class Game {
         stateManager = manager;
     }
 
+    public static GameStateManager getStateManager() {
+        return stateManager;
+    }
+
     // Die Konsolenausgaben sind nur für Sie für die erste Orientierung.
     // Die Logik in den Methoden sollen Sie für Ihr Projekt anpassen.
 
@@ -45,8 +49,10 @@ public class Game {
     public static void start() {
         System.out.println("Spiel gestartet");
         mainFrame = new MainFrame();
+
         hauptmenuPanel.zeigeHauptfenster();
-        Scanner scanner = new Scanner(System.in);
+
+        // Scanner scanner = new Scanner(System.in);
 
         // Hier gehört alles was beim Starten dieses Spiels ausgewählt werden kann rein.
         // Beispielsweise "Neues Spiel","Spielstand laden","Spielstand löschen", "Spiel
@@ -62,18 +68,18 @@ public class Game {
         // Bei "Spiel schließen" muss der State auf GameClose() gesetzt werden.
         // stateManager.setState(new GameClose());
 
-        System.out.println("[1] für Spiel starten.");
-        System.out.println("[2] für Spiel beenden.");
-        String test = scanner.nextLine();
-        if (test.equals("1")) {
-            spieler = new Spieler("Krasser Spieler", 100, 20, 1);
-            demoDungeon = DemoDungeon.demo();
-            stateManager.setState(new GameRunning());
-        } else if (test.equals("2")) {
-            stateManager.setState(new GameClose());
-        }
+        // System.out.println("[1] für Spiel starten.");
+        // System.out.println("[2] für Spiel beenden.");
+        // String test = scanner.nextLine();
+        // if (test.equals("1")) {
+        // spieler = new Spieler(100, 20, 1);
+        // demoDungeon = DemoDungeon.demo();
+        // stateManager.setState(new GameRunning());
+        // } else if (test.equals("2")) {
+        // stateManager.setState(new GameClose());
+        // }
 
-        scanner.close();
+        // scanner.close();
     }
 
     public static void running() {
@@ -90,13 +96,18 @@ public class Game {
         // Spätestens dann muss der Fortschritt in der Datenquelle gespeichert werden,
         // sonst geht dieser verloren.
 
+        run = RunPhase.KAMPF;
+
         System.out.println("Das Spiel ist im laufenden Zustand");
+        spieler = new Spieler(100, 20, 1);
+        if (demoDungeon == null) {
+            demoDungeon = DemoDungeon.demo();
+        }
         naechsterSchritt();
 
     }
 
     public static void naechsterSchritt() {
-        run = RunPhase.KAMPF;
 
         switch (run) {
             case ERKUNDEN:
@@ -117,8 +128,7 @@ public class Game {
 
             case KAMPF:
                 Gegner gegner = DemoGegnerGenerator.demo();
-                Einzelkampf.neuesSpiel(spieler, gegner);
-               
+                kampfsystem = new Einzelkampf(spieler, gegner);
 
                 if (!kampfsystem.hatSpielerGewonnen()) {
                     run = RunPhase.GAME_OVER;

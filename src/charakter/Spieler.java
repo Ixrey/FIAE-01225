@@ -16,6 +16,14 @@ public class Spieler extends Charakter {
         this.benErfahrungspunkte = 2;
     }
 
+    public Spieler(float maxLebenspunkte, float angriffsWert, int level) {
+        super(maxLebenspunkte, angriffsWert, level);
+        this.maxAktionspunkte = 1;
+        this.aktionspunkte = maxAktionspunkte;
+        this.aktErfahrungspunkte = 0;
+        this.benErfahrungspunkte = 2;
+    }
+
     // Setter für Variablen der Unterklasse
     public void setAktionspunkte(int aktionspunkte) {
         this.aktionspunkte = aktionspunkte;

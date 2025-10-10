@@ -18,6 +18,13 @@ public class Charakter {
         this.level = level;
     }
 
+    public Charakter(float maxLebenspunkte, float angriffsWert, int level) {
+        this.maxLebenspunkte = maxLebenspunkte;
+        this.aktLebenspunkte = maxLebenspunkte;
+        this.angriffsWert = angriffsWert;
+        this.level = level;
+    }
+
     // Setter der Hauptklasse
     public void setName(String name) {
         this.name = name;
