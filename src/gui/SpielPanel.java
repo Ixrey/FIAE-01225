@@ -22,7 +22,7 @@ public class SpielPanel extends JPanel {
         JPanel infoPanel = new JPanel();
         infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
         infoPanel.setPreferredSize(new Dimension(150, 200));
-        infoPanel.setBounds(10, 10, 100, 100);
+        infoPanel.setBounds(10, 10, 150, 100);
         
         gameMapExampleOne = new ImageIcon(getClass().getResource("/assets/backgroundgame.png")).getImage();
         enemyImage = new ImageIcon(getClass().getResource("/assets/evil.png")).getImage();
@@ -69,7 +69,9 @@ public class SpielPanel extends JPanel {
 
         JProgressBar erfahrungsXPBar = new JProgressBar(sp.getAktErfahrungspunkte(),sp.getBenErfahrungspunkte());
         erfahrungsXPBar.setForeground(Color.green);
-        erfahrungsXPBar.setValue(sp.getAktErfahrungspunkte());
+        erfahrungsXPBar.setString("XP "+sp.getAktErfahrungspunkte()+"/"+sp.getBenErfahrungspunkte());
+        erfahrungsXPBar.setStringPainted(true);
+        
         
 
     
