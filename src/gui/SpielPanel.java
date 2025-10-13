@@ -14,14 +14,12 @@ public class SpielPanel extends JPanel {
 
     }
 
-    public void zeigeKampfFenster() {
+    public void zeigeKampfFenster(Spieler sp, Gegner gn, Einzelkampf kampf) {
         removeAll();
         setLayout(null);
 
         playerImage = new ImageIcon(getClass().getResource("/assets/Warrior_Idle1.jpg")).getImage();
-        sp =Game.getSpieler()
-        
-        Einzelkampf kampf = new Einzelkampf(sp, gn);
+
         JTextArea combatLogArea = new JTextArea();
         combatLogArea.setEditable(false);
         combatLogArea.setLineWrap(true);

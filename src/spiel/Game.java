@@ -86,12 +86,11 @@ public class Game {
         // sonst geht dieser verloren.
 
         run = RunPhase.KAMPF;
-
+        spieler = new Spieler("pimmel", 100, 20, 1);
         mainFrame.showSpiel();
-        spielPanel.zeigeKampfFenster();
 
         System.out.println("Das Spiel ist im laufenden Zustand");
-        spieler = new Spieler(100, 20, 1);
+
         if (demoDungeon == null) {
             demoDungeon = DemoDungeon.demo();
         }
@@ -121,6 +120,7 @@ public class Game {
             case KAMPF:
                 Gegner gegner = DemoGegnerGenerator.demo();
                 kampfsystem = new Einzelkampf(spieler, gegner);
+                spielPanel.zeigeKampfFenster(spieler, gegner, kampfsystem);
                 Einzelkampf.neuesSpiel(spieler, gegner);
 
                 if (!kampfsystem.hatSpielerGewonnen()) {
