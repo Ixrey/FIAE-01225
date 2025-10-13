@@ -15,7 +15,7 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import spiel.Game;
+import spiel.Spielablauf;
 import stateManagement.GameStates.GameRunning;
 
 public class GameOver extends JPanel {
@@ -24,7 +24,6 @@ public class GameOver extends JPanel {
     private Image backgroundImage;
     private GridBagConstraints gbc;
     private Spieler sp;
-
 
     public GameOver(CardLayout cl, JPanel cardPanel) {
         this.cl = cl;
@@ -62,7 +61,7 @@ public class GameOver extends JPanel {
             // cl.show(cardPanel, "spiel");
             // var name = javax.swing.JOptionPane.showInputDialog("Enter a Username: ");
             // sp.setName(name);
-            Game.getStateManager().setState(new GameRunning());
+            Spielablauf.getStateManager().setState(new GameRunning());
 
         });
 

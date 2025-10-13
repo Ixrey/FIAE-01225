@@ -3,7 +3,7 @@ package gui;
 import charakter.Spieler;
 import java.awt.*;
 import javax.swing.*;
-import spiel.Game;
+import spiel.Spielablauf;
 import stateManagement.GameStates.GameRunning;
 
 public class HauptmenuePanel extends JPanel {
@@ -49,7 +49,7 @@ public class HauptmenuePanel extends JPanel {
             // cl.show(cardPanel, "spiel");
             // var name = javax.swing.JOptionPane.showInputDialog("Enter a Username: ");
             // sp.setName(name);
-            Game.getStateManager().setState(new GameRunning());
+            Spielablauf.getStateManager().setState(new GameRunning());
 
         });
 
