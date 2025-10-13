@@ -28,6 +28,7 @@ public class Einzelkampf {
 
     public void standartangriff() {
         gegner.setaktLebenspunkte(gegner.getaktLebenspunkte() - spieler.getAngriffsWert());
+        
 
         nachAktion();
         setCombatLog("Spieler " + spieler.getName() + " greift Gegnger " + gegner.getName() + " mit "

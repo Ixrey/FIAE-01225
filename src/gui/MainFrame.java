@@ -16,7 +16,7 @@ public class MainFrame extends JFrame {
     public MainFrame() {
         
         setTitle("Dungeon Keepers");
-        setSize(800, 800);
+        setSize(800, 700);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
@@ -28,7 +28,7 @@ public class MainFrame extends JFrame {
         // Panels zum CardLayout hinzufügen – auf DEM Feld 'cardPanel'
         cardPanel.add(hauptmenuePanel, SCREEN_MENU);
         cardPanel.add(spielPanel, SCREEN_SPIEL);
-        cardPanel.add(homeTown, "home");
+        // cardPanel.add(homeTown, "home");
 
         // Game-Referenzen auf GENAU diese Instanzen
         Game.setHauptmenuPanel(hauptmenuePanel);
