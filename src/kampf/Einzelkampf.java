@@ -92,7 +92,7 @@ public class Einzelkampf {
     }
 
     public void gegnerRunde() {
-        spieler.setaktLebenspunkte(spieler.getaktLebenspunkte() - 5);
+        spieler.setaktLebenspunkte(spieler.getaktLebenspunkte() - gegner.getAngriffsWert());
     }
 
     public void setCombatLog(String text) {
@@ -101,5 +101,9 @@ public class Einzelkampf {
 
     public String getCombatLog() {
         return this.text;
+    }
+
+    public int getRunde() {
+        return runde;
     }
 }
