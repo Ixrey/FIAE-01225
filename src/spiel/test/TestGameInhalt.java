@@ -1,4 +1,4 @@
-package spiel.demo;
+package spiel.test;
 
 import charakter.Gegner;
 import charakter.Spieler;
@@ -7,11 +7,11 @@ import java.util.Random;
 
 // Sammlung von Dummy-Komponenten, die den Spielablauf provisorisch simulieren.
 
-public class DemoGameInhalt {
+public class TestGameInhalt {
 
     private static Random rng = new Random();
 
-    private DemoGameInhalt() {
+    private TestGameInhalt() {
     }
 
     public enum DemoKampfErgebnis {

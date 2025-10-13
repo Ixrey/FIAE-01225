@@ -9,19 +9,19 @@ import java.awt.CardLayout;
 import javax.swing.JPanel;
 import kampf.Einzelkampf;
 import kampf.KampfListener;
+import spiel.test.TestGameInhalt;
+import spiel.test.TestGameInhalt.DemoRaum;
+import spiel.test.TestGameInhalt.TestDungeon;
 import stateManagement.GameStateManager;
 import stateManagement.GameStates.GameStart;
-import spiel.demo.DemoGameInhalt;
-import spiel.demo.DemoGameInhalt.TestDungeon;
-import spiel.demo.DemoGameInhalt.DemoRaum;
 
-public class Game {
+public class Spielablauf {
 
     private static GameStateManager stateManager;
     private static Spieler spieler;
     private static Gegner gegner;
     private static TestDungeon demoDungeon;
-    private static RunPhase run;
+    private static SpielPhase aktuellePhase;
     private static Einzelkampf kampfsystem;
     private static HauptmenuePanel hauptmenuPanel;
     private static MainFrame mainFrame;
@@ -53,38 +53,38 @@ public class Game {
 
         spieler = new Spieler("Oraclez", 100, 20, 1);
         mainFrame.showSpiel();
-        run = RunPhase.KAMPF;
+        aktuellePhase = SpielPhase.KAMPF;
 
         System.out.println("Das Spiel ist im laufenden Zustand");
 
         if (demoDungeon == null) {
-            demoDungeon = DemoGameInhalt.erstelleTestDungeon();
+            demoDungeon = TestGameInhalt.erstelleTestDungeon();
         }
-        naechsterSchritt();
+        verarbeiteNaechstenSchritt();
 
     }
 
-    public static void naechsterSchritt() {
+    public static void verarbeiteNaechstenSchritt() {
 
-        switch (run) {
+        switch (aktuellePhase) {
             case ERKUNDEN:
                 DemoRaum raum = demoDungeon.naechsterRaum();
                 if (raum == null) {
-                    run = RunPhase.RUN_ABGESCHLOSSEN;
+                    aktuellePhase = SpielPhase.RUN_ABGESCHLOSSEN;
                     break;
                 }
                 System.out.println("Raum: " + raum.getName() + " Raumtyp: " + raum.getTyp());
                 if (raum.istKampf()) {
-                    run = RunPhase.KAMPF;
+                    aktuellePhase = SpielPhase.KAMPF;
                     break;
                 } else {
                     System.out.println("Nix, weitermachen.");
-                    run = RunPhase.ERKUNDEN;
+                    aktuellePhase = SpielPhase.ERKUNDEN;
                 }
                 break;
 
             case KAMPF:
-                gegner = DemoGameInhalt.erstelleRandomTestGegner();
+                gegner = TestGameInhalt.erstelleRandomTestGegner();
                 kampfsystem = new Einzelkampf(spieler, gegner);
 
                 kampfsystem.addKampfListener(new KampfListener() {
@@ -93,11 +93,11 @@ public class Game {
                         if (spielerHatGewonnen) {
                             spieler.bekommeErfahrung(gegner.getAusgabeErfahrungspunkte());
                             System.out.println("listener funktioniert");
-                            run = RunPhase.ERKUNDEN;
+                            aktuellePhase = SpielPhase.ERKUNDEN;
                         } else {
-                            run = RunPhase.GAME_OVER;
+                            aktuellePhase = SpielPhase.GAME_OVER;
                         }
-                        naechsterSchritt();
+                        verarbeiteNaechstenSchritt();
                     }
                 });
                 spielPanel.zeigeKampfFenster(spieler, gegner, kampfsystem);
