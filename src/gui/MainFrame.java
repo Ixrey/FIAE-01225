@@ -9,6 +9,7 @@ import spiel.Game;
 public class MainFrame extends JFrame {
     public static final String SCREEN_MENU = "menue"; // bleibt konsistent
     public static final String SCREEN_SPIEL = "spiel";
+    public static final String SCREEN_GAMEOVER = "gameover";
 
     private final CardLayout cards = new CardLayout();
     private final JPanel cardPanel = new JPanel(cards);
@@ -23,12 +24,12 @@ public class MainFrame extends JFrame {
         // Panels vorbereiten – ACHTUNG: Felder verwenden (cards, cardPanel)
         HauptmenuePanel hauptmenuePanel = new HauptmenuePanel(cards, cardPanel);
         SpielPanel spielPanel = new SpielPanel();
-        HomeTown homeTown = new HomeTown();
+        GameOver gameOver = new GameOver(cards, cardPanel);
 
         // Panels zum CardLayout hinzufügen – auf DEM Feld 'cardPanel'
         cardPanel.add(hauptmenuePanel, SCREEN_MENU);
         cardPanel.add(spielPanel, SCREEN_SPIEL);
-        // cardPanel.add(homeTown, "home");
+        cardPanel.add(gameOver, SCREEN_GAMEOVER);
 
         // Game-Referenzen auf GENAU diese Instanzen
         Game.setHauptmenuPanel(hauptmenuePanel);
@@ -51,6 +52,15 @@ public class MainFrame extends JFrame {
         cardPanel.revalidate();
         cardPanel.repaint();
     }
+
+    public void showGameOver() {
+        System.out.println("[DBG] showSpiel on cardPanel id=" + System.identityHashCode(cardPanel));
+        cards.show(cardPanel, SCREEN_GAMEOVER);
+        cardPanel.revalidate();
+        cardPanel.repaint();
+    }
+
+
 }
 
 // public static void main(String[] args) {

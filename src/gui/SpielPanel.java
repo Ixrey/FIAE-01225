@@ -37,6 +37,7 @@ public class SpielPanel extends JPanel {
         JLabel lblNamenAnzeige = new JLabel(sp.getName());
         lblNamenAnzeige.setBounds(275, 225, 150, 25);
         lblNamenAnzeige.setForeground(Color.WHITE);
+        lblNamenAnzeige.setFont(new Font("Courier New",Font.BOLD,18));
         add(lblNamenAnzeige);
 
         //Spieler levelanzeige
@@ -44,11 +45,13 @@ public class SpielPanel extends JPanel {
         JLabel lblLvl = new JLabel("lvl " + sp.getLevel());
         lblLvl.setForeground(Color.white);
         lblLvl.setBounds(350, 225, 40, 25);
+        
 
         //Gegner namenanzeige
         JLabel lblNamenAnzeigeGegner = new JLabel(gn.getName());
         lblNamenAnzeigeGegner.setForeground(Color.white);
         lblNamenAnzeigeGegner.setBounds(525, 225, 150, 25);
+        lblNamenAnzeigeGegner.setFont(new Font("Courier New",Font.BOLD,18));
         add(lblNamenAnzeigeGegner);
 
         
@@ -57,20 +60,27 @@ public class SpielPanel extends JPanel {
 
         //Spielerdaten für die INFOBOX
 
+        
         JLabel lblNamenAnzeigeBox = new JLabel(sp.getName());
         lblNamenAnzeigeBox.setForeground(Color.black);
+        lblNamenAnzeigeBox.setFont(new Font("Courier New",Font.BOLD,14));
+        
+
         
         JLabel lblLvlBox = new JLabel("Level: " + sp.getLevel());
         lblLvlBox.setForeground(Color.black);
+        lblLvlBox.setFont(new Font("Courier New",Font.BOLD,14));
         
         
         JLabel lblSpielerAngriffsWertBox = new JLabel("Angriffswert: "+sp.getAngriffsWert());
         lblSpielerAngriffsWertBox.setForeground(Color.BLACK);
+        lblSpielerAngriffsWertBox.setFont(new Font("Courier New",Font.BOLD,14));
 
         JProgressBar erfahrungsXPBar = new JProgressBar(sp.getAktErfahrungspunkte(),sp.getBenErfahrungspunkte());
         erfahrungsXPBar.setForeground(Color.green);
         erfahrungsXPBar.setString("XP "+sp.getAktErfahrungspunkte()+"/"+sp.getBenErfahrungspunkte());
         erfahrungsXPBar.setStringPainted(true);
+        erfahrungsXPBar.setFont(new Font("Courier New",Font.BOLD,14));
         
         
 
@@ -105,7 +115,8 @@ public class SpielPanel extends JPanel {
         
 
         JButton btnAngriff = new JButton("Angriff");
-        btnAngriff.setBounds(100, 500, 100, 25);
+        btnAngriff.setFont(new Font("Courier New",Font.BOLD,14));
+        btnAngriff.setBounds(100, 500, 125, 25);
         add(btnAngriff);
         btnAngriff.addActionListener(e -> {
             kampf.standartangriff(); // Aktion ausführen
@@ -116,7 +127,8 @@ public class SpielPanel extends JPanel {
         });
 
         JButton btnTraenke = new JButton("Trank");
-        btnTraenke.setBounds(100, 550, 100, 25);
+        btnTraenke.setFont(new Font("Courier New",Font.BOLD,14));
+        btnTraenke.setBounds(100, 550, 125, 25);
         add(btnTraenke);
         btnTraenke.addActionListener(e -> {
             kampf.trank(); // Aktion ausführen
@@ -125,7 +137,8 @@ public class SpielPanel extends JPanel {
             
         });
         JButton btnFaehigkeit = new JButton("Fähigkeit");
-        btnFaehigkeit.setBounds(100, 525, 100, 25);
+        btnFaehigkeit.setFont(new Font("Courier New",Font.BOLD,14));
+        btnFaehigkeit.setBounds(100, 525, 125, 25);
         add(btnFaehigkeit);
         btnFaehigkeit.addActionListener(e -> {
             kampf.faehigkeit();
