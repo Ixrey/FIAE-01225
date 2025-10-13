@@ -16,6 +16,7 @@ public class MainWelt {
 
         aktuell(position);
         position.naechsterRaum();
+        index++;
         aktuell(position);
 
         raumListe.get(index).typWechsel();

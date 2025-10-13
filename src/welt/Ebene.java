@@ -27,7 +27,7 @@ public class Ebene {
 
     // Getter
     public ArrayList<Raum> getRaumListe() {
-        return new ArrayList<>(raumListe);
+        return raumListe;
     }
 
     public int getStockwerk() {
