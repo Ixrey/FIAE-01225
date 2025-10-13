@@ -35,6 +35,8 @@ public class Einzelkampf {
             nachAktion();
             setCombatLog("Spieler " + spieler.getName() + " greift Gegnger " + gegner.getName() + " mit "
                     + spieler.getAngriffsWert() + " Schaden an.\n");
+        } else {
+            setCombatLog("");
         }
     }
 
@@ -44,6 +46,8 @@ public class Einzelkampf {
             nachAktion();
             setCombatLog("Spieler " + spieler.getName() + " greift Gegnger " + gegner.getName() + " mit "
                     + spieler.getAngriffsWert() + " Schaden an.\n");
+        } else {
+            setCombatLog("");
         }
     }
 
@@ -55,6 +59,8 @@ public class Einzelkampf {
             nachAktion();
 
             setCombatLog("Durch den Trank hat " + spieler.getName() + " 7 Lebenspunkte bekommen.\n"); // Später abändern
+        } else {
+            setCombatLog("");
         }
     }
 

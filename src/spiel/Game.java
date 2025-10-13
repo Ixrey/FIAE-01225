@@ -17,6 +17,7 @@ public class Game {
 
     private static GameStateManager stateManager;
     private static Spieler spieler;
+    private static Gegner gegner;
     private static DemoDungeon demoDungeon;
     private static RunPhase run;
     private static Einzelkampf kampfsystem;
@@ -85,9 +86,9 @@ public class Game {
         // Spätestens dann muss der Fortschritt in der Datenquelle gespeichert werden,
         // sonst geht dieser verloren.
 
-        run = RunPhase.KAMPF;
         spieler = new Spieler("Oraclez", 100, 20, 1);
         mainFrame.showSpiel();
+        run = RunPhase.KAMPF_SETUP;
 
         System.out.println("Das Spiel ist im laufenden Zustand");
 
@@ -109,7 +110,7 @@ public class Game {
                 }
                 System.out.println("Raum: " + raum.name + " Raumtyp: " + raum.typ);
                 if (raum.istKampf()) {
-                    run = RunPhase.KAMPF;
+                    run = RunPhase.KAMPF_SETUP;
                     break;
                 } else {
                     System.out.println("Nix, weitermachen.");
@@ -117,23 +118,29 @@ public class Game {
                 }
                 break;
 
-            case KAMPF:
-                Gegner gegner = DemoGegnerGenerator.demo();
+            case KAMPF_SETUP:
+                gegner = DemoGegnerGenerator.demo();
                 kampfsystem = new Einzelkampf(spieler, gegner);
                 spielPanel.zeigeKampfFenster(spieler, gegner, kampfsystem);
                 Einzelkampf.neuesSpiel(spieler, gegner);
+                run = RunPhase.KAMPF;
+                break;
 
-                if (!kampfsystem.hatSpielerGewonnen()) {
-                    run = RunPhase.GAME_OVER;
-                } else {
-                    spieler.bekommeErfahrung(gegner.getAusgabeErfahrungspunkte());
-                    System.out.println("Kampf win.");
-                    run = RunPhase.ERKUNDEN;
+            case KAMPF:
+                if (kampfsystem.pruefeKampfende()) {
+                    if (!kampfsystem.hatSpielerGewonnen()) {
+                        run = RunPhase.GAME_OVER;
+                    } else {
+                        spieler.bekommeErfahrung(gegner.getAusgabeErfahrungspunkte());
+                        System.out.println("Kampf win.");
+                        run = RunPhase.ERKUNDEN;
+                    }
+
                 }
                 break;
 
             case GAME_OVER:
-                System.out.println("Verloren, du looser. Game Over");
+                System.out.println("Verloren, du Loser. Game Over");
                 stateManager.setState(new GameStart());
                 return;
 
