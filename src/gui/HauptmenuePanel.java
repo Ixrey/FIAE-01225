@@ -3,13 +3,16 @@ package gui;
 import java.awt.*;
 import javax.swing.*;
 
+import charakter.Spieler;
 import spiel.Game;
+import stateManagement.GameStates.GameRunning;
 
 public class HauptmenuePanel extends JPanel {
     private CardLayout cl;
     private JPanel cardPanel;
     private Image backgroundImage;
     private GridBagConstraints gbc;
+    private Spieler sp;
 
     public HauptmenuePanel(CardLayout cl, JPanel cardPanel) {
         this.cl = cl;
@@ -24,11 +27,14 @@ public class HauptmenuePanel extends JPanel {
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.insets = new Insets(10, 0, 10, 0);
 
+        zeigeHauptfenster(sp);
+
     }
 
-    public void zeigeHauptfenster() {
+    public void zeigeHauptfenster(Spieler sp) {
         JPanel buttonPanel = new JPanel();
-        Font font = new Font("Serif", Font.BOLD, 24);
+        Font font = new Font("Latin Modern Math", Font.BOLD, 16);
+        Font fontbnden = new Font("Caladea", Font.BOLD, 16);
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
         buttonPanel.setOpaque(false); // damit Hintergrund sichtbar bleibt
 
@@ -37,12 +43,14 @@ public class HauptmenuePanel extends JPanel {
         JButton btnStart = createMenuButton("Neues Spiel starten", btnSize);
         JButton btnBeenden = createMenuButton("Beenden", btnSize);
         btnStart.setFont(font);
+        btnBeenden.setFont(fontbnden);
 
         // Aktionen
         btnStart.addActionListener(e -> {
             // cl.show(cardPanel, "spiel");
-            Game.naechsterSchritt();
-            var name = javax.swing.JOptionPane.showInputDialog("Enter a Username: ");
+            // var name = javax.swing.JOptionPane.showInputDialog("Enter a Username: ");
+            // sp.setName(name);
+            Game.getStateManager().setState(new GameRunning());
 
         });
 

@@ -1,10 +1,11 @@
 package charakter;
 
+//Unterklasse Gegner erbt von Charakter und erweitert für die Gegner notwendige Dinge
 public class Gegner extends Charakter {
     private int ausgabeErfahrungspunkte;
 
     // Konstruktor der Unterklasse
-    public Gegner(String name, float maxLebenspunkte, float angriffsWert, int level) {
+    public Gegner(String name, int maxLebenspunkte, int angriffsWert, int level) {
         super(name, maxLebenspunkte, angriffsWert, level);
         this.ausgabeErfahrungspunkte = 2 + level;
     }
@@ -18,5 +19,4 @@ public class Gegner extends Charakter {
     public int getAusgabeErfahrungspunkte() {
         return this.ausgabeErfahrungspunkte;
     }
-
 }

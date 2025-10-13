@@ -118,4 +118,8 @@ public class Einzelkampf {
     public String getCombatLog() {
         return this.text;
     }
+
+    public int getRunde() {
+        return runde;
+    }
 }
