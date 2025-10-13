@@ -11,21 +11,19 @@ public class SpielPanel extends JPanel {
 
     public SpielPanel() {
         setLayout(null); // du benutzt aktuell absolutes Layout
+
+    }
+
+    public void zeigeKampfFenster(Spieler sp, Gegner gn, Einzelkampf kampf) {
+        removeAll();
+        setLayout(null);
+
         playerImage = new ImageIcon(getClass().getResource("/assets/Warrior_Idle1.jpg")).getImage();
-        Spieler sp = new Spieler("Oraclez", 100, 10, 1);
-        Gegner gn = new Gegner("Orc", 70, 1, 1);
-        Einzelkampf kampf = new Einzelkampf(sp, gn);
 
         JTextArea combatLogArea = new JTextArea();
         combatLogArea.setEditable(false);
         combatLogArea.setLineWrap(true);
         combatLogArea.setWrapStyleWord(true);
-
-        // Alle Buttons
-        // JButton btnStart = new JButton("Start Game");
-        // btnStart.setBounds(100, 175, 100, 25);
-        // add(btnStart);
-        // btnStart.addActionListener(e -> Einzelkampf.neuesSpiel(sp, gn));
 
         JButton btnAngriff = new JButton("Angriff");
         btnAngriff.setBounds(100, 500, 100, 25);
@@ -52,10 +50,6 @@ public class SpielPanel extends JPanel {
             combatLogArea.append(kampf.getCombatLog());
             // Textfeld aktualisieren
         });
-
-        // JButton btnAufgeben = new JButton("Beenden");
-        // btnAufgeben.setBounds(100, 275, 100, 25);
-        // add(btnAufgeben);
 
         JLabel lblNamenAnzeige = new JLabel(sp.getName());
         lblNamenAnzeige.setBounds(275, 250, 50, 25);
@@ -86,15 +80,17 @@ public class SpielPanel extends JPanel {
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane.setBounds(250, 500, 400, 150);
 
+        System.out.println("[DEBUG] SpielPanel.zeigeKampfFenster()");
         add(scrollPane);
-
+        revalidate();
+        repaint();
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (playerImage != null) {
-            g.drawImage(playerImage, 300, 250, 128, 128, this);
+            g.drawImage(playerImage, 250, 250, 128, 128, this);
         }
     }
 }

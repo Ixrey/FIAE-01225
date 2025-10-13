@@ -4,14 +4,21 @@ package charakter;
 public class Charakter {
     // Variablen der Hauptklasse
     private String name;
-    private float aktLebenspunkte;
-    private float maxLebenspunkte;
+    private int aktLebenspunkte;
+    private int maxLebenspunkte;
     private int level;
-    private float angriffsWert;
+    private int angriffsWert;
 
     // Konstruktor der Hauptklasse
-    public Charakter(String name, float maxLebenspunkte, float angriffsWert, int level) {
+    public Charakter(String name, int maxLebenspunkte, int angriffsWert, int level) {
         this.name = name;
+        this.maxLebenspunkte = maxLebenspunkte;
+        this.aktLebenspunkte = maxLebenspunkte;
+        this.angriffsWert = angriffsWert;
+        this.level = level;
+    }
+
+    public Charakter(int maxLebenspunkte, int angriffsWert, int level) {
         this.maxLebenspunkte = maxLebenspunkte;
         this.aktLebenspunkte = maxLebenspunkte;
         this.angriffsWert = angriffsWert;
@@ -23,15 +30,15 @@ public class Charakter {
         this.name = name;
     }
 
-    public void setaktLebenspunkte(float aktLebenspunkte) {
+    public void setaktLebenspunkte(int aktLebenspunkte) {
         this.aktLebenspunkte = aktLebenspunkte;
     }
 
-    public void setmaxLebenspunkte(float maxLebenspunkte) {
+    public void setmaxLebenspunkte(int maxLebenspunkte) {
         this.maxLebenspunkte = maxLebenspunkte;
     }
 
-    public void setangriffsWert(float angriffsWert) {
+    public void setangriffsWert(int angriffsWert) {
         this.angriffsWert = angriffsWert;
     }
 
@@ -44,15 +51,15 @@ public class Charakter {
         return this.name;
     }
 
-    public float getaktLebenspunkte() {
+    public int getaktLebenspunkte() {
         return this.aktLebenspunkte;
     }
 
-    public float getmaxLebenspunkte() {
+    public int getmaxLebenspunkte() {
         return this.maxLebenspunkte;
     }
 
-    public float getAngriffsWert() {
+    public int getAngriffsWert() {
         return this.angriffsWert;
     }
 

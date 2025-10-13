@@ -4,15 +4,13 @@ import charakter.Gegner;
 import charakter.Spieler;
 import gui.HauptmenuePanel;
 import gui.MainFrame;
-import kampf.Einzelkampf;
+import gui.SpielPanel;
 import java.awt.CardLayout;
 import java.util.List;
 import java.util.Random;
-import java.util.Scanner;
 import javax.swing.JPanel;
+import kampf.Einzelkampf;
 import stateManagement.GameStateManager;
-import stateManagement.GameStates.GameClose;
-import stateManagement.GameStates.GameRunning;
 import stateManagement.GameStates.GameStart;
 
 public class Game {
@@ -24,6 +22,7 @@ public class Game {
     private static Einzelkampf kampfsystem;
     private static HauptmenuePanel hauptmenuPanel;
     private static MainFrame mainFrame;
+    private static SpielPanel spielPanel;
     CardLayout cardLayout;
     JPanel cardPanel;
 
@@ -36,6 +35,14 @@ public class Game {
         stateManager = manager;
     }
 
+    public static GameStateManager getStateManager() {
+        return stateManager;
+    }
+
+    public static Spieler getSpieler() {
+        return spieler;
+    }
+
     // Die Konsolenausgaben sind nur für Sie für die erste Orientierung.
     // Die Logik in den Methoden sollen Sie für Ihr Projekt anpassen.
 
@@ -45,8 +52,8 @@ public class Game {
     public static void start() {
         System.out.println("Spiel gestartet");
         mainFrame = new MainFrame();
-        hauptmenuPanel.zeigeHauptfenster();
-        Scanner scanner = new Scanner(System.in);
+
+        mainFrame.showMenu();
 
         // Hier gehört alles was beim Starten dieses Spiels ausgewählt werden kann rein.
         // Beispielsweise "Neues Spiel","Spielstand laden","Spielstand löschen", "Spiel
@@ -62,18 +69,6 @@ public class Game {
         // Bei "Spiel schließen" muss der State auf GameClose() gesetzt werden.
         // stateManager.setState(new GameClose());
 
-        System.out.println("[1] für Spiel starten.");
-        System.out.println("[2] für Spiel beenden.");
-        String test = scanner.nextLine();
-        if (test.equals("1")) {
-            spieler = new Spieler("Krasser Spieler", 100, 20, 1);
-            demoDungeon = DemoDungeon.demo();
-            stateManager.setState(new GameRunning());
-        } else if (test.equals("2")) {
-            stateManager.setState(new GameClose());
-        }
-
-        scanner.close();
     }
 
     public static void running() {
@@ -90,13 +85,20 @@ public class Game {
         // Spätestens dann muss der Fortschritt in der Datenquelle gespeichert werden,
         // sonst geht dieser verloren.
 
+        run = RunPhase.KAMPF;
+        spieler = new Spieler("ORACLEZ", 100, 20, 1);
+        mainFrame.showSpiel();
+
         System.out.println("Das Spiel ist im laufenden Zustand");
+
+        if (demoDungeon == null) {
+            demoDungeon = DemoDungeon.demo();
+        }
         naechsterSchritt();
 
     }
 
     public static void naechsterSchritt() {
-        run = RunPhase.KAMPF;
 
         switch (run) {
             case ERKUNDEN:
@@ -117,6 +119,8 @@ public class Game {
 
             case KAMPF:
                 Gegner gegner = DemoGegnerGenerator.demo();
+                kampfsystem = new Einzelkampf(spieler, gegner);
+                spielPanel.zeigeKampfFenster(spieler, gegner, kampfsystem);
                 Einzelkampf.neuesSpiel(spieler, gegner);
 
                 if (!kampfsystem.hatSpielerGewonnen()) {
@@ -143,6 +147,10 @@ public class Game {
 
     public static void setHauptmenuPanel(HauptmenuePanel hauptmenu) {
         hauptmenuPanel = hauptmenu;
+    }
+
+    public static void setSpielPanel(SpielPanel spiel) {
+        spielPanel = spiel;
     }
 
     public static void close() {

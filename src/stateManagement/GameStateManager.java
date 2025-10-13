@@ -28,6 +28,7 @@ public class GameStateManager {
     public void setState(GameState newState) {
         if (!this.currentState.equals(newState)) {
             this.currentState = newState;
+            currentState.enter();
             notifyObservers();
         }
     }
