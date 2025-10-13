@@ -10,16 +10,26 @@ public class Einzelkampf {
     private int runde = 1;
     private String text = "";
     private boolean kampfIstZuende = false;
+    private KampfListener listener;
 
     public Einzelkampf(Spieler spieler, Gegner gegner) {
         this.spieler = spieler;
         this.gegner = gegner;
     }
 
-    public static void neuesSpiel(Spieler spieler, Gegner gegner) {
-        new Einzelkampf(spieler, gegner);
-
+    public void addKampfListener(KampfListener listener) {
+        this.listener = listener;
     }
+
+    private void meldeKampfEnde() {
+        if (listener != null) {
+            listener.kampfBeendet(hatSpielerGewonnen());
+        }
+    }
+
+    // public static void neuesSpiel(Spieler spieler, Gegner gegner) {
+    // new Einzelkampf(spieler, gegner);
+    // }
 
     // Methoden für Buttons im GUI
 
@@ -79,6 +89,7 @@ public class Einzelkampf {
             return false;
         }
         kampfIstZuende = true;
+        meldeKampfEnde();
         return true;
     }
 

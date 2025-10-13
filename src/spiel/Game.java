@@ -8,6 +8,7 @@ import gui.SpielPanel;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
 import kampf.Einzelkampf;
+import kampf.KampfListener;
 import stateManagement.GameStateManager;
 import stateManagement.GameStates.GameStart;
 import spiel.demo.DemoGameInhalt;
@@ -52,7 +53,7 @@ public class Game {
 
         spieler = new Spieler("Oraclez", 100, 20, 1);
         mainFrame.showSpiel();
-        run = RunPhase.KAMPF_SETUP;
+        run = RunPhase.KAMPF;
 
         System.out.println("Das Spiel ist im laufenden Zustand");
 
@@ -74,7 +75,7 @@ public class Game {
                 }
                 System.out.println("Raum: " + raum.getName() + " Raumtyp: " + raum.getTyp());
                 if (raum.istKampf()) {
-                    run = RunPhase.KAMPF_SETUP;
+                    run = RunPhase.KAMPF;
                     break;
                 } else {
                     System.out.println("Nix, weitermachen.");
@@ -82,25 +83,39 @@ public class Game {
                 }
                 break;
 
-            case KAMPF_SETUP:
+            case KAMPF:
                 gegner = DemoGameInhalt.erstelleRandomTestGegner();
                 kampfsystem = new Einzelkampf(spieler, gegner);
+
+                kampfsystem.addKampfListener(new KampfListener() {
+                    @Override
+                    public void kampfBeendet(boolean spielerHatGewonnen) {
+                        if (spielerHatGewonnen) {
+                            spieler.bekommeErfahrung(gegner.getAusgabeErfahrungspunkte());
+                            System.out.println("listener funktioniert");
+                            run = RunPhase.ERKUNDEN;
+                        } else {
+                            run = RunPhase.GAME_OVER;
+                        }
+                        naechsterSchritt();
+                    }
+                });
                 spielPanel.zeigeKampfFenster(spieler, gegner, kampfsystem);
-                Einzelkampf.neuesSpiel(spieler, gegner);
-                run = RunPhase.KAMPF;
+
                 break;
 
-            case KAMPF:
-                if (kampfsystem.pruefeKampfende()) {
-                    if (!kampfsystem.hatSpielerGewonnen()) {
-                        run = RunPhase.GAME_OVER;
-                    } else {
-                        spieler.bekommeErfahrung(gegner.getAusgabeErfahrungspunkte());
-                        System.out.println("Kampf win.");
-                        run = RunPhase.ERKUNDEN;
-                    }
-                }
-                break;
+            // case KAMPF:
+
+            // if (kampfsystem.pruefeKampfende()) {
+            // if (!kampfsystem.hatSpielerGewonnen()) {
+            // run = RunPhase.GAME_OVER;
+            // } else {
+            // spieler.bekommeErfahrung(gegner.getAusgabeErfahrungspunkte());
+            // System.out.println("Kampf win.");
+            // run = RunPhase.ERKUNDEN;
+            // }
+            // }
+            // break;
 
             case GAME_OVER:
                 System.out.println("Verloren, du Loser. Game Over");
