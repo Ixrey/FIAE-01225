@@ -4,4 +4,6 @@ package stateManagement.GameStates;
 
 // Definiert den abgeschlossenen Zustandsraum für das Spiel
 public sealed interface GameState permits GameStart, GameRunning, GameClose {
+
+    void enter();
 }

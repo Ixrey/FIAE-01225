@@ -1,24 +1,37 @@
 package gui;
 
 import charakter.Spieler;
-import java.awt.*;
-import javax.swing.*;
+import java.awt.CardLayout;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Image;
+import java.awt.Insets;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JPanel;
 import spiel.Game;
 import stateManagement.GameStates.GameRunning;
 
-public class HauptmenuePanel extends JPanel {
+public class GameOver extends JPanel {
     private CardLayout cl;
     private JPanel cardPanel;
     private Image backgroundImage;
     private GridBagConstraints gbc;
     private Spieler sp;
 
-    public HauptmenuePanel(CardLayout cl, JPanel cardPanel) {
+
+    public GameOver(CardLayout cl, JPanel cardPanel) {
         this.cl = cl;
         this.cardPanel = cardPanel;
 
         // === Hintergrundbild laden ===
-        backgroundImage = new ImageIcon(getClass().getResource("/assets/bg.png")).getImage();
+        backgroundImage = new ImageIcon(getClass().getResource("/assets/GameOver.png")).getImage();
         gbc = new GridBagConstraints();
         setLayout(new GridBagLayout());
 
@@ -39,7 +52,7 @@ public class HauptmenuePanel extends JPanel {
 
         Dimension btnSize = new Dimension(200, 40);
 
-        JButton btnStart = createMenuButton("Neues Spiel", btnSize);
+        JButton btnStart = createMenuButton("Erneuter Versuch", btnSize);
         JButton btnBeenden = createMenuButton("Beenden", btnSize);
         btnStart.setFont(font);
         btnBeenden.setFont(fontbnden);
