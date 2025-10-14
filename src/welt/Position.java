@@ -61,4 +61,7 @@ public class Position {
     public boolean istLetzterRaum() {
         return aktuellePosition == raumListe.size() - 1;
     }
+    public ArrayList<Raum> getRaumListe(){
+        return raumListe;
+    }
 }

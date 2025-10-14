@@ -1,17 +1,12 @@
 package gui;
 
-import java.awt.Image;
-import java.util.ArrayList;
 import java.awt.*;
-
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
-
-import welt.Raum;
 import welt.Ebene;
 import welt.Position;
+import welt.Raum;
 
 public class MiniMap extends JPanel { 
 
@@ -40,7 +35,7 @@ public class MiniMap extends JPanel {
 
 
         int raumZaehler = 0;
-        for (Raum raum: position.getRaumliste()){
+        for (Raum raum: position.getRaumListe()){
             raumBereich.add(erstelleRaumLabel(raum.getTyp(), raumZaehler));
             raumZaehler++;
         }

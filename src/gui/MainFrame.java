@@ -25,14 +25,14 @@ public class MainFrame extends JFrame {
         HauptmenuePanel hauptmenuePanel = new HauptmenuePanel(cards, cardPanel);
         SpielPanel spielPanel = new SpielPanel();
         GameOver gameOver = new GameOver(cards, cardPanel);
-        HomeTown homeTown = new HomeTown();
+        
         MiniMap minimap = new MiniMap();
 
         // Panels zum CardLayout hinzufügen – auf DEM Feld 'cardPanel'
         cardPanel.add(hauptmenuePanel, SCREEN_MENU);
         cardPanel.add(spielPanel, SCREEN_SPIEL);
         cardPanel.add(gameOver, SCREEN_GAMEOVER);
-        cardPanel.add(homeTown, "home");
+        
         cardPanel.add(minimap,SCREEN_MINIMAP);
 
         // Game-Referenzen auf GENAU diese Instanzen
