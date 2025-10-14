@@ -54,7 +54,7 @@ public class Spielablauf {
 
         spieler = new Spieler("Oraclez", 100, 20, 1);
         mainFrame.showSpiel();
-        aktuellePhase = SpielPhase.KAMPF;
+        aktuellePhase = SpielPhase.ERKUNDEN;
 
         System.out.println("Das Spiel ist im laufenden Zustand");
 
@@ -69,6 +69,7 @@ public class Spielablauf {
 
         switch (aktuellePhase) {
             case ERKUNDEN:
+                mainFrame.showMinimap();
                 DemoRaum raum = demoDungeon.naechsterRaum();
                 if (raum == null) {
                     aktuellePhase = SpielPhase.RUN_ABGESCHLOSSEN;
