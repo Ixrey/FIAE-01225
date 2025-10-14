@@ -59,7 +59,6 @@ public class Spielablauf {
     public static void running() {
 
         spieler = new Spieler("Oraclez", 10, 100, 1);
-        miniMap = new MiniMap();
         position = new Position(ebene = new Ebene());
         mainFrame.showSpiel();
         aktuellePhase = SpielPhase.ERKUNDEN;

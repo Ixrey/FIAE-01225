@@ -37,7 +37,7 @@ public class MainFrame extends JFrame {
         // Game-Referenzen auf GENAU diese Instanzen
         Spielablauf.setHauptmenuPanel(hauptmenuePanel);
         Spielablauf.setSpielPanel(spielPanel);
-        // Spielablauf.setMiniMap(minimap);
+        Spielablauf.setMiniMap(minimap);
 
         setContentPane(cardPanel);
         setVisible(true);
