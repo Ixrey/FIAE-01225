@@ -16,8 +16,7 @@ import welt.Raum;
 
 public class MiniMap extends JPanel {
 
-
-    public MiniMap() { 
+    public MiniMap() {
 
     }
 
@@ -42,7 +41,7 @@ public class MiniMap extends JPanel {
             raumZaehler++;
         }
 
-        // add(infoPanel(spieler));
+        add(infoPanel(spieler));
         add(raumBereich);
 
     }
@@ -105,7 +104,8 @@ public class MiniMap extends JPanel {
                 return "unbekannter Raumtyp übergeben";
         }
     }
-    public JPanel infoPanel(Spieler spieler){
+
+    public JPanel infoPanel(Spieler spieler) {
         JPanel stats = new JPanel();
         stats.setLayout(new BoxLayout(stats, BoxLayout.Y_AXIS));
         stats.setPreferredSize(new Dimension(150, 200));
@@ -136,7 +136,7 @@ public class MiniMap extends JPanel {
         stats.add(lblLvlBox);
         stats.add(lblSpielerAngriffsWertBox);
         stats.add(erfahrungsXPBar);
-        
+
         return stats;
     }
 }
