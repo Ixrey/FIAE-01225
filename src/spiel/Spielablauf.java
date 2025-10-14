@@ -66,9 +66,6 @@ public class Spielablauf {
 
         System.out.println("Das Spiel ist im laufenden Zustand");
 
-        if (demoDungeon == null) {
-            demoDungeon = TestGameInhalt.erstelleTestDungeon();
-        }
         verarbeiteNaechstenSchritt();
 
     }
@@ -92,10 +89,14 @@ public class Spielablauf {
         }
     }
 
+    private static void behandelGameOver() {
+        mainFrame.showGameOver();
+    }
+
     private static void beginneErkundenPhase() {
         aktuellePhase = SpielPhase.ERKUNDEN;
         Raum raum = holeAktuellenRaum();
-        miniMap.refresh(spieler, position, raum);
+        miniMap.zeigeRaumUebersicht(spieler, position);
         mainFrame.showMinimap();
     }
 
@@ -103,6 +104,7 @@ public class Spielablauf {
         aktuellePhase = SpielPhase.KAMPF;
         gegner = Gegnergenerator.zufallsGegnerErschaffen(spieler);
         kampfsystem = new Einzelkampf(spieler, gegner);
+
         kampfsystem.addKampfListener(new KampfListener() {
             @Override
             public void kampfBeendet(boolean spielerHatGewonnen) {
