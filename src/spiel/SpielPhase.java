@@ -1,6 +1,6 @@
 package spiel;
 
-public enum RunPhase {
+public enum SpielPhase {
     ERKUNDEN,
     KAMPF,
     GAME_OVER,

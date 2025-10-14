@@ -22,7 +22,7 @@ public class Ebene {
         raumListe.add(new Raum("leer"));
         raumListe.add(new Raum("gegner"));
         raumListe.add(new Raum("leer"));
-        raumListe.add(new Raum("gegner"));
+        raumListe.add(new Raum("boss"));
     }
 
     // Getter

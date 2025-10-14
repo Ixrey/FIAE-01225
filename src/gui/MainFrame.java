@@ -3,19 +3,19 @@ package gui;
 import java.awt.CardLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import spiel.Game;
-
+import spiel.Spielablauf;
 
 public class MainFrame extends JFrame {
     public static final String SCREEN_MENU = "menue"; // bleibt konsistent
     public static final String SCREEN_SPIEL = "spiel";
     public static final String SCREEN_GAMEOVER = "gameover";
+    public static final String SCREEN_MINIMAP = "minimap";
 
     private final CardLayout cards = new CardLayout();
     private final JPanel cardPanel = new JPanel(cards);
 
     public MainFrame() {
-        
+
         setTitle("Dungeon Keepers");
         setSize(800, 700);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -25,15 +25,19 @@ public class MainFrame extends JFrame {
         HauptmenuePanel hauptmenuePanel = new HauptmenuePanel(cards, cardPanel);
         SpielPanel spielPanel = new SpielPanel();
         GameOver gameOver = new GameOver(cards, cardPanel);
+        HomeTown homeTown = new HomeTown();
+        MiniMap minimap = new MiniMap();
 
         // Panels zum CardLayout hinzufügen – auf DEM Feld 'cardPanel'
         cardPanel.add(hauptmenuePanel, SCREEN_MENU);
         cardPanel.add(spielPanel, SCREEN_SPIEL);
         cardPanel.add(gameOver, SCREEN_GAMEOVER);
+        cardPanel.add(homeTown, "home");
+        cardPanel.add(minimap,SCREEN_MINIMAP);
 
         // Game-Referenzen auf GENAU diese Instanzen
-        Game.setHauptmenuPanel(hauptmenuePanel);
-        Game.setSpielPanel(spielPanel);
+        Spielablauf.setHauptmenuPanel(hauptmenuePanel);
+        Spielablauf.setSpielPanel(spielPanel);
 
         setContentPane(cardPanel);
         setVisible(true);
@@ -59,7 +63,6 @@ public class MainFrame extends JFrame {
         cardPanel.revalidate();
         cardPanel.repaint();
     }
-
 
 }
 
