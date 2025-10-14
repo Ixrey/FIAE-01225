@@ -1,5 +1,6 @@
 package kampf;
 
+import charakter.Charakter;
 import charakter.Gegner;
 import charakter.Spieler;
 import java.util.concurrent.ThreadLocalRandom;
@@ -142,9 +143,46 @@ public class Einzelkampf {
         }
     }
 
+    // Methoden des Schaden
+
+    public int schadenswert(Charakter angreifer, Charakter angegriffene) {
+        int finalerAngriffswert = angreifer.getAngriffsWert();
+        boolean hatGetroffen = true;
+        if (angreifer instanceof Spieler) {
+            krit(angreifer, finalerAngriffswert);
+        }
+        hatGetroffen = trefferchance(angreifer);
+        if (hatGetroffen) {
+            hatGetroffen = ausweichChance(angegriffene);
+        }
+
+        if (hatGetroffen) {
+            return finalerAngriffswert - angegriffene.getVerteidigungsWert();
+        } else {
+            return 0;
+        }
+    }
+
+    public int krit(Charakter angreifer, int finalerAngriffswert) {
+        return 0;
+    }
+
+    public boolean trefferchance(Charakter angreifer) {
+        if (wahrscheinlichkeit(angreifer.getTrefferChance())) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean ausweichChance(Charakter angegriffene) {
+        if (wahrscheinlichkeit(angegriffene.getAusweichRate())) {
+            return false;
+        }
+        return true;
+    }
+
     public void setCombatLog(String text) {
         this.text = text;
-    }
 
     public String getCombatLog() {
         return this.text;
