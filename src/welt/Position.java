@@ -13,7 +13,6 @@ public class Position {
         this.raumListe = ebene.getRaumListe();
         this.aktuellePosition = 0;
         this.aktuellerRaumTyp = raumListe.get(aktuellePosition).getTyp();
-        System.out.println(raumListe);
     }
 
     // Navigation durch Räume
@@ -61,7 +60,8 @@ public class Position {
     public boolean istLetzterRaum() {
         return aktuellePosition == raumListe.size() - 1;
     }
-    public ArrayList<Raum> getRaumListe(){
+
+    public ArrayList<Raum> getRaumListe() {
         return raumListe;
     }
 }
