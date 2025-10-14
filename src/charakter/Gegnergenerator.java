@@ -9,19 +9,19 @@ public class Gegnergenerator {
     }
     public static Gegner orkErschaffen(Spieler spieler){
         int werteMultiplikator = berechneGegnerskalierung(spieler);
-        Gegner gegner = new Gegner("Ork", werteMultiplikator*70, werteMultiplikator*8, werteMultiplikator);
+        Gegner gegner = new Gegner("Ork", werteMultiplikator*70, werteMultiplikator*8, werteMultiplikator*4, werteMultiplikator);
         return gegner;
     }
 
     public static Gegner goblinErschaffen(Spieler spieler){
         int werteMultiplikator = berechneGegnerskalierung(spieler);
-        Gegner gegner = new Gegner("Goblin", werteMultiplikator*50, werteMultiplikator*4, werteMultiplikator);
+        Gegner gegner = new Gegner("Goblin", werteMultiplikator*50, werteMultiplikator*4, werteMultiplikator*2, werteMultiplikator);
         return gegner;
     }
 
     public static Gegner bossErschaffen(Spieler spieler){
         int fixLevel = spieler.getLevel()+1;
-        Gegner boss = new Gegner("Boss",(fixLevel)*200,(fixLevel)*12,(fixLevel));
+        Gegner boss = new Gegner("Boss", (fixLevel)*200, (fixLevel)*12, (fixLevel)*6, (fixLevel));
         return boss;
     }
 
@@ -38,5 +38,5 @@ public class Gegnergenerator {
         }
         return gegner;
     }
-    
+
 }
