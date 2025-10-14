@@ -1,4 +1,4 @@
-import spiel.Game;
+import spiel.Spielablauf;
 import stateManagement.GameStateManager;
 import stateManagement.GameStateRouter;
 import stateManagement.GameStates.GameStart;
@@ -10,7 +10,7 @@ public class App {
 
         // Initialer Zustand: GameStart
         GameStateManager stateManager = new GameStateManager(new GameStart());
-        Game.setStateManager(stateManager);
+        Spielablauf.setStateManager(stateManager);
 
         GameStateRouter router = new GameStateRouter();
         stateManager.addObserver(router);

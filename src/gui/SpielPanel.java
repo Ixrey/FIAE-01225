@@ -5,7 +5,8 @@ import charakter.Spieler;
 import java.awt.*;
 import javax.swing.*;
 import kampf.Einzelkampf;
-import spiel.Game;
+import spiel.Spielablauf;
+import spiel.Spielablauf;
 
 public class SpielPanel extends JPanel {
     private Image playerImage;
@@ -24,7 +25,7 @@ public class SpielPanel extends JPanel {
         infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
         infoPanel.setPreferredSize(new Dimension(150, 200));
         infoPanel.setBounds(10, 10, 150, 100);
-        
+
         gameMapExampleOne = new ImageIcon(getClass().getResource("/assets/backgroundgame.png")).getImage();
         enemyImage = new ImageIcon(getClass().getResource("/assets/evil.png")).getImage();
         playerImage = new ImageIcon(getClass().getResource("/assets/Warrior_Idle1.jpg")).getImage();
@@ -34,61 +35,48 @@ public class SpielPanel extends JPanel {
         combatLogArea.setLineWrap(true);
         combatLogArea.setWrapStyleWord(true);
 
-        //Spieler namenanzeige
+        // Spieler namenanzeige
         JLabel lblNamenAnzeige = new JLabel(sp.getName());
         lblNamenAnzeige.setBounds(275, 225, 150, 25);
         lblNamenAnzeige.setForeground(Color.WHITE);
-        lblNamenAnzeige.setFont(new Font("Courier New",Font.BOLD,18));
+        lblNamenAnzeige.setFont(new Font("Courier New", Font.BOLD, 18));
         add(lblNamenAnzeige);
 
-        //Spieler levelanzeige
+        // Spieler levelanzeige
 
         JLabel lblLvl = new JLabel("lvl " + sp.getLevel());
         lblLvl.setForeground(Color.white);
         lblLvl.setBounds(350, 225, 40, 25);
-        
 
-        //Gegner namenanzeige
+        // Gegner namenanzeige
         JLabel lblNamenAnzeigeGegner = new JLabel(gn.getName());
         lblNamenAnzeigeGegner.setForeground(Color.white);
         lblNamenAnzeigeGegner.setBounds(525, 225, 150, 25);
-        lblNamenAnzeigeGegner.setFont(new Font("Courier New",Font.BOLD,18));
+        lblNamenAnzeigeGegner.setFont(new Font("Courier New", Font.BOLD, 18));
         add(lblNamenAnzeigeGegner);
 
-        System.out.println("hello");
+        // Spielerdaten für die INFOBOX
 
-
-
-        //Spielerdaten für die INFOBOX
-
-        
         JLabel lblNamenAnzeigeBox = new JLabel(sp.getName());
         lblNamenAnzeigeBox.setForeground(Color.black);
-        lblNamenAnzeigeBox.setFont(new Font("Courier New",Font.BOLD,14));
-        
+        lblNamenAnzeigeBox.setFont(new Font("Courier New", Font.BOLD, 14));
 
-        
         JLabel lblLvlBox = new JLabel("Level: " + sp.getLevel());
         lblLvlBox.setForeground(Color.black);
-        lblLvlBox.setFont(new Font("Courier New",Font.BOLD,14));
-        
-        
-        JLabel lblSpielerAngriffsWertBox = new JLabel("Angriffswert: "+sp.getAngriffsWert());
+        lblLvlBox.setFont(new Font("Courier New", Font.BOLD, 14));
+
+        JLabel lblSpielerAngriffsWertBox = new JLabel("Angriffswert: " + sp.getAngriffsWert());
         lblSpielerAngriffsWertBox.setForeground(Color.BLACK);
-        lblSpielerAngriffsWertBox.setFont(new Font("Courier New",Font.BOLD,14));
+        lblSpielerAngriffsWertBox.setFont(new Font("Courier New", Font.BOLD, 14));
 
-        JProgressBar erfahrungsXPBar = new JProgressBar(sp.getAktErfahrungspunkte(),sp.getBenErfahrungspunkte());
+        JProgressBar erfahrungsXPBar = new JProgressBar(sp.getAktErfahrungspunkte(), sp.getBenErfahrungspunkte());
         erfahrungsXPBar.setForeground(Color.green);
-        erfahrungsXPBar.setString("XP "+sp.getAktErfahrungspunkte()+"/"+sp.getBenErfahrungspunkte());
+        erfahrungsXPBar.setString("XP " + sp.getAktErfahrungspunkte() + "/" + sp.getBenErfahrungspunkte());
         erfahrungsXPBar.setStringPainted(true);
-        erfahrungsXPBar.setFont(new Font("Courier New",Font.BOLD,14));
-        
-        
+        erfahrungsXPBar.setFont(new Font("Courier New", Font.BOLD, 14));
 
-    
-
-        //Gegner lvl
-        JLabel lblLvlGegner = new JLabel("lvl "+ gn.getLevel());
+        // Gegner lvl
+        JLabel lblLvlGegner = new JLabel("lvl " + gn.getLevel());
         lblLvlGegner.setForeground(Color.black);
         lblLvlGegner.setBounds(425, 225, 40, 25);
 
@@ -96,7 +84,7 @@ public class SpielPanel extends JPanel {
         JProgressBar healthBarSp = new JProgressBar(0, sp.getmaxLebenspunkte());
         healthBarSp.setForeground(Color.RED);
         healthBarSp.setStringPainted(true);
-        healthBarSp.setString(""+sp.getaktLebenspunkte()+"/"+sp.getmaxLebenspunkte());
+        healthBarSp.setString("" + sp.getaktLebenspunkte() + "/" + sp.getmaxLebenspunkte());
         healthBarSp.setValue(sp.getaktLebenspunkte());
         healthBarSp.setBounds(250, 200, 150, 20);
         add(healthBarSp);
@@ -105,7 +93,7 @@ public class SpielPanel extends JPanel {
         JProgressBar healthBarGegner = new JProgressBar(0, gn.getmaxLebenspunkte());
         healthBarGegner.setForeground(Color.RED);
         healthBarGegner.setStringPainted(true);
-        healthBarGegner.setString(""+gn.getaktLebenspunkte()+"/"+gn.getmaxLebenspunkte());
+        healthBarGegner.setString("" + gn.getaktLebenspunkte() + "/" + gn.getmaxLebenspunkte());
         healthBarGegner.setValue(gn.getaktLebenspunkte());
         healthBarGegner.setBounds(500, 200, 150, 20);
         add(healthBarGegner);
@@ -115,32 +103,30 @@ public class SpielPanel extends JPanel {
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane.setBounds(250, 500, 400, 150);
 
-        
-
         JButton btnAngriff = new JButton("Angriff");
-        btnAngriff.setFont(new Font("Courier New",Font.BOLD,14));
+        btnAngriff.setFont(new Font("Courier New", Font.BOLD, 14));
         btnAngriff.setBounds(100, 500, 125, 25);
         add(btnAngriff);
         btnAngriff.addActionListener(e -> {
             kampf.standartangriff(); // Aktion ausführen
-            
-            healthBarSp.setValue(sp.getaktLebenspunkte()); 
+
+            healthBarSp.setValue(sp.getaktLebenspunkte());
             healthBarGegner.setValue(gn.getaktLebenspunkte());
 
-            healthBarSp.setString(""+sp.getaktLebenspunkte()+"/"+sp.getmaxLebenspunkte());
-            healthBarGegner.setString(""+gn.getaktLebenspunkte()+"/"+gn.getmaxLebenspunkte());
+            healthBarSp.setString("" + sp.getaktLebenspunkte() + "/" + sp.getmaxLebenspunkte());
+            healthBarGegner.setString("" + gn.getaktLebenspunkte() + "/" + gn.getmaxLebenspunkte());
 
             combatLogArea.append(kampf.getCombatLog());
-            
-            
-            if(kampf.pruefeKampfende()==true){
-                Game.naechsterSchritt();
-            };
+
+            if (kampf.pruefeKampfende() == true) {
+                Spielablauf.verarbeiteNaechstenSchritt();
+            }
+            ;
             // Textfeld aktualisieren
         });
 
         JButton btnTraenke = new JButton("Trank");
-        btnTraenke.setFont(new Font("Courier New",Font.BOLD,14));
+        btnTraenke.setFont(new Font("Courier New", Font.BOLD, 14));
         btnTraenke.setBounds(100, 550, 125, 25);
         add(btnTraenke);
         btnTraenke.addActionListener(e -> {
@@ -148,38 +134,34 @@ public class SpielPanel extends JPanel {
 
             combatLogArea.append(kampf.getCombatLog());
             healthBarSp.setValue(sp.getaktLebenspunkte());
-            healthBarSp.setString(""+sp.getaktLebenspunkte()+"/"+sp.getmaxLebenspunkte());
-            healthBarGegner.setString(""+gn.getaktLebenspunkte()+"/"+gn.getmaxLebenspunkte());
-            
-            
+            healthBarSp.setString("" + sp.getaktLebenspunkte() + "/" + sp.getmaxLebenspunkte());
+            healthBarGegner.setString("" + gn.getaktLebenspunkte() + "/" + gn.getmaxLebenspunkte());
+
         });
         JButton btnFaehigkeit = new JButton("Fähigkeit");
-        btnFaehigkeit.setFont(new Font("Courier New",Font.BOLD,14));
+        btnFaehigkeit.setFont(new Font("Courier New", Font.BOLD, 14));
         btnFaehigkeit.setBounds(100, 525, 125, 25);
         add(btnFaehigkeit);
         btnFaehigkeit.addActionListener(e -> {
             kampf.faehigkeit();
 
-            healthBarSp.setValue(sp.getaktLebenspunkte()); 
-            healthBarGegner.setValue(gn.getaktLebenspunkte()); 
-            healthBarSp.setString(""+sp.getaktLebenspunkte()+"/"+sp.getmaxLebenspunkte());
-            healthBarGegner.setString(""+gn.getaktLebenspunkte()+"/"+gn.getmaxLebenspunkte());
+            healthBarSp.setValue(sp.getaktLebenspunkte());
+            healthBarGegner.setValue(gn.getaktLebenspunkte());
+            healthBarSp.setString("" + sp.getaktLebenspunkte() + "/" + sp.getmaxLebenspunkte());
+            healthBarGegner.setString("" + gn.getaktLebenspunkte() + "/" + gn.getmaxLebenspunkte());
             combatLogArea.append(kampf.getCombatLog());
 
-            if(kampf.pruefeKampfende()==true){
-                Game.naechsterSchritt();
+            if (kampf.pruefeKampfende() == true) {
+                Spielablauf.verarbeiteNaechstenSchritt();
             }
-            
+
         });
-        
 
-
-        //Alle kompo. für meine Infobox hinzufügen
+        // Alle kompo. für meine Infobox hinzufügen
         infoPanel.add(lblNamenAnzeigeBox);
         infoPanel.add(lblLvlBox);
         infoPanel.add(lblSpielerAngriffsWertBox);
         infoPanel.add(erfahrungsXPBar);
-        
 
         add(scrollPane);
         add(infoPanel);
@@ -191,7 +173,7 @@ public class SpielPanel extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (playerImage != null) {
-            
+
             g.drawImage(gameMapExampleOne, 0, 0, getWidth(), getHeight(), this);
             g.drawImage(playerImage, 250, 250, 128, 128, this);
             g.drawImage(enemyImage, 500, 250, 128, 128, this);
