@@ -59,9 +59,6 @@ public class GameOver extends JPanel {
 
         // Aktionen
         btnStart.addActionListener(e -> {
-            // cl.show(cardPanel, "spiel");
-            // var name = javax.swing.JOptionPane.showInputDialog("Enter a Username: ");
-            // sp.setName(name);
             Game.getStateManager().setState(new GameRunning());
 
         });
