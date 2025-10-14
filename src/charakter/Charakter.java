@@ -1,4 +1,6 @@
 package charakter;
+
+//Hauptklasse für die Charaktere
 public class Charakter {
     // Variablen der Hauptklasse
     private String name;
@@ -6,21 +8,21 @@ public class Charakter {
     private int maxLebenspunkte;
     private int level;
     private int angriffsWert;
+    private int ausweichRate;
+    private int verteidigungsWert;
+    private int trefferChance;
 
     // Konstruktor der Hauptklasse
-    public Charakter(String name, int maxLebenspunkte, int angriffsWert, int level) {
+    public Charakter(String name, int maxLebenspunkte, int angriffsWert, int verteidigungsWert, int level) {
         this.name = name;
         this.maxLebenspunkte = maxLebenspunkte;
         this.aktLebenspunkte = maxLebenspunkte;
         this.angriffsWert = angriffsWert;
+        this.verteidigungsWert = verteidigungsWert;
         this.level = level;
-    }
+        this.ausweichRate = 5;
+        this.trefferChance = 90;
 
-    public Charakter(int maxLebenspunkte, int angriffsWert, int level) {
-        this.maxLebenspunkte = maxLebenspunkte;
-        this.aktLebenspunkte = maxLebenspunkte;
-        this.angriffsWert = angriffsWert;
-        this.level = level;
     }
 
     // Setter der Hauptklasse
@@ -44,6 +46,18 @@ public class Charakter {
         this.level = level;
     }
 
+    public void setAusweichRate(int ausweichRate) {
+        this.ausweichRate = ausweichRate;
+    }
+
+    public void setVerteidigungsWert(int verteidigungsWert) {
+        this.verteidigungsWert = verteidigungsWert;
+    }
+
+    public void setTrefferChance(int trefferChance) {
+        this.trefferChance = trefferChance;
+    }
+
     // Getter der Hauptklasse
     public String getName() {
         return this.name;
@@ -63,6 +77,18 @@ public class Charakter {
 
     public int getLevel() {
         return this.level;
+    }
+
+    public int getAusweichRate() {
+        return ausweichRate;
+    }
+
+    public int getVerteidigungsWert() {
+        return verteidigungsWert;
+    }
+
+    public int getTrefferChance() {
+        return trefferChance;
     }
 
     public static boolean istLebendig(Charakter charakter) { // von Apo
