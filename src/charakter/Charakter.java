@@ -1,6 +1,4 @@
 package charakter;
-
-//Hauptklasse für die Charaktere
 public class Charakter {
     // Variablen der Hauptklasse
     private String name;

@@ -9,14 +9,22 @@ public class Einzelkampf {
     private Gegner gegner;
     private int runde = 1;
     private String text = "";
+    private boolean kampfIstZuende = false;
+    private KampfListener listener;
 
     public Einzelkampf(Spieler spieler, Gegner gegner) {
         this.spieler = spieler;
         this.gegner = gegner;
     }
 
-    public static void neuesSpiel(Spieler spieler, Gegner gegner) {
-        new Einzelkampf(spieler, gegner);
+    public void addKampfListener(KampfListener listener) {
+        this.listener = listener;
+    }
+
+    private void meldeKampfEnde() {
+        if (listener != null) {
+            listener.kampfBeendet(hatSpielerGewonnen());
+        }
     }
 
     // Methoden für Buttons im GUI
@@ -27,27 +35,40 @@ public class Einzelkampf {
     }
 
     public void standartangriff() {
-        gegner.setaktLebenspunkte(gegner.getaktLebenspunkte() - spieler.getAngriffsWert());
+        if (!kampfIstZuende) {
+            gegner.setaktLebenspunkte(gegner.getaktLebenspunkte() - spieler.getAngriffsWert());
 
-        nachAktion();
-        setCombatLog("Spieler " + spieler.getName() + " greift Gegnger " + gegner.getName() + " mit "
-                + spieler.getAngriffsWert() + " Schaden an.\n");
+            nachAktion();
+            setCombatLog("Spieler: " + spieler.getName() + " greift Gegnger " + gegner.getName() + " mit "
+                    + spieler.getAngriffsWert() + " Schaden an.\nGegner: " + gegner.getName() + " greift Spieler "
+                    + spieler.getName() + " mit " +
+                    +gegner.getAngriffsWert() + " Schaden an.\n\n");
+        }
     }
 
     public void faehigkeit() {
-        gegner.setaktLebenspunkte(gegner.getaktLebenspunkte() - spieler.getAngriffsWert());
-        nachAktion();
-        setCombatLog("Spieler " + spieler.getName() + " greift Gegnger " + gegner.getName() + " mit "
-                + spieler.getAngriffsWert() + " Schaden an.\n");
+        if (!kampfIstZuende) {
+            gegner.setaktLebenspunkte(gegner.getaktLebenspunkte() - spieler.getAngriffsWert());
+            nachAktion();
+            setCombatLog("Spieler: " + spieler.getName() + " greift Gegnger " + gegner.getName() + " mit "
+                    + spieler.getAngriffsWert() + " Schaden an.\nGegner: " + gegner.getName() + " greift Spieler "
+                    + spieler.getName() + " mit " +
+                    +gegner.getAngriffsWert() + " Schaden an.\n\n");
+
+        }
     }
 
     public void trank() {
-        if ((spieler.getmaxLebenspunkte() - spieler.getaktLebenspunkte()) >= 7) {
-            spieler.setaktLebenspunkte(spieler.getaktLebenspunkte() + 7);
-        }
-        nachAktion();
+        if (!kampfIstZuende) {
+            if ((spieler.getmaxLebenspunkte() - spieler.getaktLebenspunkte()) >= 7) {
+                spieler.setaktLebenspunkte(spieler.getaktLebenspunkte() + 7);
+            }
+            nachAktion();
 
-        setCombatLog("Durch den Trank hat " + spieler.getName() + " 7 Lebenspunkte bekommen.\n"); // Später abändern
+            setCombatLog("Durch den Trank hat " + spieler.getName() + " 7 Lebenspunkte bekommen.\nGegner "
+                    + gegner.getName() + " greift Spieler " + spieler.getName() + " mit " +
+                    +gegner.getAngriffsWert() + " Schaden an.\n\n"); // Später abändern
+        }
     }
 
     // Methoden der Spiellogik
@@ -64,6 +85,8 @@ public class Einzelkampf {
         if (charakter.Charakter.istLebendig(spieler) && charakter.Charakter.istLebendig(gegner)) {
             return false;
         }
+        kampfIstZuende = true;
+        meldeKampfEnde();
         return true;
     }
 
@@ -77,6 +100,14 @@ public class Einzelkampf {
                 gegnerRunde();
                 naechsteRunde();
             }
+        } else {
+            if (hatSpielerGewonnen()) {
+                System.out.println("Spieler hat gewonnen.");
+            } else if (!hatSpielerGewonnen()) {
+                System.out.println("Gegner hat gewonnen.");
+            } else {
+                System.out.println("Fehler in der nachAktion()-Methode");
+            }
         }
     }
 
@@ -86,12 +117,15 @@ public class Einzelkampf {
         } else if (charakter.Charakter.istLebendig(gegner) == false) {
             return true;
         }
-        System.out.println("Fehler ist in der einzelkampfEnde-Methode aufgetreten");
+        System.out.println("Spiel ist noch nicht beendet!");
         return false;
     }
 
     public void gegnerRunde() {
+
         spieler.setaktLebenspunkte(spieler.getaktLebenspunkte() - gegner.getAngriffsWert());
+        setCombatLog("Gegner " + gegner.getName() + " greift Spieler " + spieler.getName() + " mit "
+                + gegner.getAngriffsWert() + " Schaden an.\n");
     }
 
     public void setCombatLog(String text) {
