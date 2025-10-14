@@ -64,4 +64,8 @@ public class Position {
     public ArrayList<Raum> getRaumListe() {
         return raumListe;
     }
+
+    public Raum getAktuellerRaum() {
+        return raumListe.get(aktuellePosition);
+    }
 }

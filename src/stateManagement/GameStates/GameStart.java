@@ -13,6 +13,6 @@ public final class GameStart implements GameState {
 
     @Override
     public void enter() {
-        Spielablauf.close();
+        Spielablauf.start();
     }
 }

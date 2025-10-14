@@ -1,6 +1,8 @@
 package gui;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -10,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
 import charakter.Spieler;
+import spiel.Spielablauf;
 import welt.Ebene;
 import welt.Position;
 import welt.Raum;
@@ -36,6 +39,13 @@ public class MiniMap extends JPanel {
         JButton btnWeiter = new JButton("Nächster Raum");
         btnWeiter.setBounds(600, 600, 150, 50);
         raumBereich.add(btnWeiter);
+
+        btnWeiter.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Spielablauf.behandelWeiterButton();
+            }
+        });
 
         int raumZaehler = 0;
         for (Raum raum : position.getRaumListe()) {

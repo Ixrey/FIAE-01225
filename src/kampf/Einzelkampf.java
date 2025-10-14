@@ -66,7 +66,7 @@ public class Einzelkampf {
     public void trank() {
         if (!kampfIstZuende) {
             if ((spieler.getmaxLebenspunkte() - spieler.getaktLebenspunkte()) >= 7) {
-                spieler.setaktLebenspunkte(spieler.getaktLebenspunkte() + 7);
+                spieler.setaktLebenspunkte(spieler.getaktLebenspunkte() + 14);
             }
             nachAktion();
 
