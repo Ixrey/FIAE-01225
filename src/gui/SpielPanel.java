@@ -162,7 +162,7 @@ public class SpielPanel extends JPanel {
 
         }
         if (gn.getName().equals("Höllenvieh")) {
-            g.drawImage(orkImage, 500, 250, 128, 128, this);
+            g.drawImage(orkImage, 525, 250, 128, 128, this);
 
         } else if (gn.getName().equals("Boss")) {
             g.drawImage(bossImage, 500, 250, 128, 128, this);
