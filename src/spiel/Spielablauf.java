@@ -106,7 +106,8 @@ public class Spielablauf {
 
             case GAME_OVER:
                 System.out.println("Verloren, du Loser. Game Over");
-                stateManager.setState(new GameStart());
+                mainFrame.showGameOver();
+                // stateManager.setState(new GameStart());
                 return;
 
             case RUN_ABGESCHLOSSEN:
