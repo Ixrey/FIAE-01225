@@ -17,7 +17,6 @@ public class SpielPanel extends JPanel {
 
     public SpielPanel() {
         setLayout(null); // du benutzt aktuell absolutes Layout
-        
 
     }
 
@@ -25,15 +24,16 @@ public class SpielPanel extends JPanel {
         this.gn = gn;
         removeAll();
         setLayout(null);
-        
+
         JPanel infoPanel = new JPanel();
         infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
         infoPanel.setPreferredSize(new Dimension(150, 200));
         infoPanel.setBounds(10, 10, 150, 100);
-        
-        //BILDER werden geladen
+
+        // BILDER werden geladen
         goblinImage = new ImageIcon(getClass().getResource("/assets/Knochiger Goblin im Kampfmodus.png")).getImage();
-        bossImage = new ImageIcon(getClass().getResource("/assets/Verfallener Skelettkrieger im Retro-Stil.png")).getImage();
+        bossImage = new ImageIcon(getClass().getResource("/assets/Verfallener Skelettkrieger im Retro-Stil.png"))
+                .getImage();
         gameMapExampleOne = new ImageIcon(getClass().getResource("/assets/backgroundgame.png")).getImage();
         orkImage = new ImageIcon(getClass().getResource("/assets/evil.png")).getImage();
         playerImage = new ImageIcon(getClass().getResource("/assets/Warrior_Idle1.jpg")).getImage();
@@ -83,7 +83,6 @@ public class SpielPanel extends JPanel {
         erfahrungsXPBar.setString("XP " + sp.getAktErfahrungspunkte() + "/" + sp.getBenErfahrungspunkte());
         erfahrungsXPBar.setValue(sp.getAktErfahrungspunkte());
         erfahrungsXPBar.setStringPainted(true);
-        
 
         // Gegner lvl
         JLabel lblLvlGegner = new JLabel("lvl " + gn.getLevel());
@@ -103,7 +102,7 @@ public class SpielPanel extends JPanel {
         JProgressBar healthBarGegner = new JProgressBar(0, gn.getmaxLebenspunkte());
         healthBarGegner.setForeground(Color.RED);
         healthBarGegner.setStringPainted(true);
-        
+
         healthBarGegner.setString("" + gn.getaktLebenspunkte() + "/" + gn.getmaxLebenspunkte());
         healthBarGegner.setValue(gn.getaktLebenspunkte());
         healthBarGegner.setBounds(500, 200, 150, 20);
@@ -128,12 +127,11 @@ public class SpielPanel extends JPanel {
             healthBarGegner.setString("" + gn.getaktLebenspunkte() + "/" + gn.getmaxLebenspunkte());
 
             combatLogArea.append(kampf.getCombatLog());
-            
 
             if (kampf.pruefeKampfende() == true) {
                 Spielablauf.verarbeiteNaechstenSchritt();
             }
-            
+
             // Textfeld aktualisieren
         });
 
@@ -188,14 +186,14 @@ public class SpielPanel extends JPanel {
 
             g.drawImage(gameMapExampleOne, 0, 0, getWidth(), getHeight(), this);
             g.drawImage(playerImage, 250, 250, 128, 128, this);
-            
-        }if(gn.getName().equals("Höllenvieh")){
-            g.drawImage(orkImage, 500, 250, 128, 128, this);
-            
-        }else if(gn.getName().equals("Boss")){
-            g.drawImage(bossImage, 500, 250, 128, 128, this);
+
         }
-        else if(gn.getName().equals("Goblin")){
+        if (gn.getName().equals("Höllenvieh")) {
+            g.drawImage(orkImage, 500, 250, 128, 128, this);
+
+        } else if (gn.getName().equals("Boss")) {
+            g.drawImage(bossImage, 500, 250, 128, 128, this);
+        } else if (gn.getName().equals("Goblin")) {
             g.drawImage(goblinImage, 500, 250, 128, 128, this);
         }
     }
