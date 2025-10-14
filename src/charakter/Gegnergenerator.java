@@ -12,7 +12,8 @@ public class Gegnergenerator {
 
     public static Gegner hollenVieh(Spieler spieler) {
         int werteMultiplikator = berechneGegnerskalierung(spieler);
-        Gegner gegner = new Gegner("Ork", werteMultiplikator * 70, werteMultiplikator * 8, werteMultiplikator * 4,
+        Gegner gegner = new Gegner("Höllenvieh", werteMultiplikator * 70, werteMultiplikator * 8,
+                werteMultiplikator * 4,
                 werteMultiplikator);
         return gegner;
     }
