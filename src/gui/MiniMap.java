@@ -43,10 +43,6 @@ public class MiniMap extends JPanel {
             raumBereich.add(erstelleRaumLabel(raum.getTyp(), raumZaehler, position.getAktuellePosition()));
             raumZaehler++;
         }
-<<<<<<< HEAD
-=======
-
->>>>>>> 7a692adac30d4bd3b46535cadf7646f4c2c62a14
         add(infoPanel(spieler));
         add(raumBereich);
 
