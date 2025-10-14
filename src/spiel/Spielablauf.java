@@ -88,7 +88,6 @@ public class Spielablauf {
                 System.out.println("Raum: " + raum.getName() + " Raumtyp: " + raum.getTyp());
                 if (raum.istKampf()) {
                     aktuellePhase = SpielPhase.KAMPF;
-
                     break;
                 } else {
                     System.out.println("Nix, weitermachen.");
@@ -136,6 +135,10 @@ public class Spielablauf {
 
     public static void setSpielPanel(SpielPanel spiel) {
         spielPanel = spiel;
+    }
+
+    public static void setMiniMap(MiniMap mMap) {
+        miniMap = mMap;
     }
 
     public static void close() {
