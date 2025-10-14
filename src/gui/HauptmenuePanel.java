@@ -40,7 +40,11 @@ public class HauptmenuePanel extends JPanel {
         Dimension btnSize = new Dimension(200, 40);
 
         JButton btnStart = createMenuButton("Neues Spiel", btnSize);
+        btnStart.setForeground(Color.white);
+        btnStart.setBackground(Color.DARK_GRAY);
         JButton btnBeenden = createMenuButton("Beenden", btnSize);
+        btnBeenden.setForeground(Color.WHITE);
+        btnBeenden.setBackground(Color.DARK_GRAY);
         btnStart.setFont(font);
         btnBeenden.setFont(fontbnden);
 
