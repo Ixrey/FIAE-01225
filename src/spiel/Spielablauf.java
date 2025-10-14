@@ -52,7 +52,7 @@ public class Spielablauf {
 
     public static void running() {
 
-        spieler = new Spieler("Oraclez", 200, 100, 1);
+        spieler = new Spieler("Oraclez", 10, 100, 1);
         mainFrame.showSpiel();
         aktuellePhase = SpielPhase.KAMPF;
 

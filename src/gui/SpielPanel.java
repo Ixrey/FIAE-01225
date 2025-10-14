@@ -14,6 +14,7 @@ public class SpielPanel extends JPanel {
     private Gegner gn;
     private Image bossImage;
     private Image goblinImage;
+    private static  Spieler sp;
 
     public SpielPanel() {
         setLayout(null); // du benutzt aktuell absolutes Layout
@@ -23,13 +24,10 @@ public class SpielPanel extends JPanel {
 
     public void zeigeKampfFenster(Spieler sp, Gegner gn, Einzelkampf kampf) {
         this.gn = gn;
+        this.sp = sp;
         removeAll();
         setLayout(null);
         
-        JPanel infoPanel = new JPanel();
-        infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
-        infoPanel.setPreferredSize(new Dimension(150, 200));
-        infoPanel.setBounds(10, 10, 150, 100);
         
         //BILDER werden geladen
         goblinImage = new ImageIcon(getClass().getResource("/assets/Knochiger Goblin im Kampfmodus.png")).getImage();
@@ -63,28 +61,7 @@ public class SpielPanel extends JPanel {
         lblNamenAnzeigeGegner.setFont(new Font("Courier New", Font.BOLD, 18));
         add(lblNamenAnzeigeGegner);
 
-        // Spielerdaten für die INFOBOX
-
-        JLabel lblNamenAnzeigeBox = new JLabel(sp.getName());
-        lblNamenAnzeigeBox.setForeground(Color.black);
-        lblNamenAnzeigeBox.setFont(new Font("Courier New", Font.BOLD, 14));
-
-        JLabel lblLvlBox = new JLabel("Level: " + sp.getLevel());
-        lblLvlBox.setForeground(Color.black);
-        lblLvlBox.setFont(new Font("Courier New", Font.BOLD, 14));
-
-        JLabel lblSpielerAngriffsWertBox = new JLabel("Angriffswert: " + sp.getAngriffsWert());
-        lblSpielerAngriffsWertBox.setForeground(Color.BLACK);
-        lblSpielerAngriffsWertBox.setFont(new Font("Courier New", Font.BOLD, 14));
-
-        JProgressBar erfahrungsXPBar = new JProgressBar(0, sp.getBenErfahrungspunkte());
-        erfahrungsXPBar.setFont(new Font("Courier New", Font.BOLD, 14));
-        erfahrungsXPBar.setForeground(Color.green);
-        erfahrungsXPBar.setString("XP " + sp.getAktErfahrungspunkte() + "/" + sp.getBenErfahrungspunkte());
-        erfahrungsXPBar.setValue(sp.getAktErfahrungspunkte());
-        erfahrungsXPBar.setStringPainted(true);
-        
-
+    
         // Gegner lvl
         JLabel lblLvlGegner = new JLabel("lvl " + gn.getLevel());
         lblLvlGegner.setForeground(Color.black);
@@ -134,7 +111,7 @@ public class SpielPanel extends JPanel {
                 Spielablauf.verarbeiteNaechstenSchritt();
             }
             
-            // Textfeld aktualisieren
+            
         });
 
         JButton btnTraenke = new JButton("Trank");
@@ -169,14 +146,9 @@ public class SpielPanel extends JPanel {
 
         });
 
-        // Alle kompo. für meine Infobox hinzufügen
-        infoPanel.add(lblNamenAnzeigeBox);
-        infoPanel.add(lblLvlBox);
-        infoPanel.add(lblSpielerAngriffsWertBox);
-        infoPanel.add(erfahrungsXPBar);
 
         add(scrollPane);
-        add(infoPanel);
+        add(SpielPanel.infoPanel());
         revalidate();
         repaint();
     }
@@ -198,5 +170,40 @@ public class SpielPanel extends JPanel {
         else if(gn.getName().equals("Goblin")){
             g.drawImage(goblinImage, 500, 250, 128, 128, this);
         }
+    }
+
+    public static JPanel infoPanel(){
+        JPanel stats = new JPanel();
+        stats.setLayout(new BoxLayout(stats, BoxLayout.Y_AXIS));
+        stats.setPreferredSize(new Dimension(150, 200));
+        stats.setBounds(10, 10, 150, 100);
+
+        // Spielerdaten für die INFOBOX
+
+        JLabel lblNamenAnzeigeBox = new JLabel(sp.getName());
+        lblNamenAnzeigeBox.setForeground(Color.black);
+        lblNamenAnzeigeBox.setFont(new Font("Courier New", Font.BOLD, 14));
+
+        JLabel lblLvlBox = new JLabel("Level: " + sp.getLevel());
+        lblLvlBox.setForeground(Color.black);
+        lblLvlBox.setFont(new Font("Courier New", Font.BOLD, 14));
+
+        JLabel lblSpielerAngriffsWertBox = new JLabel("Angriffswert: " + sp.getAngriffsWert());
+        lblSpielerAngriffsWertBox.setForeground(Color.BLACK);
+        lblSpielerAngriffsWertBox.setFont(new Font("Courier New", Font.BOLD, 14));
+
+        JProgressBar erfahrungsXPBar = new JProgressBar(0, sp.getBenErfahrungspunkte());
+        erfahrungsXPBar.setFont(new Font("Courier New", Font.BOLD, 14));
+        erfahrungsXPBar.setForeground(Color.green);
+        erfahrungsXPBar.setString("XP " + sp.getAktErfahrungspunkte() + "/" + sp.getBenErfahrungspunkte());
+        erfahrungsXPBar.setValue(sp.getAktErfahrungspunkte());
+        erfahrungsXPBar.setStringPainted(true);
+
+        stats.add(lblNamenAnzeigeBox);
+        stats.add(lblLvlBox);
+        stats.add(lblSpielerAngriffsWertBox);
+        stats.add(erfahrungsXPBar);
+        
+        return stats;
     }
 }
