@@ -3,6 +3,7 @@ package gui;
 import java.awt.*;
 
 import javax.swing.BoxLayout;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -10,7 +11,6 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
 import charakter.Spieler;
-import welt.Ebene;
 import welt.Position;
 import welt.Raum;
 
@@ -33,7 +33,10 @@ public class MiniMap extends JPanel {
         raumBereich.add(lblUeberschrift);
 
         JButton btnWeiter = new JButton("Nächster Raum");
-        btnWeiter.setBounds(600, 600, 150, 50);
+        btnWeiter.setFont(new Font("Courier New",Font.BOLD,18));
+        btnWeiter.setBackground(Color.DARK_GRAY);
+        btnWeiter.setForeground(Color.WHITE);
+        btnWeiter.setBounds(550, 580, 200, 50);
         raumBereich.add(btnWeiter);
 
         int raumZaehler = 0;
@@ -41,8 +44,7 @@ public class MiniMap extends JPanel {
             raumBereich.add(erstelleRaumLabel(raum.getTyp(), raumZaehler, position.getAktuellePosition()));
             raumZaehler++;
         }
-
-        // add(infoPanel(spieler));
+        add(infoPanel(spieler));
         add(raumBereich);
 
     }
@@ -109,9 +111,14 @@ public class MiniMap extends JPanel {
         JPanel stats = new JPanel();
         stats.setLayout(new BoxLayout(stats, BoxLayout.Y_AXIS));
         stats.setPreferredSize(new Dimension(150, 200));
-        stats.setBounds(10, 10, 150, 100);
+        stats.setBounds(10, 400, 150, 300);
 
         // Spielerdaten für die INFOBOX
+
+        JLabel lblSpielerIcon = new JLabel();
+        Image spielerImage = new ImageIcon(this.getClass().getResource("/assets/Warrior_Idle1.jpg")).getImage();
+        lblSpielerIcon.setIcon(new ImageIcon(spielerImage));
+            
 
         JLabel lblNamenAnzeigeBox = new JLabel(spieler.getName());
         lblNamenAnzeigeBox.setForeground(Color.black);
@@ -132,6 +139,7 @@ public class MiniMap extends JPanel {
         erfahrungsXPBar.setValue(spieler.getAktErfahrungspunkte());
         erfahrungsXPBar.setStringPainted(true);
 
+        stats.add(lblSpielerIcon);
         stats.add(lblNamenAnzeigeBox);
         stats.add(lblLvlBox);
         stats.add(lblSpielerAngriffsWertBox);
