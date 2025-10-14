@@ -27,10 +27,6 @@ public class Einzelkampf {
         }
     }
 
-    // public static void neuesSpiel(Spieler spieler, Gegner gegner) {
-    // new Einzelkampf(spieler, gegner);
-    // }
-
     // Methoden für Buttons im GUI
 
     public void rundeBeenden() {

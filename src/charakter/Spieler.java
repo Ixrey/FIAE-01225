@@ -7,6 +7,8 @@ public class Spieler extends Charakter {
     private int aktErfahrungspunkte;
     private int benErfahrungspunkte;
     private int steigerungsWert = 20;
+    private int aktTraenke;
+    private int maxTraenke;
 
     // Konstruktor der Unterklasse
     public Spieler(String name, int maxLebenspunkte, int angriffsWert, int level) {
@@ -15,6 +17,8 @@ public class Spieler extends Charakter {
         this.aktionspunkte = maxAktionspunkte;
         this.aktErfahrungspunkte = 0;
         this.benErfahrungspunkte = 2;
+        this.maxTraenke = 3;
+        this.aktTraenke = maxTraenke;
     }
 
     public Spieler(int maxLebenspunkte, int angriffsWert, int level) {
@@ -42,6 +46,18 @@ public class Spieler extends Charakter {
         this.benErfahrungspunkte = benErfahrungspunkte;
     }
 
+    public void setSteigerungsWert(int steigerungsWert) {
+        this.steigerungsWert = steigerungsWert;
+    }
+
+    public void setAktTraenke(int aktTraenke) {
+        this.aktTraenke = aktTraenke;
+    }
+
+    public void setMaxTraenke(int maxTraenke) {
+        this.maxTraenke = maxTraenke;
+    }
+
     // Getter für Variablen der Unterklasse
     public int getAktionspunkte() {
         return this.aktionspunkte;
@@ -57,6 +73,18 @@ public class Spieler extends Charakter {
 
     public int getBenErfahrungspunkte() {
         return this.benErfahrungspunkte;
+    }
+
+    public int getSteigerungsWert() {
+        return steigerungsWert;
+    }
+
+    public int getAktTraenke() {
+        return aktTraenke;
+    }
+
+    public int getMaxTraenke() {
+        return maxTraenke;
     }
 
     // Methoden der Unterklasse
@@ -99,5 +127,6 @@ public class Spieler extends Charakter {
         int plusLebenspunkte = zwischenergebnis / 100;
         this.setmaxLebenspunkte(this.getmaxLebenspunkte() + plusLebenspunkte);
         this.setaktLebenspunkte(this.getaktLebenspunkte() + plusLebenspunkte);
+
     }
 }

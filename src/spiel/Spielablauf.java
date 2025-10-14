@@ -1,6 +1,7 @@
 package spiel;
 
 import charakter.Gegner;
+import charakter.Gegnergenerator;
 import charakter.Spieler;
 import gui.HauptmenuePanel;
 import gui.MainFrame;
@@ -85,7 +86,7 @@ public class Spielablauf {
                 break;
 
             case KAMPF:
-                gegner = TestGameInhalt.erstelleRandomTestGegner();
+                gegner = Gegnergenerator.zufallsGegnerErschaffen(spieler);
                 kampfsystem = new Einzelkampf(spieler, gegner);
 
                 kampfsystem.addKampfListener(new KampfListener() {
@@ -93,7 +94,6 @@ public class Spielablauf {
                     public void kampfBeendet(boolean spielerHatGewonnen) {
                         if (spielerHatGewonnen) {
                             spieler.bekommeErfahrung(gegner.getAusgabeErfahrungspunkte());
-                            System.out.println("listener funktioniert");
                             aktuellePhase = SpielPhase.ERKUNDEN;
                         } else {
                             aktuellePhase = SpielPhase.GAME_OVER;
@@ -104,19 +104,6 @@ public class Spielablauf {
                 spielPanel.zeigeKampfFenster(spieler, gegner, kampfsystem);
 
                 break;
-
-            // case KAMPF:
-
-            // if (kampfsystem.pruefeKampfende()) {
-            // if (!kampfsystem.hatSpielerGewonnen()) {
-            // run = RunPhase.GAME_OVER;
-            // } else {
-            // spieler.bekommeErfahrung(gegner.getAusgabeErfahrungspunkte());
-            // System.out.println("Kampf win.");
-            // run = RunPhase.ERKUNDEN;
-            // }
-            // }
-            // break;
 
             case GAME_OVER:
                 System.out.println("Verloren, du Loser. Game Over");
