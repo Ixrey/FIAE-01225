@@ -15,18 +15,14 @@ import welt.Position;
 import welt.Raum;
 
 public class MiniMap extends JPanel {
-    private Spieler spieler;
 
-    public MiniMap() {
-        setLayout(null);
-        Ebene ebene = new Ebene();
-        Position spielerposition = new Position(ebene);
-        zeigeRaumUebersicht(spieler, spielerposition);
+
+    public MiniMap() { 
+
     }
 
     public void zeigeRaumUebersicht(Spieler spieler, Position position) {
-        this.spieler = spieler;
-
+        setLayout(null);
         JPanel raumBereich = new JPanel();
         raumBereich.setLayout(null);
         raumBereich.setBounds(0, 0, 800, 800);
@@ -45,9 +41,8 @@ public class MiniMap extends JPanel {
             raumBereich.add(erstelleRaumLabel(raum.getTyp(), raumZaehler, position.getAktuellePosition()));
             raumZaehler++;
         }
-        JPanel infoBereich = infoPanel();
-        raumBereich.add(infoBereich);
 
+        // add(infoPanel(spieler));
         add(raumBereich);
 
     }
@@ -110,7 +105,7 @@ public class MiniMap extends JPanel {
                 return "unbekannter Raumtyp übergeben";
         }
     }
-    public JPanel infoPanel(){
+    public JPanel infoPanel(Spieler spieler){
         JPanel stats = new JPanel();
         stats.setLayout(new BoxLayout(stats, BoxLayout.Y_AXIS));
         stats.setPreferredSize(new Dimension(150, 200));
