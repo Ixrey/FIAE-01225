@@ -6,26 +6,32 @@ import java.awt.*;
 import javax.swing.*;
 import kampf.Einzelkampf;
 import spiel.Spielablauf;
-import spiel.Spielablauf;
 
 public class SpielPanel extends JPanel {
     private Image playerImage;
     private Image enemyImage;
     private Image gameMapExampleOne;
+    private Gegner gn;
+    private Image bossImage;
 
     public SpielPanel() {
         setLayout(null); // du benutzt aktuell absolutes Layout
+        
 
     }
 
     public void zeigeKampfFenster(Spieler sp, Gegner gn, Einzelkampf kampf) {
+        this.gn = gn;
         removeAll();
         setLayout(null);
+        
         JPanel infoPanel = new JPanel();
         infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
         infoPanel.setPreferredSize(new Dimension(150, 200));
         infoPanel.setBounds(10, 10, 150, 100);
-
+        
+        //BILDER werden geladen
+        bossImage = new ImageIcon(getClass().getResource("/assets/Verfallener Skelettkrieger im Retro-Stil.png")).getImage();
         gameMapExampleOne = new ImageIcon(getClass().getResource("/assets/backgroundgame.png")).getImage();
         enemyImage = new ImageIcon(getClass().getResource("/assets/evil.png")).getImage();
         playerImage = new ImageIcon(getClass().getResource("/assets/Warrior_Idle1.jpg")).getImage();
@@ -176,7 +182,12 @@ public class SpielPanel extends JPanel {
 
             g.drawImage(gameMapExampleOne, 0, 0, getWidth(), getHeight(), this);
             g.drawImage(playerImage, 250, 250, 128, 128, this);
-            g.drawImage(enemyImage, 500, 250, 128, 128, this);
+            
+        }if(gn.getName().equals("Goblin")){
+            g.drawImage(enemyImage, 250, 250, 128, 128, this);
+            
+        }else if(gn.getName().equals("Boss")){
+            g.drawImage(bossImage, 250, 250, 128, 128, this);
         }
     }
 }

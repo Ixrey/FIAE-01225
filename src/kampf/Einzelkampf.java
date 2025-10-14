@@ -2,6 +2,7 @@ package kampf;
 
 import charakter.Gegner;
 import charakter.Spieler;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Einzelkampf {
 
@@ -10,6 +11,7 @@ public class Einzelkampf {
     private int runde = 1;
     private String text = "";
     private boolean kampfIstZuende = false;
+    private boolean faehigkeitEinsetzen = true;
     private KampfListener listener;
 
     public Einzelkampf(Spieler spieler, Gegner gegner) {
@@ -47,13 +49,16 @@ public class Einzelkampf {
     }
 
     public void faehigkeit() {
-        if (!kampfIstZuende) {
+        if (!kampfIstZuende && faehigkeitEinsetzen) {
             gegner.setaktLebenspunkte(gegner.getaktLebenspunkte() - spieler.getAngriffsWert());
             nachAktion();
             setCombatLog("Spieler: " + spieler.getName() + " greift Gegnger " + gegner.getName() + " mit "
                     + spieler.getAngriffsWert() + " Schaden an.\nGegner: " + gegner.getName() + " greift Spieler "
                     + spieler.getName() + " mit " +
                     +gegner.getAngriffsWert() + " Schaden an.\n\n");
+            faehigkeitEinsetzen = false;
+        } else if (!kampfIstZuende && !faehigkeitEinsetzen) {
+            setCombatLog("Der Spieler " + spieler.getName() + " hat bereits seine Fähigkeit eingesetzt!");
 
         }
     }
@@ -126,6 +131,15 @@ public class Einzelkampf {
         spieler.setaktLebenspunkte(spieler.getaktLebenspunkte() - gegner.getAngriffsWert());
         setCombatLog("Gegner " + gegner.getName() + " greift Spieler " + spieler.getName() + " mit "
                 + gegner.getAngriffsWert() + " Schaden an.\n");
+    }
+
+    public boolean wahrscheinlichkeit(int wahrscheinlich) {
+        int zufall = ThreadLocalRandom.current().nextInt(0, 100);
+        if (zufall < wahrscheinlich) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public void setCombatLog(String text) {

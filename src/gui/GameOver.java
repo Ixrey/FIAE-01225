@@ -15,7 +15,6 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-
 import spiel.Spielablauf;
 import stateManagement.GameStates.GameRunning;
 
@@ -59,9 +58,6 @@ public class GameOver extends JPanel {
 
         // Aktionen
         btnStart.addActionListener(e -> {
-            // cl.show(cardPanel, "spiel");
-            // var name = javax.swing.JOptionPane.showInputDialog("Enter a Username: ");
-            // sp.setName(name);
             Spielablauf.getStateManager().setState(new GameRunning());
 
         });
