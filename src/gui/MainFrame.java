@@ -25,6 +25,7 @@ public class MainFrame extends JFrame {
         HauptmenuePanel hauptmenuePanel = new HauptmenuePanel(cards, cardPanel);
         SpielPanel spielPanel = new SpielPanel();
         GameOver gameOver = new GameOver(cards, cardPanel);
+        
         MiniMap minimap = new MiniMap();
 
         // Panels zum CardLayout hinzufügen – auf DEM Feld 'cardPanel'

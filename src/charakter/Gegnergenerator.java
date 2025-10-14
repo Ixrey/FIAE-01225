@@ -7,9 +7,9 @@ public class Gegnergenerator {
         int fixLevel = spieler.getLevel()-1;
         return zufallsLevel+ fixLevel;
     }
-    public static Gegner orkErschaffen(Spieler spieler){
+    public static Gegner hollenVieh(Spieler spieler){
         int werteMultiplikator = berechneGegnerskalierung(spieler);
-        Gegner gegner = new Gegner("Ork", werteMultiplikator*70, werteMultiplikator*8, werteMultiplikator);
+        Gegner gegner = new Gegner("Höllenvieh", werteMultiplikator*70, werteMultiplikator*8, werteMultiplikator);
         return gegner;
     }
 
@@ -33,7 +33,7 @@ public class Gegnergenerator {
                 gegner = goblinErschaffen(spieler);
                 break;
             case 2:
-                gegner = orkErschaffen(spieler);
+                gegner = hollenVieh(spieler);
                 break;
         }
         return gegner;

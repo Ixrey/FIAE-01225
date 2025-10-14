@@ -3,7 +3,6 @@ package gui;
 import charakter.Spieler;
 import java.awt.*;
 import javax.swing.*;
-
 import spiel.Spielablauf;
 import stateManagement.GameStates.GameRunning;
 

@@ -52,7 +52,7 @@ public class Spielablauf {
 
     public static void running() {
 
-        spieler = new Spieler("Oraclez", 100, 20, 1);
+        spieler = new Spieler("Oraclez", 10, 100, 1);
         mainFrame.showSpiel();
         aktuellePhase = SpielPhase.ERKUNDEN;
 
@@ -107,7 +107,8 @@ public class Spielablauf {
 
             case GAME_OVER:
                 System.out.println("Verloren, du Loser. Game Over");
-                stateManager.setState(new GameStart());
+                mainFrame.showGameOver();
+                // stateManager.setState(new GameStart());
                 return;
 
             case RUN_ABGESCHLOSSEN:
