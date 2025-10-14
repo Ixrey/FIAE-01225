@@ -81,6 +81,7 @@ public class Spielablauf {
                     System.out.println("Nix, weitermachen.");
                     aktuellePhase = SpielPhase.ERKUNDEN;
                 }
+
                 break;
 
             case KAMPF:
