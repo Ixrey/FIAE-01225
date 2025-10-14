@@ -21,6 +21,8 @@ public class MiniMap extends JPanel {
     }
 
     public void zeigeRaumUebersicht(Spieler spieler, Position position) {
+        removeAll();
+
         setLayout(null);
         JPanel raumBereich = new JPanel();
         raumBereich.setLayout(null);
@@ -44,6 +46,8 @@ public class MiniMap extends JPanel {
         add(infoPanel(spieler));
         add(raumBereich);
 
+        revalidate();
+        repaint();
     }
 
     public JLabel erstelleRaumLabel(String raumTyp, int raumNummer, int position) {
