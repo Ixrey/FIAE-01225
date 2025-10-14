@@ -21,6 +21,7 @@ public class Spieler extends Charakter{
         this.aktTraenke = maxTraenke;
         this.kritischeRate = 15;
         this.krtischerSchaden = 2;
+        
     }
 //Setter für Variablen der Unterklasse
     public void setAktionspunkte(int aktionspunkte) {
