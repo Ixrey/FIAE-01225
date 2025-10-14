@@ -86,7 +86,7 @@ public class Game {
         // sonst geht dieser verloren.
 
         run = RunPhase.KAMPF;
-        spieler = new Spieler("Oraclez", 100, 20, 1);
+        spieler = new Spieler("Oraclez", 150, 5, 1);
         mainFrame.showSpiel();
 
         System.out.println("Das Spiel ist im laufenden Zustand");

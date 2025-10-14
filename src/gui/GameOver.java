@@ -39,11 +39,11 @@ public class GameOver extends JPanel {
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.insets = new Insets(10, 0, 10, 0);
 
-        zeigeHauptfenster(sp);
+        zeigeGameOver(sp);
 
     }
 
-    public void zeigeHauptfenster(Spieler sp) {
+    public void zeigeGameOver(Spieler sp) {
         JPanel buttonPanel = new JPanel();
         Font font = new Font("Courier New", Font.BOLD, 16);
         Font fontbnden = new Font("Courier New", Font.BOLD, 16);

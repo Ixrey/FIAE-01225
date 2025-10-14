@@ -33,8 +33,9 @@ public class Einzelkampf {
             gegner.setaktLebenspunkte(gegner.getaktLebenspunkte() - spieler.getAngriffsWert());
 
             nachAktion();
-            setCombatLog("Spieler " + spieler.getName() + " greift Gegnger " + gegner.getName() + " mit "
-                    + spieler.getAngriffsWert() + " Schaden an.\n");
+            setCombatLog("Spieler: " + spieler.getName() + " greift Gegnger " + gegner.getName() + " mit "
+                    + spieler.getAngriffsWert() + " Schaden an.\nGegner: " + gegner.getName() +" greift Spieler " + spieler.getName() + " mit "+ 
+                                                         + gegner.getAngriffsWert() + " Schaden an.\n\n");
         }
     }
 
@@ -42,8 +43,10 @@ public class Einzelkampf {
         if (!kampfIstZuende) {
             gegner.setaktLebenspunkte(gegner.getaktLebenspunkte() - spieler.getAngriffsWert());
             nachAktion();
-            setCombatLog("Spieler " + spieler.getName() + " greift Gegnger " + gegner.getName() + " mit "
-                    + spieler.getAngriffsWert() + " Schaden an.\n");
+            setCombatLog("Spieler: " + spieler.getName() + " greift Gegnger " + gegner.getName() + " mit "
+                    + spieler.getAngriffsWert() + " Schaden an.\nGegner: " + gegner.getName() +" greift Spieler " + spieler.getName() + " mit "+ 
+                                                         + gegner.getAngriffsWert() + " Schaden an.\n\n");
+                    
         }
     }
 
@@ -54,7 +57,8 @@ public class Einzelkampf {
             }
             nachAktion();
 
-            setCombatLog("Durch den Trank hat " + spieler.getName() + " 7 Lebenspunkte bekommen.\n"); // Später abändern
+            setCombatLog("Durch den Trank hat " + spieler.getName() + " 7 Lebenspunkte bekommen.\nGegner " + gegner.getName() +" greift Spieler " + spieler.getName() + " mit "+ 
+                                                         + gegner.getAngriffsWert() + " Schaden an.\n\n"); // Später abändern
         }
     }
 
@@ -108,6 +112,7 @@ public class Einzelkampf {
     }
 
     public void gegnerRunde() {
+        
         spieler.setaktLebenspunkte(spieler.getaktLebenspunkte() - gegner.getAngriffsWert());
         setCombatLog("Gegner " + gegner.getName() + " greift Spieler " + spieler.getName() + " mit "
                 + gegner.getAngriffsWert() + " Schaden an.\n");

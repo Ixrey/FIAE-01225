@@ -133,6 +133,7 @@ public class SpielPanel extends JPanel {
             combatLogArea.append(kampf.getCombatLog());
             
             
+            
             if(kampf.pruefeKampfende()==true){
                 Game.naechsterSchritt();
             };
