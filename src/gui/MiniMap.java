@@ -1,10 +1,13 @@
 package gui;
 
 import java.awt.*;
+
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 
 import charakter.Spieler;
 import welt.Ebene;
@@ -22,6 +25,7 @@ public class MiniMap extends JPanel {
     }
 
     public void zeigeRaumUebersicht(Spieler spieler, Position position) {
+        this.spieler = spieler;
 
         JPanel raumBereich = new JPanel();
         raumBereich.setLayout(null);
@@ -41,8 +45,9 @@ public class MiniMap extends JPanel {
             raumBereich.add(erstelleRaumLabel(raum.getTyp(), raumZaehler, position.getAktuellePosition()));
             raumZaehler++;
         }
-        // raumBereich.add(SpielPanel.infoPanel());
-        add(SpielPanel.infoPanel());
+        JPanel infoBereich = infoPanel();
+        raumBereich.add(infoBereich);
+
         add(raumBereich);
 
     }
@@ -105,5 +110,38 @@ public class MiniMap extends JPanel {
                 return "unbekannter Raumtyp übergeben";
         }
     }
+    public JPanel infoPanel(){
+        JPanel stats = new JPanel();
+        stats.setLayout(new BoxLayout(stats, BoxLayout.Y_AXIS));
+        stats.setPreferredSize(new Dimension(150, 200));
+        stats.setBounds(10, 10, 150, 100);
 
+        // Spielerdaten für die INFOBOX
+
+        JLabel lblNamenAnzeigeBox = new JLabel(spieler.getName());
+        lblNamenAnzeigeBox.setForeground(Color.black);
+        lblNamenAnzeigeBox.setFont(new Font("Courier New", Font.BOLD, 14));
+
+        JLabel lblLvlBox = new JLabel("Level: " + spieler.getLevel());
+        lblLvlBox.setForeground(Color.black);
+        lblLvlBox.setFont(new Font("Courier New", Font.BOLD, 14));
+
+        JLabel lblSpielerAngriffsWertBox = new JLabel("Angriffswert: " + spieler.getAngriffsWert());
+        lblSpielerAngriffsWertBox.setForeground(Color.BLACK);
+        lblSpielerAngriffsWertBox.setFont(new Font("Courier New", Font.BOLD, 14));
+
+        JProgressBar erfahrungsXPBar = new JProgressBar(0, spieler.getBenErfahrungspunkte());
+        erfahrungsXPBar.setFont(new Font("Courier New", Font.BOLD, 14));
+        erfahrungsXPBar.setForeground(Color.green);
+        erfahrungsXPBar.setString("XP " + spieler.getAktErfahrungspunkte() + "/" + spieler.getBenErfahrungspunkte());
+        erfahrungsXPBar.setValue(spieler.getAktErfahrungspunkte());
+        erfahrungsXPBar.setStringPainted(true);
+
+        stats.add(lblNamenAnzeigeBox);
+        stats.add(lblLvlBox);
+        stats.add(lblSpielerAngriffsWertBox);
+        stats.add(erfahrungsXPBar);
+        
+        return stats;
+    }
 }
