@@ -112,5 +112,6 @@ public class Spieler extends Charakter{
         int plusLebenspunkte = zwischenergebnis/100;
         this.setmaxLebenspunkte(this.getmaxLebenspunkte()+plusLebenspunkte);
         this.setaktLebenspunkte(this.getaktLebenspunkte()+plusLebenspunkte);
+ 
     }
 }
