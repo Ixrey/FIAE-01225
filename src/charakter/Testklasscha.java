@@ -3,11 +3,10 @@ package charakter;
 public class Testklasscha {
         public static void main(String[] args) throws Exception {
                 // test für charakter
-                Spieler sp1 = new Spieler("sp1", 100, 10,7, 1);
+                Spieler sp1 = new Spieler("sp1", 100, 10, 7, 1);
                 sp1.bekommeErfahrung(20);
                 sp1.bekommeErfahrung(3);
                 System.out.println("lvl" + sp1.getLevel());
-                System.out.println("lvl" + g1.getLevel());
                 Gegner g2 = Gegnergenerator.zufallsGegnerErschaffen(sp1);
                 System.out.println("akterf" + sp1.getAktErfahrungspunkte());
                 System.out.println("benerf" + sp1.getBenErfahrungspunkte());
