@@ -1,6 +1,6 @@
 package stateManagement.GameStates;
 
-import spiel.Game;
+import spiel.Spielablauf;
 
 // Sie Arbeiten nur im package Game. Alle anderen Dateien bleiben von Ihnen unberührt. 
 
@@ -13,7 +13,7 @@ public final class GameRunning implements GameState {
 
     @Override
     public void enter() {
-        Game.running();
+        Spielablauf.running();
     }
 
 }

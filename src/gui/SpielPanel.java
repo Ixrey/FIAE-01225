@@ -23,7 +23,7 @@ public class SpielPanel extends JPanel {
         infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
         infoPanel.setPreferredSize(new Dimension(150, 200));
         infoPanel.setBounds(10, 10, 150, 100);
-        
+
         gameMapExampleOne = new ImageIcon(getClass().getResource("/assets/backgroundgame.png")).getImage();
         enemyImage = new ImageIcon(getClass().getResource("/assets/evil.png")).getImage();
         playerImage = new ImageIcon(getClass().getResource("/assets/Warrior_Idle1.jpg")).getImage();
@@ -33,61 +33,48 @@ public class SpielPanel extends JPanel {
         combatLogArea.setLineWrap(true);
         combatLogArea.setWrapStyleWord(true);
 
-        //Spieler namenanzeige
+        // Spieler namenanzeige
         JLabel lblNamenAnzeige = new JLabel(sp.getName());
         lblNamenAnzeige.setBounds(275, 225, 150, 25);
         lblNamenAnzeige.setForeground(Color.WHITE);
-        lblNamenAnzeige.setFont(new Font("Courier New",Font.BOLD,18));
+        lblNamenAnzeige.setFont(new Font("Courier New", Font.BOLD, 18));
         add(lblNamenAnzeige);
 
-        //Spieler levelanzeige
+        // Spieler levelanzeige
 
         JLabel lblLvl = new JLabel("lvl " + sp.getLevel());
         lblLvl.setForeground(Color.white);
         lblLvl.setBounds(350, 225, 40, 25);
-        
 
-        //Gegner namenanzeige
+        // Gegner namenanzeige
         JLabel lblNamenAnzeigeGegner = new JLabel(gn.getName());
         lblNamenAnzeigeGegner.setForeground(Color.white);
         lblNamenAnzeigeGegner.setBounds(525, 225, 150, 25);
-        lblNamenAnzeigeGegner.setFont(new Font("Courier New",Font.BOLD,18));
+        lblNamenAnzeigeGegner.setFont(new Font("Courier New", Font.BOLD, 18));
         add(lblNamenAnzeigeGegner);
 
-        
+        // Spielerdaten für die INFOBOX
 
-
-
-        //Spielerdaten für die INFOBOX
-
-        
         JLabel lblNamenAnzeigeBox = new JLabel(sp.getName());
         lblNamenAnzeigeBox.setForeground(Color.black);
-        lblNamenAnzeigeBox.setFont(new Font("Courier New",Font.BOLD,14));
-        
+        lblNamenAnzeigeBox.setFont(new Font("Courier New", Font.BOLD, 14));
 
-        
         JLabel lblLvlBox = new JLabel("Level: " + sp.getLevel());
         lblLvlBox.setForeground(Color.black);
-        lblLvlBox.setFont(new Font("Courier New",Font.BOLD,14));
-        
-        
-        JLabel lblSpielerAngriffsWertBox = new JLabel("Angriffswert: "+sp.getAngriffsWert());
+        lblLvlBox.setFont(new Font("Courier New", Font.BOLD, 14));
+
+        JLabel lblSpielerAngriffsWertBox = new JLabel("Angriffswert: " + sp.getAngriffsWert());
         lblSpielerAngriffsWertBox.setForeground(Color.BLACK);
-        lblSpielerAngriffsWertBox.setFont(new Font("Courier New",Font.BOLD,14));
+        lblSpielerAngriffsWertBox.setFont(new Font("Courier New", Font.BOLD, 14));
 
-        JProgressBar erfahrungsXPBar = new JProgressBar(sp.getAktErfahrungspunkte(),sp.getBenErfahrungspunkte());
+        JProgressBar erfahrungsXPBar = new JProgressBar(sp.getAktErfahrungspunkte(), sp.getBenErfahrungspunkte());
         erfahrungsXPBar.setForeground(Color.green);
-        erfahrungsXPBar.setString("XP "+sp.getAktErfahrungspunkte()+"/"+sp.getBenErfahrungspunkte());
+        erfahrungsXPBar.setString("XP " + sp.getAktErfahrungspunkte() + "/" + sp.getBenErfahrungspunkte());
         erfahrungsXPBar.setStringPainted(true);
-        erfahrungsXPBar.setFont(new Font("Courier New",Font.BOLD,14));
-        
-        
+        erfahrungsXPBar.setFont(new Font("Courier New", Font.BOLD, 14));
 
-    
-
-        //Gegner lvl
-        JLabel lblLvlGegner = new JLabel("lvl "+ gn.getLevel());
+        // Gegner lvl
+        JLabel lblLvlGegner = new JLabel("lvl " + gn.getLevel());
         lblLvlGegner.setForeground(Color.black);
         lblLvlGegner.setBounds(425, 225, 40, 25);
 
@@ -112,32 +99,30 @@ public class SpielPanel extends JPanel {
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane.setBounds(250, 500, 400, 150);
 
-        
-
         JButton btnAngriff = new JButton("Angriff");
-        btnAngriff.setFont(new Font("Courier New",Font.BOLD,14));
+        btnAngriff.setFont(new Font("Courier New", Font.BOLD, 14));
         btnAngriff.setBounds(100, 500, 125, 25);
         add(btnAngriff);
         btnAngriff.addActionListener(e -> {
             kampf.standartangriff(); // Aktion ausführen
             combatLogArea.append(kampf.getCombatLog());
-            healthBarSp.setValue(sp.getaktLebenspunkte()); 
-            healthBarGegner.setValue(gn.getaktLebenspunkte()); 
+            healthBarSp.setValue(sp.getaktLebenspunkte());
+            healthBarGegner.setValue(gn.getaktLebenspunkte());
             // Textfeld aktualisieren
         });
 
         JButton btnTraenke = new JButton("Trank");
-        btnTraenke.setFont(new Font("Courier New",Font.BOLD,14));
+        btnTraenke.setFont(new Font("Courier New", Font.BOLD, 14));
         btnTraenke.setBounds(100, 550, 125, 25);
         add(btnTraenke);
         btnTraenke.addActionListener(e -> {
             kampf.trank(); // Aktion ausführen
             combatLogArea.append(kampf.getCombatLog());
-            healthBarSp.setValue(sp.getaktLebenspunkte()); 
-            
+            healthBarSp.setValue(sp.getaktLebenspunkte());
+
         });
         JButton btnFaehigkeit = new JButton("Fähigkeit");
-        btnFaehigkeit.setFont(new Font("Courier New",Font.BOLD,14));
+        btnFaehigkeit.setFont(new Font("Courier New", Font.BOLD, 14));
         btnFaehigkeit.setBounds(100, 525, 125, 25);
         add(btnFaehigkeit);
         btnFaehigkeit.addActionListener(e -> {
@@ -146,15 +131,12 @@ public class SpielPanel extends JPanel {
             combatLogArea.append(kampf.getCombatLog());
             // Textfeld aktualisieren
         });
-        
 
-
-        //Alle kompo. für meine Infobox hinzufügen
+        // Alle kompo. für meine Infobox hinzufügen
         infoPanel.add(lblNamenAnzeigeBox);
         infoPanel.add(lblLvlBox);
         infoPanel.add(lblSpielerAngriffsWertBox);
         infoPanel.add(erfahrungsXPBar);
-        
 
         add(scrollPane);
         add(infoPanel);

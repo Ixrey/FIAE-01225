@@ -104,19 +104,6 @@ public class Spielablauf {
 
                 break;
 
-            // case KAMPF:
-
-            // if (kampfsystem.pruefeKampfende()) {
-            // if (!kampfsystem.hatSpielerGewonnen()) {
-            // run = RunPhase.GAME_OVER;
-            // } else {
-            // spieler.bekommeErfahrung(gegner.getAusgabeErfahrungspunkte());
-            // System.out.println("Kampf win.");
-            // run = RunPhase.ERKUNDEN;
-            // }
-            // }
-            // break;
-
             case GAME_OVER:
                 System.out.println("Verloren, du Loser. Game Over");
                 stateManager.setState(new GameStart());
