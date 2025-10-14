@@ -109,6 +109,8 @@ public class Einzelkampf {
 
     public void gegnerRunde() {
         spieler.setaktLebenspunkte(spieler.getaktLebenspunkte() - gegner.getAngriffsWert());
+        setCombatLog("Gegner " + gegner.getName() + " greift Spieler " + spieler.getName() + " mit "
+                + gegner.getAngriffsWert() + " Schaden an.\n");
     }
 
     public void setCombatLog(String text) {
