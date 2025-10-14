@@ -5,6 +5,7 @@ import charakter.Gegnergenerator;
 import charakter.Spieler;
 import gui.HauptmenuePanel;
 import gui.MainFrame;
+import gui.MiniMap;
 import gui.SpielPanel;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
@@ -15,6 +16,8 @@ import spiel.test.TestGameInhalt.DemoRaum;
 import spiel.test.TestGameInhalt.TestDungeon;
 import stateManagement.GameStateManager;
 import stateManagement.GameStates.GameStart;
+import welt.Ebene;
+import welt.Position;
 
 public class Spielablauf {
 
@@ -27,6 +30,9 @@ public class Spielablauf {
     private static HauptmenuePanel hauptmenuPanel;
     private static MainFrame mainFrame;
     private static SpielPanel spielPanel;
+    private static MiniMap miniMap;
+    private static Position position;
+    private static Ebene ebene;
     CardLayout cardLayout;
     JPanel cardPanel;
 
@@ -53,6 +59,8 @@ public class Spielablauf {
     public static void running() {
 
         spieler = new Spieler("Oraclez", 10, 100, 1);
+        miniMap = new MiniMap();
+        position = new Position(ebene = new Ebene());
         mainFrame.showSpiel();
         aktuellePhase = SpielPhase.ERKUNDEN;
 
@@ -69,8 +77,10 @@ public class Spielablauf {
 
         switch (aktuellePhase) {
             case ERKUNDEN:
-                mainFrame.showMinimap();
                 DemoRaum raum = demoDungeon.naechsterRaum();
+                miniMap.zeigeRaumUebersicht(spieler, position);
+                mainFrame.showMinimap();
+
                 if (raum == null) {
                     aktuellePhase = SpielPhase.RUN_ABGESCHLOSSEN;
                     break;
@@ -78,6 +88,7 @@ public class Spielablauf {
                 System.out.println("Raum: " + raum.getName() + " Raumtyp: " + raum.getTyp());
                 if (raum.istKampf()) {
                     aktuellePhase = SpielPhase.KAMPF;
+
                     break;
                 } else {
                     System.out.println("Nix, weitermachen.");
