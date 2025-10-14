@@ -3,8 +3,7 @@ package gui;
 import java.awt.CardLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import spiel.Game;
-
+import spiel.Spielablauf;
 
 public class MainFrame extends JFrame {
     public static final String SCREEN_MENU = "menue"; // bleibt konsistent
@@ -15,7 +14,7 @@ public class MainFrame extends JFrame {
     private final JPanel cardPanel = new JPanel(cards);
 
     public MainFrame() {
-        
+
         setTitle("Dungeon Keepers");
         setSize(800, 700);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -32,8 +31,8 @@ public class MainFrame extends JFrame {
         cardPanel.add(gameOver, SCREEN_GAMEOVER);
 
         // Game-Referenzen auf GENAU diese Instanzen
-        Game.setHauptmenuPanel(hauptmenuePanel);
-        Game.setSpielPanel(spielPanel);
+        Spielablauf.setHauptmenuPanel(hauptmenuePanel);
+        Spielablauf.setSpielPanel(spielPanel);
 
         setContentPane(cardPanel);
         setVisible(true);
@@ -59,7 +58,6 @@ public class MainFrame extends JFrame {
         cardPanel.revalidate();
         cardPanel.repaint();
     }
-
 
 }
 
