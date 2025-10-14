@@ -40,21 +40,21 @@ public class MainFrame extends JFrame {
     }
 
     public void showMenu() {
-        System.out.println("[DBG] showMenu on cardPanel id=" + System.identityHashCode(cardPanel));
+        
         cards.show(cardPanel, SCREEN_MENU);
         cardPanel.revalidate();
         cardPanel.repaint();
     }
 
     public void showSpiel() {
-        System.out.println("[DBG] showSpiel on cardPanel id=" + System.identityHashCode(cardPanel));
+        
         cards.show(cardPanel, SCREEN_SPIEL);
         cardPanel.revalidate();
         cardPanel.repaint();
     }
 
     public void showGameOver() {
-        System.out.println("[DBG] showSpiel on cardPanel id=" + System.identityHashCode(cardPanel));
+        
         cards.show(cardPanel, SCREEN_GAMEOVER);
         cardPanel.revalidate();
         cardPanel.repaint();
