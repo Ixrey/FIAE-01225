@@ -1,5 +1,6 @@
 package kampf;
 
+import charakter.Charakter;
 import charakter.Gegner;
 import charakter.Spieler;
 import java.util.concurrent.ThreadLocalRandom;
@@ -38,11 +39,12 @@ public class Einzelkampf {
 
     public void standartangriff() {
         if (!kampfIstZuende) {
-            gegner.setaktLebenspunkte(gegner.getaktLebenspunkte() - spieler.getAngriffsWert());
+            int gesamterSchaden = schadenswert(spieler, gegner);
+            gegner.setaktLebenspunkte(gegner.getaktLebenspunkte() - gesamterSchaden);
 
             nachAktion();
             setCombatLog("Spieler: " + spieler.getName() + " greift Gegnger " + gegner.getName() + " mit "
-                    + spieler.getAngriffsWert() + " Schaden an.\nGegner: " + gegner.getName() + " greift Spieler "
+                    + gesamterSchaden + " Schaden an.\nGegner: " + gegner.getName() + " greift Spieler "
                     + spieler.getName() + " mit " +
                     +gegner.getAngriffsWert() + " Schaden an.\n\n");
         }
@@ -50,10 +52,11 @@ public class Einzelkampf {
 
     public void faehigkeit() {
         if (!kampfIstZuende && faehigkeitEinsetzen) {
-            gegner.setaktLebenspunkte(gegner.getaktLebenspunkte() - spieler.getAngriffsWert());
+            int gesamterSchaden = schadenswert(spieler, gegner) * 2;
+            gegner.setaktLebenspunkte(gegner.getaktLebenspunkte() - gesamterSchaden);
             nachAktion();
             setCombatLog("Spieler: " + spieler.getName() + " greift Gegnger " + gegner.getName() + " mit "
-                    + spieler.getAngriffsWert() + " Schaden an.\nGegner: " + gegner.getName() + " greift Spieler "
+                    + gesamterSchaden + " Schaden an.\nGegner: " + gegner.getName() + " greift Spieler "
                     + spieler.getName() + " mit " +
                     +gegner.getAngriffsWert() + " Schaden an.\n\n");
             faehigkeitEinsetzen = false;
@@ -127,10 +130,10 @@ public class Einzelkampf {
     }
 
     public void gegnerRunde() {
-
-        spieler.setaktLebenspunkte(spieler.getaktLebenspunkte() - gegner.getAngriffsWert());
+        int gesamterSchaden = schadenswert(gegner, spieler);
+        spieler.setaktLebenspunkte(spieler.getaktLebenspunkte() - gesamterSchaden);
         setCombatLog("Gegner " + gegner.getName() + " greift Spieler " + spieler.getName() + " mit "
-                + gegner.getAngriffsWert() + " Schaden an.\n");
+                + gesamterSchaden + " Schaden an.\n");
     }
 
     public boolean wahrscheinlichkeit(int wahrscheinlich) {
@@ -140,6 +143,47 @@ public class Einzelkampf {
         } else {
             return false;
         }
+    }
+
+    // Methoden des Schaden
+
+    public int schadenswert(Charakter angreifer, Charakter angegriffene) {
+        int finalerAngriffswert = angreifer.getAngriffsWert();
+        boolean hatGetroffen = true;
+        if (angreifer instanceof Spieler) {
+            finalerAngriffswert *= krit();
+        }
+        hatGetroffen = trefferchance(angreifer);
+        if (hatGetroffen) {
+            hatGetroffen = ausweichChance(angegriffene);
+        }
+
+        if (hatGetroffen) {
+            return finalerAngriffswert - angegriffene.getVerteidigungsWert();
+        } else {
+            return 0;
+        }
+    }
+
+    public int krit() {
+        if (wahrscheinlichkeit(spieler.getKritischeRate())) {
+            return spieler.getKrtischerSchaden();
+        }
+        return 1;
+    }
+
+    public boolean trefferchance(Charakter angreifer) {
+        if (wahrscheinlichkeit(angreifer.getTrefferChance())) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean ausweichChance(Charakter angegriffene) {
+        if (wahrscheinlichkeit(angegriffene.getAusweichRate())) {
+            return false;
+        }
+        return true;
     }
 
     public void setCombatLog(String text) {

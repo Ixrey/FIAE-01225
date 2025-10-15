@@ -34,7 +34,7 @@ public class SpielPanel extends JPanel {
                 .getImage();
         gameMapExampleOne = new ImageIcon(getClass().getResource("/assets/backgroundgame.png")).getImage();
         orkImage = new ImageIcon(getClass().getResource("/assets/evil.png")).getImage();
-        playerImage = new ImageIcon(getClass().getResource("/assets/Warrior_Idle1.jpg")).getImage();
+        playerImage = new ImageIcon(getClass().getResource("/assets/hero.png")).getImage();
 
         JTextArea combatLogArea = new JTextArea();
         combatLogArea.setEditable(false);
@@ -43,7 +43,7 @@ public class SpielPanel extends JPanel {
 
         // Spieler namenanzeige
         JLabel lblNamenAnzeige = new JLabel(sp.getName());
-        lblNamenAnzeige.setBounds(275, 225, 150, 25);
+        lblNamenAnzeige.setBounds(250, 225, 150, 25);
         lblNamenAnzeige.setForeground(Color.WHITE);
         lblNamenAnzeige.setFont(new Font("Courier New", Font.BOLD, 18));
         add(lblNamenAnzeige);
@@ -57,7 +57,7 @@ public class SpielPanel extends JPanel {
         // Gegner namenanzeige
         JLabel lblNamenAnzeigeGegner = new JLabel(gn.getName());
         lblNamenAnzeigeGegner.setForeground(Color.white);
-        lblNamenAnzeigeGegner.setBounds(525, 225, 150, 25);
+        lblNamenAnzeigeGegner.setBounds(500, 225, 150, 25);
         lblNamenAnzeigeGegner.setFont(new Font("Courier New", Font.BOLD, 18));
         add(lblNamenAnzeigeGegner);
 
@@ -158,16 +158,16 @@ public class SpielPanel extends JPanel {
         if (playerImage != null) {
 
             g.drawImage(gameMapExampleOne, 0, 0, getWidth(), getHeight(), this);
-            g.drawImage(playerImage, 250, 250, 128, 128, this);
+            g.drawImage(playerImage, 215, 250, 250, 220, this);
 
         }
         if (gn.getName().equals("Höllenvieh")) {
-            g.drawImage(orkImage, 500, 250, 128, 128, this);
+            g.drawImage(orkImage, 485, 275, 190, 190, this);
 
         } else if (gn.getName().equals("Boss")) {
-            g.drawImage(bossImage, 500, 250, 128, 128, this);
+            g.drawImage(bossImage, 485, 275, 220, 220, this);
         } else if (gn.getName().equals("Goblin")) {
-            g.drawImage(goblinImage, 500, 250, 128, 128, this);
+            g.drawImage(goblinImage, 485, 275, 190, 190, this);
         }
     }
 

@@ -1,7 +1,6 @@
 package charakter;
-
 //Unterklasse Spieler erbt von Charakter und erweitert für den Spieler notwendige Dinge
-public class Spieler extends Charakter {
+public class Spieler extends Charakter{
     private int aktionspunkte;
     private int maxAktionspunkte;
     private int aktErfahrungspunkte;
@@ -9,27 +8,22 @@ public class Spieler extends Charakter {
     private int steigerungsWert = 20;
     private int aktTraenke;
     private int maxTraenke;
-
-    // Konstruktor der Unterklasse
-    public Spieler(String name, int maxLebenspunkte, int angriffsWert, int level) {
-        super(name, maxLebenspunkte, angriffsWert, level);
+    private int kritischeRate;
+    private int krtischerSchaden;
+//Konstruktor der Unterklasse
+    public Spieler(String name, int maxLebenspunkte, int angriffsWert, int verteidigungsWert, int level) {
+        super(name, maxLebenspunkte, angriffsWert, verteidigungsWert, level);
         this.maxAktionspunkte = 1;
         this.aktionspunkte = maxAktionspunkte;
         this.aktErfahrungspunkte = 0;
         this.benErfahrungspunkte = 2;
         this.maxTraenke = 3;
         this.aktTraenke = maxTraenke;
+        this.kritischeRate = 15;
+        this.krtischerSchaden = 2;
+        
     }
-
-    public Spieler(int maxLebenspunkte, int angriffsWert, int level) {
-        super(maxLebenspunkte, angriffsWert, level);
-        this.maxAktionspunkte = 1;
-        this.aktionspunkte = maxAktionspunkte;
-        this.aktErfahrungspunkte = 0;
-        this.benErfahrungspunkte = 2;
-    }
-
-    // Setter für Variablen der Unterklasse
+//Setter für Variablen der Unterklasse
     public void setAktionspunkte(int aktionspunkte) {
         this.aktionspunkte = aktionspunkte;
     }
@@ -58,7 +52,14 @@ public class Spieler extends Charakter {
         this.maxTraenke = maxTraenke;
     }
 
-    // Getter für Variablen der Unterklasse
+    public void setKritischeRate(int kritischeRate) {
+        this.kritischeRate = kritischeRate;
+    }
+
+    public void setKrtischerSchaden(int krtischerSchaden) {
+        this.krtischerSchaden = krtischerSchaden;
+    }
+//Getter für Variablen der Unterklasse
     public int getAktionspunkte() {
         return this.aktionspunkte;
     }
@@ -75,7 +76,7 @@ public class Spieler extends Charakter {
         return this.benErfahrungspunkte;
     }
 
-    public int getSteigerungsWert() {
+        public int getSteigerungsWert() {
         return steigerungsWert;
     }
 
@@ -87,46 +88,78 @@ public class Spieler extends Charakter {
         return maxTraenke;
     }
 
-    // Methoden der Unterklasse
-    // Methode was passiert wenn der Spieler ein Level aufsteigt
-    public void aufleveln() {
-        this.setLevel(this.getLevel() + 1);
-        this.setBenErfahrungspunkte(getBenErfahrungspunkte() * 2);
+    public int getKritischeRate() {
+        return kritischeRate;
+    }
+
+    public int getKrtischerSchaden() {
+        return krtischerSchaden;
+    }
+//Methoden der Unterklasse
+    //Methode was passiert wenn der Spieler ein Level aufsteigt
+    public void aufleveln(){
+        this.setLevel(this.getLevel()+1);
+        this.setBenErfahrungspunkte(getBenErfahrungspunkte()*2);
         lebenspunkteSteigern();
         angriffSteigern();
+        verteidigungSteigern();
+        ausweichRateSteigern();
+        kritRateSteigern();
+        krtischerSchadenSteigern();
     }
-
-    // Methode für die Verarbeitung von Erfahrungspunkten
-    public void bekommeErfahrung(int erfWert) {
-        if ((erfWert + this.aktErfahrungspunkte) >= this.benErfahrungspunkte) {
-            this.setAktErfahrungspunkte(erfWert + this.aktErfahrungspunkte);
+    //Methode für die Verarbeitung von Erfahrungspunkten
+    public void bekommeErfahrung(int erfWert){
+        if ((erfWert+this.aktErfahrungspunkte)>=this.benErfahrungspunkte){
+            this.setAktErfahrungspunkte(erfWert+this.aktErfahrungspunkte);
             do {
-                this.setAktErfahrungspunkte((this.aktErfahrungspunkte) - this.benErfahrungspunkte);
-                this.aufleveln();
-            } while ((this.aktErfahrungspunkte) >= this.benErfahrungspunkte);
-        } else {
-            this.setAktErfahrungspunkte((erfWert + this.aktErfahrungspunkte));
+                this.setAktErfahrungspunkte((this.aktErfahrungspunkte)-this.benErfahrungspunkte);
+                this.aufleveln();}
+                while ((this.aktErfahrungspunkte)>=this.benErfahrungspunkte);
+        }
+        else {
+            this.setAktErfahrungspunkte((erfWert+this.aktErfahrungspunkte));
         }
     }
-
-    // Methode zur steigerung des Angriffs(wird bei "aufleveln()" aufgerufen)
-    public void angriffSteigern() {
-        int zwischenergebnis = this.getAngriffsWert() * steigerungsWert;
-        if (zwischenergebnis - (zwischenergebnis / 100 * 100) >= 50) {
-            zwischenergebnis = zwischenergebnis + 100;
+    //Methode zur steigerung des Angriffs(wird bei "aufleveln()" aufgerufen)
+    public void angriffSteigern(){
+        int zwischenergebnis = this.getAngriffsWert()*steigerungsWert;
+        if (zwischenergebnis-(zwischenergebnis/100*100)>=50){
+            zwischenergebnis=zwischenergebnis+100;
         }
-        this.setangriffsWert(this.getAngriffsWert() + zwischenergebnis / 100);
+        this.setangriffsWert(this.getAngriffsWert()+zwischenergebnis/100);
     }
-
-    // Methode zu Steigerung der Lebenspunkte(wird bei "aufleveln()" aufgerufen)
-    public void lebenspunkteSteigern() {
-        int zwischenergebnis = this.getmaxLebenspunkte() * steigerungsWert;
-        if (zwischenergebnis - (zwischenergebnis / 100 * 100) >= 50) {
-            zwischenergebnis = zwischenergebnis + 100;
+    //Methode zu Steigerung der Lebenspunkte(wird bei "aufleveln()" aufgerufen)
+    public void lebenspunkteSteigern(){
+        int zwischenergebnis = this.getmaxLebenspunkte()*steigerungsWert;
+        if (zwischenergebnis-(zwischenergebnis/100*100)>=50){
+            zwischenergebnis=zwischenergebnis+100;
         }
-        int plusLebenspunkte = zwischenergebnis / 100;
-        this.setmaxLebenspunkte(this.getmaxLebenspunkte() + plusLebenspunkte);
-        this.setaktLebenspunkte(this.getaktLebenspunkte() + plusLebenspunkte);
-
+        int plusLebenspunkte = zwischenergebnis/100;
+        this.setmaxLebenspunkte(this.getmaxLebenspunkte()+plusLebenspunkte);
+        this.setaktLebenspunkte(this.getaktLebenspunkte()+plusLebenspunkte);
+    }
+    //Methode zur steigerung der Verteidigung(wird bei "aufleveln()" aufgerufen)
+    public void verteidigungSteigern(){
+        int zwischenergebnis = this.getVerteidigungsWert()*steigerungsWert;
+        if (zwischenergebnis-(zwischenergebnis/100*100)>=50){
+            zwischenergebnis=zwischenergebnis+100;
+        }
+        this.setVerteidigungsWert(this.getVerteidigungsWert()+zwischenergebnis/100);
+    }
+    //Methode zur steigerung der Ausweichrate(wird bei "aufleveln()" aufgerufen)
+    public void ausweichRateSteigern(){
+        if (this.getLevel()%2==0){
+            this.setAusweichRate(this.getAusweichRate()+3);
+        }
+    }
+    //Methode zur steigerung der Ausweichrate(wird bei "aufleveln()" aufgerufen)
+    public void kritRateSteigern(){
+        this.setKritischeRate(this.getKritischeRate()+5);
+    }
+    //Methode zur steigerung der Ausweichrate(wird bei "aufleveln()" aufgerufen)
+    public void krtischerSchadenSteigern(){
+        if (this.getLevel()%5==0){
+            this.setKrtischerSchaden(this.getKrtischerSchaden()+1);
+        }
     }
 }

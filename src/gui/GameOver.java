@@ -2,6 +2,7 @@ package gui;
 
 import charakter.Spieler;
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -36,7 +37,7 @@ public class GameOver extends JPanel {
 
         gbc.gridx = 0;
         gbc.anchor = GridBagConstraints.CENTER;
-        gbc.insets = new Insets(10, 0, 10, 0);
+        gbc.insets = new Insets(300, 0, 5, 0);
 
         zeigeGameOver(sp);
 
@@ -46,13 +47,17 @@ public class GameOver extends JPanel {
         JPanel buttonPanel = new JPanel();
         Font font = new Font("Courier New", Font.BOLD, 16);
         Font fontbnden = new Font("Courier New", Font.BOLD, 16);
-        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
         buttonPanel.setOpaque(false); // damit Hintergrund sichtbar bleibt
 
         Dimension btnSize = new Dimension(200, 40);
 
         JButton btnStart = createMenuButton("Erneuter Versuch", btnSize);
+        btnStart.setForeground(Color.RED);
+        btnStart.setBackground(Color.DARK_GRAY);
         JButton btnBeenden = createMenuButton("Beenden", btnSize);
+        btnBeenden.setForeground(Color.RED);
+        btnBeenden.setBackground(Color.DARK_GRAY);
         btnStart.setFont(font);
         btnBeenden.setFont(fontbnden);
 
@@ -66,7 +71,7 @@ public class GameOver extends JPanel {
 
         // Buttons hinzufügen
         buttonPanel.add(btnStart);
-        buttonPanel.add(Box.createRigidArea(new Dimension(0, 15)));
+        buttonPanel.add(Box.createRigidArea(new Dimension(0, 40)));
         buttonPanel.add(btnBeenden);
 
         add(buttonPanel, gbc);
