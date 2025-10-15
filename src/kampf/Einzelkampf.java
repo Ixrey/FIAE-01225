@@ -92,7 +92,7 @@ public class Einzelkampf {
             if (ergebnis.hatGetroffen()) {
                 gegner.setaktLebenspunkte(gegner.getaktLebenspunkte() - ergebnis.getSchaden());
             }
-            protokolliereSpielerAngriff("Faehigkeit", gegner, ergebnis);
+            protokolliereSpielerAngriff("Fähigkeit", gegner, ergebnis);
             nachAktion();
             logLineHinzufuegen("");
             finalisiereZugLog();
@@ -116,7 +116,7 @@ public class Einzelkampf {
             if (geheiltePunkte > 0) {
                 logLineHinzufuegen("  Heilung: " + geheiltePunkte + " Lebenspunkte.");
             } else {
-                logLineHinzufuegen("  Keine Wirkung, der Spieler ist fast vollstaendig geheilt.");
+                logLineHinzufuegen("  Keine Wirkung, der Spieler ist fast vollständig geheilt.");
             }
             nachAktion();
             logLineHinzufuegen("");
