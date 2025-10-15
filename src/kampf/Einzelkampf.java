@@ -1,4 +1,4 @@
-package kampf;
+﻿package kampf;
 
 import charakter.Charakter;
 import charakter.Gegner;
@@ -14,6 +14,33 @@ public class Einzelkampf {
     private boolean kampfIstZuende = false;
     private boolean faehigkeitEinsetzen = true;
     private KampfListener listener;
+
+    private static final String LINE_SEPARATOR = System.lineSeparator();
+    private final StringBuilder zugLog = new StringBuilder();
+
+    private static class AngriffsErgebnis {
+        private int schaden;
+        private boolean hatGetroffen;
+        private boolean warKritisch;
+
+        private AngriffsErgebnis(int schaden, boolean hatGetroffen, boolean warKritisch) {
+            this.schaden = schaden;
+            this.hatGetroffen = hatGetroffen;
+            this.warKritisch = warKritisch;
+        }
+
+        private int getSchaden() {
+            return schaden;
+        }
+
+        private boolean hatGetroffen() {
+            return hatGetroffen;
+        }
+
+        private boolean warKritisch() {
+            return warKritisch;
+        }
+    }
 
     public Einzelkampf(Spieler spieler, Gegner gegner) {
         this.spieler = spieler;
@@ -33,49 +60,67 @@ public class Einzelkampf {
     // Methoden für Buttons im GUI
 
     public void rundeBeenden() {
+        if (kampfIstZuende) {
+            return;
+        }
+        setzeZugLogZurück();
+        logLineHinzufuegen("Spieler " + spieler.getName() + " beendet seine Runde.");
         spieler.setAktionspunkte(0);
         nachAktion();
+        logLineHinzufuegen("");
+        finalisiereZugLog();
     }
 
     public void standartangriff() {
         if (!kampfIstZuende) {
-            int gesamterSchaden = schadenswert(spieler, gegner);
-            gegner.setaktLebenspunkte(gegner.getaktLebenspunkte() - gesamterSchaden);
-
+            setzeZugLogZurück();
+            AngriffsErgebnis ergebnis = berechneAngriff(spieler, gegner, 1);
+            if (ergebnis.hatGetroffen()) {
+                gegner.setaktLebenspunkte(gegner.getaktLebenspunkte() - ergebnis.getSchaden());
+            }
+            protokolliereSpielerAngriff("Standardangriff", gegner, ergebnis);
             nachAktion();
-            setCombatLog("Spieler: " + spieler.getName() + " greift Gegnger " + gegner.getName() + " mit "
-                    + gesamterSchaden + " Schaden an.\nGegner: " + gegner.getName() + " greift Spieler "
-                    + spieler.getName() + " mit " +
-                    +gegner.getAngriffsWert() + " Schaden an.\n\n");
+            logLineHinzufuegen("");
+            finalisiereZugLog();
         }
     }
 
     public void faehigkeit() {
         if (!kampfIstZuende && faehigkeitEinsetzen) {
-            int gesamterSchaden = schadenswert(spieler, gegner) * 2;
-            gegner.setaktLebenspunkte(gegner.getaktLebenspunkte() - gesamterSchaden);
+            setzeZugLogZurück();
+            AngriffsErgebnis ergebnis = berechneAngriff(spieler, gegner, 2);
+            if (ergebnis.hatGetroffen()) {
+                gegner.setaktLebenspunkte(gegner.getaktLebenspunkte() - ergebnis.getSchaden());
+            }
+            protokolliereSpielerAngriff("Faehigkeit", gegner, ergebnis);
             nachAktion();
-            setCombatLog("Spieler: " + spieler.getName() + " greift Gegnger " + gegner.getName() + " mit "
-                    + gesamterSchaden + " Schaden an.\nGegner: " + gegner.getName() + " greift Spieler "
-                    + spieler.getName() + " mit " +
-                    +gegner.getAngriffsWert() + " Schaden an.\n\n");
+            logLineHinzufuegen("");
+            finalisiereZugLog();
             faehigkeitEinsetzen = false;
         } else if (!kampfIstZuende && !faehigkeitEinsetzen) {
-            setCombatLog("Der Spieler " + spieler.getName() + " hat bereits seine Fähigkeit eingesetzt!");
-
+            setCombatLog("Der Spieler " + spieler.getName() + " hat bereits seine Faehigkeit eingesetzt!"
+                    + LINE_SEPARATOR + LINE_SEPARATOR);
         }
     }
 
     public void trank() {
         if (!kampfIstZuende) {
-            if ((spieler.getmaxLebenspunkte() - spieler.getaktLebenspunkte()) >= 7) {
-                spieler.setaktLebenspunkte(spieler.getaktLebenspunkte() + 14);
+            setzeZugLogZurück();
+            int differenz = spieler.getmaxLebenspunkte() - spieler.getaktLebenspunkte();
+            int geheiltePunkte = 0;
+            if (differenz >= 7) {
+                geheiltePunkte = Math.min(14, differenz);
+                spieler.setaktLebenspunkte(spieler.getaktLebenspunkte() + geheiltePunkte);
+            }
+            logLineHinzufuegen("Spieler " + spieler.getName() + " trinkt einen Trank.");
+            if (geheiltePunkte > 0) {
+                logLineHinzufuegen("  Heilung: " + geheiltePunkte + " Lebenspunkte.");
+            } else {
+                logLineHinzufuegen("  Keine Wirkung, der Spieler ist fast vollstaendig geheilt.");
             }
             nachAktion();
-
-            setCombatLog("Durch den Trank hat " + spieler.getName() + " 7 Lebenspunkte bekommen.\nGegner "
-                    + gegner.getName() + " greift Spieler " + spieler.getName() + " mit " +
-                    +gegner.getAngriffsWert() + " Schaden an.\n\n"); // Später abändern
+            logLineHinzufuegen("");
+            finalisiereZugLog();
         }
     }
 
@@ -86,7 +131,7 @@ public class Einzelkampf {
     }
 
     public boolean pruefeNaechsteRunde() {
-        return true; // für die Basisversion
+        return true; // fuer die Basisversion
     }
 
     public boolean pruefeKampfende() {
@@ -139,10 +184,11 @@ public class Einzelkampf {
     }
 
     public void gegnerRunde() {
-        int gesamterSchaden = schadenswert(gegner, spieler);
-        spieler.setaktLebenspunkte(spieler.getaktLebenspunkte() - gesamterSchaden);
-        setCombatLog("Gegner " + gegner.getName() + " greift Spieler " + spieler.getName() + " mit "
-                + gesamterSchaden + " Schaden an.\n");
+        AngriffsErgebnis ergebnis = berechneAngriff(gegner, spieler, 1);
+        if (ergebnis.hatGetroffen()) {
+            spieler.setaktLebenspunkte(spieler.getaktLebenspunkte() - ergebnis.getSchaden());
+        }
+        protokolliereGegnerAngriff(ergebnis);
     }
 
     public boolean wahrscheinlichkeit(int wahrscheinlich) {
@@ -156,22 +202,28 @@ public class Einzelkampf {
 
     // Methoden des Schaden
 
-    public int schadenswert(Charakter angreifer, Charakter angegriffene) {
+    private AngriffsErgebnis berechneAngriff(Charakter angreifer, Charakter angegriffene, int multiplikator) {
         int finalerAngriffswert = angreifer.getAngriffsWert();
         boolean hatGetroffen = true;
+        boolean warKritisch = false;
         if (angreifer instanceof Spieler) {
-            finalerAngriffswert *= krit();
+            int kritMultiplikator = krit();
+            if (kritMultiplikator > 1) {
+                warKritisch = true;
+                finalerAngriffswert *= kritMultiplikator;
+            }
         }
         hatGetroffen = trefferchance(angreifer);
         if (hatGetroffen) {
             hatGetroffen = ausweichChance(angegriffene);
         }
 
+        int schaden = 0;
         if (hatGetroffen) {
-            return finalerAngriffswert - angegriffene.getVerteidigungsWert();
-        } else {
-            return 0;
+            schaden = Math.max(0, finalerAngriffswert - angegriffene.getVerteidigungsWert());
+            schaden *= multiplikator;
         }
+        return new AngriffsErgebnis(schaden, hatGetroffen, warKritisch);
     }
 
     public int krit() {
@@ -200,7 +252,41 @@ public class Einzelkampf {
     }
 
     public String getCombatLog() {
-        return this.text;
+        return this.text == null ? "" : this.text;
+    }
+
+    private void setzeZugLogZurück() {
+        zugLog.setLength(0);
+    }
+
+    private void logLineHinzufuegen(String inhalt) {
+        zugLog.append(inhalt).append(LINE_SEPARATOR);
+    }
+
+    private void finalisiereZugLog() {
+        setCombatLog(zugLog.toString());
+    }
+
+    private void protokolliereSpielerAngriff(String aktion, Charakter ziel, AngriffsErgebnis ergebnis) {
+        logLineHinzufuegen("Spieler " + spieler.getName() + " - " + aktion + " auf " + ziel.getName());
+        if (ergebnis.hatGetroffen()) {
+            StringBuilder zeile = new StringBuilder("  Treffer! Schaden: ").append(ergebnis.getSchaden());
+            if (ergebnis.warKritisch()) {
+                zeile.append(" (kritisch)");
+            }
+            logLineHinzufuegen(zeile.toString());
+        } else {
+            logLineHinzufuegen("  Angriff verfehlt.");
+        }
+    }
+
+    private void protokolliereGegnerAngriff(AngriffsErgebnis ergebnis) {
+        logLineHinzufuegen("Gegner " + gegner.getName() + " greift " + spieler.getName() + " an");
+        if (ergebnis.hatGetroffen()) {
+            logLineHinzufuegen("  Treffer! Schaden: " + ergebnis.getSchaden());
+        } else {
+            logLineHinzufuegen("  Angriff verfehlt.");
+        }
     }
 
     public int getRunde() {

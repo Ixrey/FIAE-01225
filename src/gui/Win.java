@@ -1,5 +1,5 @@
-public class Win {
+package gui;
 
-    
+public class Win {
 
 }
