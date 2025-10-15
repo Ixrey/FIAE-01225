@@ -42,11 +42,11 @@ public class TestGameInhalt {
 
         public static TestDungeon demo() {
             return new TestDungeon(List.of(
-                    new DemoRaum("Raum 1", "KAMPF"),
+                    new DemoRaum("Raum 1", "LEER"),
                     new DemoRaum("Raum 2", "KAMPF"),
                     new DemoRaum("Raum 3", "LEER"),
                     new DemoRaum("Raum 4", "KAMPF"),
-                    new DemoRaum("Raum 4", "LEER")));
+                    new DemoRaum("Raum 5", "LEER")));
         }
 
         public DemoRaum naechsterRaum() {

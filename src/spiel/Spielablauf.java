@@ -5,28 +5,31 @@ import charakter.Gegnergenerator;
 import charakter.Spieler;
 import gui.HauptmenuePanel;
 import gui.MainFrame;
+import gui.MiniMap;
 import gui.SpielPanel;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
 import kampf.Einzelkampf;
 import kampf.KampfListener;
-import spiel.test.TestGameInhalt;
-import spiel.test.TestGameInhalt.DemoRaum;
-import spiel.test.TestGameInhalt.TestDungeon;
 import stateManagement.GameStateManager;
 import stateManagement.GameStates.GameStart;
+import welt.Ebene;
+import welt.Position;
+import welt.Raum;
 
 public class Spielablauf {
 
     private static GameStateManager stateManager;
     private static Spieler spieler;
     private static Gegner gegner;
-    private static TestDungeon demoDungeon;
     private static SpielPhase aktuellePhase;
     private static Einzelkampf kampfsystem;
     private static HauptmenuePanel hauptmenuPanel;
     private static MainFrame mainFrame;
     private static SpielPanel spielPanel;
+    private static MiniMap miniMap;
+    private static Position position;
+    private static Ebene ebene;
     CardLayout cardLayout;
     JPanel cardPanel;
 
@@ -44,78 +47,141 @@ public class Spielablauf {
 
     public static void start() {
         System.out.println("Spiel gestartet");
-        mainFrame = new MainFrame();
-
+        if (mainFrame == null) {
+            mainFrame = new MainFrame();
+        }
         mainFrame.showMenu();
 
     }
 
     public static void running() {
 
-        spieler = new Spieler("Oraclez", 10, 100, 1,1);
+        spieler = new Spieler("Oraclez", 2000, 30, 1);
+        position = new Position(ebene = new Ebene());
         mainFrame.showSpiel();
-        aktuellePhase = SpielPhase.KAMPF;
+        aktuellePhase = SpielPhase.ERKUNDEN;
 
         System.out.println("Das Spiel ist im laufenden Zustand");
 
-        if (demoDungeon == null) {
-            demoDungeon = TestGameInhalt.erstelleTestDungeon();
-        }
         verarbeiteNaechstenSchritt();
 
     }
 
     public static void verarbeiteNaechstenSchritt() {
-
         switch (aktuellePhase) {
             case ERKUNDEN:
-                DemoRaum raum = demoDungeon.naechsterRaum();
-                if (raum == null) {
-                    aktuellePhase = SpielPhase.RUN_ABGESCHLOSSEN;
-                    break;
-                }
-                System.out.println("Raum: " + raum.getName() + " Raumtyp: " + raum.getTyp());
-                if (raum.istKampf()) {
-                    aktuellePhase = SpielPhase.KAMPF;
-                    break;
-                } else {
-                    System.out.println("Nix, weitermachen.");
-                    aktuellePhase = SpielPhase.ERKUNDEN;
-                }
+                beginneErkundenPhase();
                 break;
 
             case KAMPF:
-                gegner = Gegnergenerator.zufallsGegnerErschaffen(spieler);
-                kampfsystem = new Einzelkampf(spieler, gegner);
-
-                kampfsystem.addKampfListener(new KampfListener() {
-                    @Override
-                    public void kampfBeendet(boolean spielerHatGewonnen) {
-                        if (spielerHatGewonnen) {
-                            spieler.bekommeErfahrung(gegner.getAusgabeErfahrungspunkte());
-                            aktuellePhase = SpielPhase.ERKUNDEN;
-                        } else {
-                            aktuellePhase = SpielPhase.GAME_OVER;
-                        }
-                        verarbeiteNaechstenSchritt();
-                    }
-                });
-                spielPanel.zeigeKampfFenster(spieler, gegner, kampfsystem);
-
+                starteKampfPhase();
                 break;
 
             case GAME_OVER:
-                System.out.println("Verloren, du Loser. Game Over");
-                mainFrame.showGameOver();
-                // stateManager.setState(new GameStart());
-                return;
-
-            case RUN_ABGESCHLOSSEN:
-                System.out.println("Win, zurück zum Menü. Yay.");
-                stateManager.setState(new GameStart());
+                behandelGameOver();
                 break;
 
+            case RUN_ABGESCHLOSSEN:
+                behandelRunAbgeschlossen();
+                break;
         }
+    }
+
+    private static void behandelGameOver() {
+        mainFrame.showGameOver();
+        aktuellePhase = SpielPhase.GAME_OVER;
+    }
+
+    private static void beginneErkundenPhase() {
+        aktuellePhase = SpielPhase.ERKUNDEN;
+        miniMap.zeigeRaumUebersicht(spieler, position);
+        mainFrame.showMinimap();
+    }
+
+    private static void starteKampfPhase() {
+        aktuellePhase = SpielPhase.KAMPF;
+        Raum aktuellerRaum = getAktuellenRaum();
+
+        switch (aktuellerRaum.getTyp()) {
+            case "gegner":
+                gegner = Gegnergenerator.zufallsGegnerErschaffen(spieler);
+                break;
+            case "boss":
+                gegner = Gegnergenerator.bossErschaffen(spieler);
+                break;
+        }
+
+        kampfsystem = new Einzelkampf(spieler, gegner);
+        kampfsystem.addKampfListener(Spielablauf::kampfBeendet);
+        spielPanel.zeigeKampfFenster(spieler, gegner, kampfsystem);
+        mainFrame.showSpiel();
+    }
+
+    private static void kampfBeendet(boolean spielerHatGewonnen) {
+        Raum raum = getAktuellenRaum();
+        if (spielerHatGewonnen) {
+            spieler.bekommeErfahrung(gegner.getAusgabeErfahrungspunkte());
+            raum.typWechsel();
+            proceedNachKampf(spielerHatGewonnen);
+        } else {
+            aktuellePhase = SpielPhase.GAME_OVER;
+            verarbeiteNaechstenSchritt();
+        }
+    }
+
+    private static void proceedNachKampf(boolean spielerHatGewonnen) {
+        boolean istBossBesiegt = position.getAktuellerRaum().getTyp().contains("bossBesiegt");
+
+        if (spielerHatGewonnen) {
+
+            if (position.istLetzterRaum() && istBossBesiegt) {
+                behandelRunAbgeschlossen();
+            } else {
+                aktuellePhase = SpielPhase.ERKUNDEN;
+                verarbeiteNaechstenSchritt();
+            }
+        } else {
+            behandelGameOver();
+        }
+    }
+
+    public static void behandelRunAbgeschlossen() {
+        aktuellePhase = SpielPhase.RUN_ABGESCHLOSSEN;
+        stateManager.setState(new GameStart());
+        mainFrame.showMenu();
+
+        spieler = null;
+        ebene = null;
+        position = null;
+        // mainFrame.showRunFinished();
+
+    }
+
+    private static Raum getAktuellenRaum() {
+        return position.getRaumListe().get(position.getAktuellePosition());
+    }
+
+    public static void behandelWeiterButton() {
+        if (aktuellePhase != SpielPhase.ERKUNDEN || position == null) {
+            return;
+        }
+
+        if (!position.istLetzterRaum()) {
+            position.naechsterRaum();
+        }
+
+        Raum aktuellerRaum = getAktuellenRaum();
+        String typ = aktuellerRaum.getTyp();
+
+        if ("gegner".equals(typ) || "boss".equals(typ)) {
+            aktuellePhase = SpielPhase.KAMPF;
+        } else if (position.istLetzterRaum() && typ.contains("bossBesiegt")) {
+            aktuellePhase = SpielPhase.RUN_ABGESCHLOSSEN;
+        } else {
+            aktuellePhase = SpielPhase.ERKUNDEN;
+        }
+
+        verarbeiteNaechstenSchritt();
     }
 
     public static void setHauptmenuPanel(HauptmenuePanel hauptmenu) {
@@ -124,6 +190,10 @@ public class Spielablauf {
 
     public static void setSpielPanel(SpielPanel spiel) {
         spielPanel = spiel;
+    }
+
+    public static void setMiniMap(MiniMap mMap) {
+        miniMap = mMap;
     }
 
     public static void close() {
