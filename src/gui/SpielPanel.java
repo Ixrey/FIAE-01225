@@ -14,7 +14,7 @@ public class SpielPanel extends JPanel {
     private Gegner gn;
     private Image bossImage;
     private Image goblinImage;
-    private static  Spieler sp;
+    private static Spieler sp;
 
     public SpielPanel() {
         setLayout(null); // du benutzt aktuell absolutes Layout
@@ -26,9 +26,8 @@ public class SpielPanel extends JPanel {
         this.sp = sp;
         removeAll();
         setLayout(null);
-        
-        
-        //BILDER werden geladen
+
+        // BILDER werden geladen
         goblinImage = new ImageIcon(getClass().getResource("/assets/Knochiger Goblin im Kampfmodus.png")).getImage();
         bossImage = new ImageIcon(getClass().getResource("/assets/Verfallener Skelettkrieger im Retro-Stil.png"))
                 .getImage();
@@ -61,7 +60,6 @@ public class SpielPanel extends JPanel {
         lblNamenAnzeigeGegner.setFont(new Font("Courier New", Font.BOLD, 18));
         add(lblNamenAnzeigeGegner);
 
-    
         // Gegner lvl
         JLabel lblLvlGegner = new JLabel("lvl " + gn.getLevel());
         lblLvlGegner.setForeground(Color.black);
@@ -105,12 +103,6 @@ public class SpielPanel extends JPanel {
             healthBarGegner.setString("" + gn.getaktLebenspunkte() + "/" + gn.getmaxLebenspunkte());
 
             combatLogArea.append(kampf.getCombatLog());
-
-            if (kampf.pruefeKampfende() == true) {
-                Spielablauf.verarbeiteNaechstenSchritt();
-            }
-            
-            
         });
 
         JButton btnTraenke = new JButton("Trank");
@@ -138,13 +130,7 @@ public class SpielPanel extends JPanel {
             healthBarSp.setString("" + sp.getaktLebenspunkte() + "/" + sp.getmaxLebenspunkte());
             healthBarGegner.setString("" + gn.getaktLebenspunkte() + "/" + gn.getmaxLebenspunkte());
             combatLogArea.append(kampf.getCombatLog());
-
-            if (kampf.pruefeKampfende() == true) {
-                Spielablauf.verarbeiteNaechstenSchritt();
-            }
-
         });
-
 
         add(scrollPane);
         add(SpielPanel.infoPanel());
@@ -171,7 +157,7 @@ public class SpielPanel extends JPanel {
         }
     }
 
-    public static JPanel infoPanel(){
+    public static JPanel infoPanel() {
         JPanel stats = new JPanel();
         stats.setLayout(new BoxLayout(stats, BoxLayout.Y_AXIS));
         stats.setPreferredSize(new Dimension(150, 200));
@@ -202,7 +188,7 @@ public class SpielPanel extends JPanel {
         stats.add(lblLvlBox);
         stats.add(lblSpielerAngriffsWertBox);
         stats.add(erfahrungsXPBar);
-        
+
         return stats;
     }
 }
