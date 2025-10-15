@@ -1,4 +1,4 @@
-package spiel;
+﻿package spiel;
 
 import charakter.Gegner;
 import charakter.Gegnergenerator;
@@ -8,8 +8,10 @@ import gui.MainFrame;
 import gui.MiniMap;
 import gui.SpielPanel;
 import java.awt.CardLayout;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import kampf.Einzelkampf;
+import kampf.KampfListener;
 import stateManagement.GameStateManager;
 import stateManagement.GameStates.GameStart;
 import welt.Ebene;
@@ -20,6 +22,7 @@ public class Spielablauf {
 
     private static GameStateManager stateManager;
     private static Spieler spieler;
+    private static String abgefragterSpielerName;
     private static Gegner gegner;
     private static SpielPhase aktuellePhase;
     private static Einzelkampf kampfsystem;
@@ -55,7 +58,10 @@ public class Spielablauf {
 
     public static void running() {
 
-        spieler = new Spieler("Oraclez", 100, 30, 5, 1);
+        if (abgefragterSpielerName == null) {
+            abgefragterSpielerName = frageSpielerName();
+        }
+        spieler = new Spieler(abgefragterSpielerName, 100, 30, 5, 1);
         position = new Position(ebene = new Ebene());
         mainFrame.showSpiel();
         aktuellePhase = SpielPhase.ERKUNDEN;
@@ -86,9 +92,24 @@ public class Spielablauf {
         }
     }
 
+    private static String frageSpielerName() {
+        String initialName = abgefragterSpielerName != null ? abgefragterSpielerName : "Spieler";
+        String name = (String) JOptionPane.showInputDialog(mainFrame, "Wie soll dein Held heißen?", "Charaktername",
+                JOptionPane.PLAIN_MESSAGE, null, null, initialName);
+        if (name == null) {
+            return "Spieler";
+        }
+        name = name.trim();
+        if (name.isEmpty()) {
+            return "Spieler";
+        }
+        return name;
+    }
+
     private static void behandelGameOver() {
         mainFrame.showGameOver();
         aktuellePhase = SpielPhase.GAME_OVER;
+        abgefragterSpielerName = null;
     }
 
     private static void beginneErkundenPhase() {
@@ -111,21 +132,26 @@ public class Spielablauf {
         }
 
         kampfsystem = new Einzelkampf(spieler, gegner);
-        kampfsystem.addKampfListener(Spielablauf::kampfBeendet);
+
+        kampfsystem.addKampfListener(new KampfListener() {
+            @Override
+            public void kampfBeendet(boolean spielerHatGewonnen) {
+                Raum raum = getAktuellenRaum();
+                if (spielerHatGewonnen) {
+                    spieler.bekommeErfahrung(gegner.getAusgabeErfahrungspunkte());
+                    raum.typWechsel();
+                    proceedNachKampf(spielerHatGewonnen);
+                } else {
+                    aktuellePhase = SpielPhase.GAME_OVER;
+                    verarbeiteNaechstenSchritt();
+                }
+            }
+
+        });
+
         spielPanel.zeigeKampfFenster(spieler, gegner, kampfsystem);
         mainFrame.showSpiel();
-    }
 
-    private static void kampfBeendet(boolean spielerHatGewonnen) {
-        Raum raum = getAktuellenRaum();
-        if (spielerHatGewonnen) {
-            spieler.bekommeErfahrung(gegner.getAusgabeErfahrungspunkte());
-            raum.typWechsel();
-            proceedNachKampf(spielerHatGewonnen);
-        } else {
-            aktuellePhase = SpielPhase.GAME_OVER;
-            verarbeiteNaechstenSchritt();
-        }
     }
 
     private static void proceedNachKampf(boolean spielerHatGewonnen) {
@@ -150,6 +176,7 @@ public class Spielablauf {
         mainFrame.showMenu();
 
         spieler = null;
+        abgefragterSpielerName = null;
         ebene = null;
         position = null;
         // mainFrame.showRunFinished();
