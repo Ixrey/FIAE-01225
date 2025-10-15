@@ -10,7 +10,6 @@ import gui.SpielPanel;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
 import kampf.Einzelkampf;
-import kampf.KampfListener;
 import stateManagement.GameStateManager;
 import stateManagement.GameStates.GameStart;
 import welt.Ebene;

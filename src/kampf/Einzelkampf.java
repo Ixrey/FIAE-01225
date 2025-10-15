@@ -100,22 +100,31 @@ public class Einzelkampf {
 
     public void nachAktion() {
 
-        boolean pruefeEnde = pruefeKampfende();
-        if (!pruefeEnde) {
-            boolean pruefeNaechste = pruefeNaechsteRunde();
+        if (pruefeKampfende()) {
+            logKampfErgebnis();
+            return;
+        }
 
-            if (pruefeNaechste) {
-                gegnerRunde();
-                naechsteRunde();
+        if (pruefeNaechsteRunde()) {
+            gegnerRunde();
+
+            if (pruefeKampfende()) {
+                logKampfErgebnis();
+                return;
             }
+
+            naechsteRunde();
+        }
+    }
+
+    private void logKampfErgebnis() {
+        boolean spielerGewonnen = hatSpielerGewonnen();
+        if (spielerGewonnen) {
+            System.out.println("Spieler hat gewonnen.");
+        } else if (!spielerGewonnen) {
+            System.out.println("Gegner hat gewonnen.");
         } else {
-            if (hatSpielerGewonnen()) {
-                System.out.println("Spieler hat gewonnen.");
-            } else if (!hatSpielerGewonnen()) {
-                System.out.println("Gegner hat gewonnen.");
-            } else {
-                System.out.println("Fehler in der nachAktion()-Methode");
-            }
+            System.out.println("Fehler in der nachAktion()-Methode");
         }
     }
 
