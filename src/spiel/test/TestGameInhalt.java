@@ -86,7 +86,7 @@ public class TestGameInhalt {
         }
 
         static Gegner demo() {
-            return rng.nextBoolean() ? new Gegner("Goblin", 50, 10, 1) : new Gegner("Ork", 70, 12, 1);
+            return rng.nextBoolean() ? new Gegner("Goblin", 50, 10, 2, 1) : new Gegner("Ork", 70, 12, 2, 1);
         }
     }
 }

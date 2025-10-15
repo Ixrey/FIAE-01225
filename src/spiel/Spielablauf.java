@@ -56,7 +56,7 @@ public class Spielablauf {
 
     public static void running() {
 
-        spieler = new Spieler("Oraclez", 2000, 30, 1);
+        spieler = new Spieler("Oraclez", 100, 30, 5, 1);
         position = new Position(ebene = new Ebene());
         mainFrame.showSpiel();
         aktuellePhase = SpielPhase.ERKUNDEN;
