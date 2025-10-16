@@ -140,7 +140,7 @@ public class Spielablauf {
                 if (spielerHatGewonnen) {
                     spieler.bekommeErfahrung(gegner.getAusgabeErfahrungspunkte());
                     raum.typWechsel();
-                    proceedNachKampf(spielerHatGewonnen);
+                    behandelNachKampf(spielerHatGewonnen);
                 } else {
                     aktuellePhase = SpielPhase.GAME_OVER;
                     verarbeiteNaechstenSchritt();
@@ -154,7 +154,7 @@ public class Spielablauf {
 
     }
 
-    private static void proceedNachKampf(boolean spielerHatGewonnen) {
+    private static void behandelNachKampf(boolean spielerHatGewonnen) {
         boolean istBossBesiegt = position.getAktuellerRaum().getTyp().contains("bossBesiegt");
 
         if (spielerHatGewonnen) {
