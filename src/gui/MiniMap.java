@@ -1,8 +1,9 @@
-package gui;
+﻿package gui;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URL;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -20,10 +21,14 @@ import welt.Raum;
 public class MiniMap extends JPanel {
 
     public MiniMap() {
-
     }
 
     public void zeigeRaumUebersicht(Spieler spieler, Position position) {
+        if (spieler == null || position == null) {
+            System.err.println("MiniMap: Spieler oder Position fehlt, keine Aktualisierung.");
+            return;
+        }
+
         removeAll();
 
         setLayout(null);
@@ -36,7 +41,7 @@ public class MiniMap extends JPanel {
         lblUeberschrift.setFont(new Font("Courier New", Font.BOLD, 24));
         raumBereich.add(lblUeberschrift);
 
-        JButton btnWeiter = new JButton("Nächster Raum");
+        JButton btnWeiter = new JButton("Naechster Raum");
         btnWeiter.setBounds(600, 600, 150, 50);
         raumBereich.add(btnWeiter);
 
@@ -61,15 +66,21 @@ public class MiniMap extends JPanel {
     }
 
     public JLabel erstelleRaumLabel(String raumTyp, int raumNummer, int position) {
-        Image img;
         setLayout(null);
-        if (raumNummer == position) {
-            img = new ImageIcon(this.getClass().getResource(findeBildfuerRaumtypAktuell(raumTyp))).getImage();
-        } else {
-            img = new ImageIcon(this.getClass().getResource(findeBildfuerRaumtyp(raumTyp))).getImage();
-        }
+        String bildPfad = raumNummer == position ? findeBildfuerRaumtypAktuell(raumTyp)
+                : findeBildfuerRaumtyp(raumTyp);
+        ImageIcon icon = ladeIcon(bildPfad);
         JLabel lblNeuerRaum = new JLabel();
-        lblNeuerRaum.setIcon(new ImageIcon(img));
+        if (icon != null) {
+            lblNeuerRaum.setIcon(icon);
+        } else {
+            lblNeuerRaum.setText(raumTyp);
+            lblNeuerRaum.setHorizontalAlignment(JLabel.CENTER);
+            lblNeuerRaum.setVerticalAlignment(JLabel.CENTER);
+            lblNeuerRaum.setOpaque(true);
+            lblNeuerRaum.setBackground(new Color(200, 200, 200));
+            lblNeuerRaum.setForeground(Color.RED);
+        }
         lblNeuerRaum.setBounds((raumNummer * 125) + 33, 100, 100, 100);
         return lblNeuerRaum;
 
@@ -87,13 +98,14 @@ public class MiniMap extends JPanel {
                 return "/assets/Leer_aktuell.png";
 
             case "boss":
-                return "/assets/boss_aktuell.png";
+                return "/assets/Boss_aktuell.png";
 
-            case "boss_besiegt":
+            case "bossBesiegt":
                 return "/assets/Boss_besiegt_aktuell.png";
 
             default:
-                return "unbekannter Raumtyp übergeben";
+                System.err.println("MiniMap: Unbekannter aktueller Raumtyp '" + raumTyp + "'");
+                return null;
         }
     }
 
@@ -109,13 +121,14 @@ public class MiniMap extends JPanel {
                 return "/assets/Leer.png";
 
             case "boss":
-                return "/assets/boss.png";
+                return "/assets/Boss.png";
 
-            case "boss_besiegt":
+            case "bossBesiegt":
                 return "/assets/Boss_besiegt.png";
 
             default:
-                return "unbekannter Raumtyp übergeben";
+                System.err.println("MiniMap: Unbekannter Raumtyp '" + raumTyp + "'");
+                return null;
         }
     }
 
@@ -125,7 +138,15 @@ public class MiniMap extends JPanel {
         stats.setPreferredSize(new Dimension(150, 200));
         stats.setBounds(10, 10, 150, 100);
 
-        // Spielerdaten für die INFOBOX
+        if (spieler == null) {
+            JLabel placeholder = new JLabel("Spieler nicht verfuegbar");
+            placeholder.setForeground(Color.black);
+            placeholder.setFont(new Font("Courier New", Font.BOLD, 14));
+            stats.add(placeholder);
+            return stats;
+        }
+
+        // Spielerdaten fuer die INFOBOX
 
         JLabel lblNamenAnzeigeBox = new JLabel(spieler.getName());
         lblNamenAnzeigeBox.setForeground(Color.black);
@@ -152,5 +173,17 @@ public class MiniMap extends JPanel {
         stats.add(erfahrungsXPBar);
 
         return stats;
+    }
+
+    private ImageIcon ladeIcon(String pfad) {
+        if (pfad == null || pfad.isBlank()) {
+            return null;
+        }
+        URL resource = getClass().getResource(pfad);
+        if (resource == null) {
+            System.err.println("MiniMap: Ressource nicht gefunden: " + pfad);
+            return null;
+        }
+        return new ImageIcon(resource);
     }
 }

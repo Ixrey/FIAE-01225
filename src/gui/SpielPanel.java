@@ -3,6 +3,7 @@ package gui;
 import charakter.Gegner;
 import charakter.Spieler;
 import java.awt.*;
+import java.net.URL;
 import javax.swing.*;
 import kampf.Einzelkampf;
 import spiel.Spielablauf;
@@ -28,12 +29,11 @@ public class SpielPanel extends JPanel {
         setLayout(null);
 
         // BILDER werden geladen
-        goblinImage = new ImageIcon(getClass().getResource("/assets/Knochiger Goblin im Kampfmodus.png")).getImage();
-        bossImage = new ImageIcon(getClass().getResource("/assets/Verfallener Skelettkrieger im Retro-Stil.png"))
-                .getImage();
-        gameMapExampleOne = new ImageIcon(getClass().getResource("/assets/backgroundgame.png")).getImage();
-        orkImage = new ImageIcon(getClass().getResource("/assets/evil.png")).getImage();
-        playerImage = new ImageIcon(getClass().getResource("/assets/hero.png")).getImage();
+        goblinImage = ladeBild("/assets/Knochiger Goblin im Kampfmodus.png");
+        bossImage = ladeBild("/assets/Verfallener Skelettkrieger im Retro-Stil.png");
+        gameMapExampleOne = ladeBild("/assets/backgroundgame.png");
+        orkImage = ladeBild("/assets/evil.png");
+        playerImage = ladeBild("/assets/hero.png");
 
         JTextArea combatLogArea = new JTextArea();
         combatLogArea.setEditable(false);
@@ -192,3 +192,5 @@ public class SpielPanel extends JPanel {
         return stats;
     }
 }
+
+
