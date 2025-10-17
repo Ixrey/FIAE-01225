@@ -89,7 +89,7 @@ public class MiniMap extends JPanel {
             case "boss":
                 return "/assets/boss_aktuell.png";
 
-            case "boss_besiegt":
+            case "bossBesiegt":
                 return "/assets/Boss_besiegt_aktuell.png";
 
             default:
