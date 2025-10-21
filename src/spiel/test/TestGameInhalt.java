@@ -26,7 +26,7 @@ public class TestGameInhalt {
         return DemoGegnerGenerator.demo();
     }
 
-    public static DemoKampfErgebnis simulateKampf(Spieler spieler, Gegner gegner) {
+    public static DemoKampfErgebnis simuliereKampf(Spieler spieler, Gegner gegner) {
         boolean spielerGewinnt = rng.nextDouble() < 0.75;
         System.out.println("Kampf gegen " + gegner.getName());
         return spielerGewinnt ? DemoKampfErgebnis.GEGNER_BESIEGT : DemoKampfErgebnis.SPIELER_BESIEGT;
