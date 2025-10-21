@@ -8,15 +8,20 @@ public class Spieler extends Charakter{
     private int steigerungsWert = 20;
     private int aktTraenke;
     private int maxTraenke;
+    private int kritischeRate;
+    private int krtischerSchaden;
 //Konstruktor der Unterklasse
-    public Spieler(String name, int maxLebenspunkte, int angriffsWert, int level) {
-        super(name, maxLebenspunkte, angriffsWert, level);
+    public Spieler(String name, int maxLebenspunkte, int angriffsWert, int verteidigungsWert, int level) {
+        super(name, maxLebenspunkte, angriffsWert, verteidigungsWert, level);
         this.maxAktionspunkte = 1;
         this.aktionspunkte = maxAktionspunkte;
         this.aktErfahrungspunkte = 0;
         this.benErfahrungspunkte = 2;
         this.maxTraenke = 3;
         this.aktTraenke = maxTraenke;
+        this.kritischeRate = 15;
+        this.krtischerSchaden = 2;
+        
     }
 //Setter für Variablen der Unterklasse
     public void setAktionspunkte(int aktionspunkte) {
@@ -46,6 +51,14 @@ public class Spieler extends Charakter{
     public void setMaxTraenke(int maxTraenke) {
         this.maxTraenke = maxTraenke;
     }
+
+    public void setKritischeRate(int kritischeRate) {
+        this.kritischeRate = kritischeRate;
+    }
+
+    public void setKrtischerSchaden(int krtischerSchaden) {
+        this.krtischerSchaden = krtischerSchaden;
+    }
 //Getter für Variablen der Unterklasse
     public int getAktionspunkte() {
         return this.aktionspunkte;
@@ -74,6 +87,14 @@ public class Spieler extends Charakter{
     public int getMaxTraenke() {
         return maxTraenke;
     }
+
+    public int getKritischeRate() {
+        return kritischeRate;
+    }
+
+    public int getKrtischerSchaden() {
+        return krtischerSchaden;
+    }
 //Methoden der Unterklasse
     //Methode was passiert wenn der Spieler ein Level aufsteigt
     public void aufleveln(){
@@ -81,6 +102,10 @@ public class Spieler extends Charakter{
         this.setBenErfahrungspunkte(getBenErfahrungspunkte()*2);
         lebenspunkteSteigern();
         angriffSteigern();
+        verteidigungSteigern();
+        ausweichRateSteigern();
+        kritRateSteigern();
+        krtischerSchadenSteigern();
     }
     //Methode für die Verarbeitung von Erfahrungspunkten
     public void bekommeErfahrung(int erfWert){
@@ -112,6 +137,29 @@ public class Spieler extends Charakter{
         int plusLebenspunkte = zwischenergebnis/100;
         this.setmaxLebenspunkte(this.getmaxLebenspunkte()+plusLebenspunkte);
         this.setaktLebenspunkte(this.getaktLebenspunkte()+plusLebenspunkte);
- 
+    }
+    //Methode zur steigerung der Verteidigung(wird bei "aufleveln()" aufgerufen)
+    public void verteidigungSteigern(){
+        int zwischenergebnis = this.getVerteidigungsWert()*steigerungsWert;
+        if (zwischenergebnis-(zwischenergebnis/100*100)>=50){
+            zwischenergebnis=zwischenergebnis+100;
+        }
+        this.setVerteidigungsWert(this.getVerteidigungsWert()+zwischenergebnis/100);
+    }
+    //Methode zur steigerung der Ausweichrate(wird bei "aufleveln()" aufgerufen)
+    public void ausweichRateSteigern(){
+        if (this.getLevel()%2==0){
+            this.setAusweichRate(this.getAusweichRate()+3);
+        }
+    }
+    //Methode zur steigerung der Ausweichrate(wird bei "aufleveln()" aufgerufen)
+    public void kritRateSteigern(){
+        this.setKritischeRate(this.getKritischeRate()+5);
+    }
+    //Methode zur steigerung der Ausweichrate(wird bei "aufleveln()" aufgerufen)
+    public void krtischerSchadenSteigern(){
+        if (this.getLevel()%5==0){
+            this.setKrtischerSchaden(this.getKrtischerSchaden()+1);
+        }
     }
 }

@@ -2,7 +2,7 @@
 Kurzbeschreibung (1–3 Sätze). Issue/Task: #<Nummer>
 
 ## Wie testen?
-- Starten: Main.java ▶️
+- Starten: Main.java
 - Schritte: …
 - Erwartetes Ergebnis: …
 

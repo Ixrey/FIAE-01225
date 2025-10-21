@@ -4,8 +4,8 @@ package charakter;
 public class Gegner extends Charakter {
     private int ausgabeErfahrungspunkte;
 //Konstruktor der Unterklasse 
-    public Gegner(String name, int maxLebenspunkte, int angriffsWert, int level) {
-        super(name, maxLebenspunkte, angriffsWert, level);
+    public Gegner(String name, int maxLebenspunkte, int angriffsWert, int verteidigungsWert, int level) {
+        super(name, maxLebenspunkte, angriffsWert, verteidigungsWert, level);
         this.ausgabeErfahrungspunkte = 2+level;
     }
 //Setter für Variablen der Unterklasse
